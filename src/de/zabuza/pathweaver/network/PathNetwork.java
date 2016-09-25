@@ -1,9 +1,11 @@
 package de.zabuza.pathweaver.network;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * A path network which consists of nodes and directed edges which connects the
@@ -31,12 +33,12 @@ public class PathNetwork {
 	/**
 	 * Maps nodes to their incoming edges.
 	 */
-	private final HashMap<Node, LinkedList<IncomingEdge>> mNodeToIncomingEdges;
+	private final HashMap<Node, HashSet<IncomingEdge>> mNodeToIncomingEdges;
 
 	/**
 	 * Maps nodes to their outgoing edges.
 	 */
-	private final HashMap<Node, LinkedList<OutgoingEdge>> mNodeToOutgoingEdges;
+	private final HashMap<Node, HashSet<OutgoingEdge>> mNodeToOutgoingEdges;
 
 	/**
 	 * Creates a new empty path network.
@@ -65,17 +67,17 @@ public class PathNetwork {
 	 */
 	public void addEdge(final Node source, final Node destination, final int cost) {
 		OutgoingEdge outgoingEdge = new OutgoingEdge(destination, cost);
-		LinkedList<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
-			outgoingEdges = new LinkedList<>();
+			outgoingEdges = new LinkedHashSet<>();
 		}
 		outgoingEdges.add(outgoingEdge);
 		mNodeToOutgoingEdges.put(source, outgoingEdges);
 
 		IncomingEdge incomingEdge = new IncomingEdge(source, cost);
-		LinkedList<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		HashSet<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
-			incomingEdges = new LinkedList<>();
+			incomingEdges = new LinkedHashSet<>();
 		}
 		incomingEdges.add(incomingEdge);
 		mNodeToIncomingEdges.put(destination, incomingEdges);
@@ -101,6 +103,18 @@ public class PathNetwork {
 	}
 
 	/**
+	 * Returns whether the network contains the given node or not.
+	 * 
+	 * @param node
+	 *            The node to check
+	 * @return <tt>True</tt> if the node is contained in the network,
+	 *         <tt>false</tt> otherwise
+	 */
+	public boolean containsNode(final Node node) {
+		return mNodes.contains(node);
+	}
+
+	/**
 	 * Gets the amount of edges the network currently has.
 	 * 
 	 * @return The amount of edges the network currently has.
@@ -116,6 +130,80 @@ public class PathNetwork {
 	 */
 	public int getAmountOfNodes() {
 		return mAmountOfNodes;
+	}
+
+	/**
+	 * Gets an unmodifiable set of all incoming edges the given destination has
+	 * or an <tt>empty set</tt> if there are no.
+	 * 
+	 * @param destination
+	 *            The destination to get its incoming edges from
+	 * @return An unmodifiable set of all incoming edges the given destination
+	 *         has or an <tt>empty set</tt> if there are no
+	 */
+	public Set<IncomingEdge> getIncomingEdges(final Node destination) {
+		HashSet<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		if (incomingEdges == null) {
+			return Collections.emptySet();
+		} else {
+			return Collections.unmodifiableSet(incomingEdges);
+		}
+	}
+
+	/**
+	 * Gets an unmodifiable set of all outgoing edges the given source has or an
+	 * <tt>empty set</tt> if there are no.
+	 * 
+	 * @param source
+	 *            The source to get its outgoing edges from
+	 * @return An unmodifiable set of all outgoing edges the given source has or
+	 *         an <tt>empty set</tt> if there are no
+	 */
+	public Set<OutgoingEdge> getOutgoingEdges(final Node source) {
+		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		if (outgoingEdges == null) {
+			return Collections.emptySet();
+		} else {
+			return Collections.unmodifiableSet(outgoingEdges);
+		}
+	}
+
+	/**
+	 * Returns whether the node has the given incoming edge or not.
+	 * 
+	 * @param destination
+	 *            The destination to check
+	 * @param incomingEdge
+	 *            The incoming edge to check
+	 * @return <tt>True</tt> if the node has the incoming edge, <tt>false</tt>
+	 *         otherwise
+	 */
+	public boolean hasIncomingEdge(final Node destination, final IncomingEdge incomingEdge) {
+		HashSet<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		if (incomingEdges == null) {
+			return false;
+		} else {
+			return incomingEdges.contains(incomingEdge);
+		}
+	}
+
+	/**
+	 * Returns whether the node has the given outgoing edge or not.
+	 * 
+	 * @param source
+	 *            The source to check
+	 * @param outgoingEdge
+	 *            The outgoing edge to check
+	 * @return <tt>True</tt> if the node has the outgoing edge, <tt>false</tt>
+	 *         otherwise
+	 */
+	public boolean hasOutgoingEdge(final Node source, final OutgoingEdge outgoingEdge) {
+		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		if (outgoingEdges == null) {
+			return false;
+		} else {
+			return outgoingEdges.contains(outgoingEdge);
+		}
 	}
 
 	/**
@@ -138,7 +226,7 @@ public class PathNetwork {
 		builder.append("#nodes=" + mAmountOfNodes);
 		builder.append(",#edges=" + mAmountOfEdges);
 		builder.append(",edges={");
-		for (Entry<Node, LinkedList<OutgoingEdge>> entry : mNodeToOutgoingEdges.entrySet()) {
+		for (Entry<Node, HashSet<OutgoingEdge>> entry : mNodeToOutgoingEdges.entrySet()) {
 			Node source = entry.getKey();
 			for (OutgoingEdge outgoingEdge : entry.getValue()) {
 				Node destination = outgoingEdge.getDestination();
@@ -146,7 +234,9 @@ public class PathNetwork {
 				builder.append("(" + source + "-" + cost + "->" + destination + "),");
 			}
 		}
-		builder.deleteCharAt(builder.length() - 1);
+		if (!mNodeToOutgoingEdges.isEmpty()) {
+			builder.deleteCharAt(builder.length() - 1);
+		}
 		builder.append("}");
 		builder.append("]");
 

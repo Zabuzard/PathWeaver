@@ -34,10 +34,12 @@ public class RoadNode extends Node {
 	 * The maximal allowed value for a longitude position.
 	 */
 	private final int LONGITUDE_MAX = 180;
+
 	/**
 	 * The minimal allowed value for a longitude position.
 	 */
 	private final int LONGITUDE_MIN = -180;
+
 	/**
 	 * The latitude position of this node. Must be between <tt>-90<tt> and
 	 * <tt>90<tt> (both inclusive).
@@ -71,6 +73,7 @@ public class RoadNode extends Node {
 		mLatitude = latitude;
 		mLongitude = longitude;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -127,5 +130,15 @@ public class RoadNode extends Node {
 		result = prime * result + Float.floatToIntBits(mLatitude);
 		result = prime * result + Float.floatToIntBits(mLongitude);
 		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "RoadNode [latitude=" + mLatitude + ", longitude=" + mLongitude + "]";
 	}
 }
