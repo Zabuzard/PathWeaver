@@ -24,21 +24,26 @@ public class RoadNode extends Node {
 	/**
 	 * The maximal allowed value for a latitude position.
 	 */
-	private final int LATITUDE_MAX = 90;
+	private static final int LATITUDE_MAX = 90;
 
 	/**
 	 * The minimal allowed value for a latitude position.
 	 */
-	private final int LATITUDE_MIN = -90;
+	private static final int LATITUDE_MIN = -90;
+
 	/**
 	 * The maximal allowed value for a longitude position.
 	 */
-	private final int LONGITUDE_MAX = 180;
-
+	private static final int LONGITUDE_MAX = 180;
 	/**
 	 * The minimal allowed value for a longitude position.
 	 */
-	private final int LONGITUDE_MIN = -180;
+	private static final int LONGITUDE_MIN = -180;
+
+	/**
+	 * The id of this node.
+	 */
+	private final int mId;
 
 	/**
 	 * The latitude position of this node. Must be between <tt>-90<tt> and
@@ -50,9 +55,13 @@ public class RoadNode extends Node {
 	 * <tt>180<tt> (both inclusive).
 	 */
 	private final float mLongitude;
+
 	/**
-	 * Creates a new road node with given position in latitude and longitude.
+	 * Creates a new road node with given an ID and a position in latitude and
+	 * longitude.
 	 * 
+	 * @param id
+	 *            The id of this node
 	 * @param latitude
 	 *            The latitude position of this node which must be between
 	 *            <tt>-90</tt> and <tt>90</tt> (both inclusive)
@@ -63,13 +72,14 @@ public class RoadNode extends Node {
 	 *             If either the given latitude or longitude exceeds the allowed
 	 *             range
 	 */
-	public RoadNode(final float latitude, final float longitude) throws IllegalArgumentException {
+	public RoadNode(final int id, final float latitude, final float longitude) throws IllegalArgumentException {
 		if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) {
 			throw new IllegalArgumentException(EXCEPTION_LATITUDE_ILLEGAL + latitude);
 		}
 		if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
 			throw new IllegalArgumentException(EXCEPTION_LONGITUDE_ILLEGAL + longitude);
 		}
+		mId = id;
 		mLatitude = latitude;
 		mLongitude = longitude;
 	}
@@ -91,13 +101,19 @@ public class RoadNode extends Node {
 			return false;
 		}
 		RoadNode other = (RoadNode) obj;
-		if (Float.floatToIntBits(mLatitude) != Float.floatToIntBits(other.mLatitude)) {
-			return false;
-		}
-		if (Float.floatToIntBits(mLongitude) != Float.floatToIntBits(other.mLongitude)) {
+		if (mId != other.mId) {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Gets the id of this node.
+	 * 
+	 * @return The id of this node
+	 */
+	public int getId() {
+		return mId;
 	}
 
 	/**
@@ -127,8 +143,7 @@ public class RoadNode extends Node {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(mLatitude);
-		result = prime * result + Float.floatToIntBits(mLongitude);
+		result = prime * result + mId;
 		return result;
 	}
 
@@ -139,6 +154,6 @@ public class RoadNode extends Node {
 	 */
 	@Override
 	public String toString() {
-		return "RoadNode [latitude=" + mLatitude + ", longitude=" + mLongitude + "]";
+		return mId + "";
 	}
 }

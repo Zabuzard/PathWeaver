@@ -17,9 +17,15 @@ import java.util.Set;
  */
 public class PathNetwork {
 	/**
+	 * Message for the exception thrown when the given nodes where not added to
+	 * the network previously though needed.
+	 */
+	private static final String EXCEPTION_NODE_NOT_ADDED = "The given nodes must already be added to the network before using this operation.";
+	/**
 	 * The current amount of edges the network has.
 	 */
 	private int mAmountOfEdges;
+
 	/**
 	 * The current amount of nodes the network has.
 	 */
@@ -66,6 +72,9 @@ public class PathNetwork {
 	 *            ADirectedEdge(Node, int)}.
 	 */
 	public void addEdge(final Node source, final Node destination, final int cost) {
+		if (!containsNode(source) || !containsNode(destination)) {
+			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
+		}
 		OutgoingEdge outgoingEdge = new OutgoingEdge(destination, cost);
 		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {

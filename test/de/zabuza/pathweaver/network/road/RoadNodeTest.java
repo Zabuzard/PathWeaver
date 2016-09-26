@@ -23,23 +23,43 @@ public final class RoadNodeTest {
 	 */
 	@Test
 	public void testEqualsObject() {
+		int id = 0;
 		int latitude = 10;
 		int longitude = 20;
 		int differentLatitude = -10;
 		int differentLongitude = 14;
+		int differentId = 1;
 
-		RoadNode node = new RoadNode(latitude, longitude);
-		RoadNode differentLatNode = new RoadNode(differentLatitude, longitude);
-		RoadNode differentLongNode = new RoadNode(latitude, differentLongitude);
-		RoadNode totallyDifferentNode = new RoadNode(differentLatitude, differentLongitude);
+		RoadNode node = new RoadNode(id, latitude, longitude);
+		RoadNode differentLatNode = new RoadNode(id, differentLatitude, longitude);
+		RoadNode differentLongNode = new RoadNode(id, latitude, differentLongitude);
+		RoadNode totallyDifferentNode = new RoadNode(differentId, differentLatitude, differentLongitude);
 
-		RoadNode sameNode = new RoadNode(latitude, longitude);
+		RoadNode sameNode = new RoadNode(id, latitude, longitude);
+		RoadNode sameIdNode = new RoadNode(id, differentLatitude, differentLongitude);
 
 		Assert.assertEquals(node, node);
 		Assert.assertEquals(sameNode, node);
-		Assert.assertNotEquals(differentLatNode, node);
-		Assert.assertNotEquals(differentLongNode, node);
+		Assert.assertEquals(sameIdNode, node);
+		Assert.assertEquals(differentLatNode, node);
+		Assert.assertEquals(differentLongNode, node);
 		Assert.assertNotEquals(totallyDifferentNode, node);
+	}
+
+	/**
+	 * Test method for {@link RoadNode#getId()}.
+	 */
+	@Test
+	public void testGetId() {
+		int id = 0;
+		int latitude = 10;
+		int longitude = 20;
+		int differentId = 2;
+		RoadNode node = new RoadNode(id, latitude, longitude);
+		RoadNode anotherNode = new RoadNode(differentId, latitude, longitude);
+
+		Assert.assertEquals(id, node.getId());
+		Assert.assertEquals(differentId, anotherNode.getId());
 	}
 
 	/**
@@ -47,11 +67,12 @@ public final class RoadNodeTest {
 	 */
 	@Test
 	public void testGetLatitude() {
+		int id = 0;
 		int latitude = 10;
 		int longitude = 20;
 		int differentLatitude = -10;
-		RoadNode node = new RoadNode(latitude, longitude);
-		RoadNode anotherNode = new RoadNode(differentLatitude, longitude);
+		RoadNode node = new RoadNode(id, latitude, longitude);
+		RoadNode anotherNode = new RoadNode(id, differentLatitude, longitude);
 
 		Assert.assertEquals(latitude, node.getLatitude(), 0);
 		Assert.assertEquals(differentLatitude, anotherNode.getLatitude(), 0);
@@ -60,8 +81,8 @@ public final class RoadNodeTest {
 		int exceedingMinLatitude = -100;
 		int exceedingMaxLatitude = 100;
 		exception.expect(IllegalArgumentException.class);
-		new RoadNode(exceedingMinLatitude, longitude);
-		new RoadNode(exceedingMaxLatitude, longitude);
+		new RoadNode(id, exceedingMinLatitude, longitude);
+		new RoadNode(id, exceedingMaxLatitude, longitude);
 	}
 
 	/**
@@ -69,11 +90,12 @@ public final class RoadNodeTest {
 	 */
 	@Test
 	public void testGetLongitude() {
+		int id = 0;
 		int latitude = 10;
 		int longitude = 20;
 		int differentLongitude = -10;
-		RoadNode node = new RoadNode(latitude, longitude);
-		RoadNode anotherNode = new RoadNode(latitude, differentLongitude);
+		RoadNode node = new RoadNode(id, latitude, longitude);
+		RoadNode anotherNode = new RoadNode(id, latitude, differentLongitude);
 
 		Assert.assertEquals(longitude, node.getLongitude(), 0);
 		Assert.assertEquals(differentLongitude, anotherNode.getLongitude(), 0);
@@ -82,8 +104,8 @@ public final class RoadNodeTest {
 		int exceedingMinLongitude = -190;
 		int exceedingMaxLongitude = 190;
 		exception.expect(IllegalArgumentException.class);
-		new RoadNode(latitude, exceedingMinLongitude);
-		new RoadNode(latitude, exceedingMaxLongitude);
+		new RoadNode(id, latitude, exceedingMinLongitude);
+		new RoadNode(id, latitude, exceedingMaxLongitude);
 	}
 
 	/**
@@ -91,22 +113,26 @@ public final class RoadNodeTest {
 	 */
 	@Test
 	public void testHashCode() {
+		int id = 0;
 		int latitude = 10;
 		int longitude = 20;
 		int differentLatitude = -10;
 		int differentLongitude = 14;
+		int differentId = 1;
 
-		RoadNode node = new RoadNode(latitude, longitude);
-		RoadNode differentLatNode = new RoadNode(differentLatitude, longitude);
-		RoadNode differentLongNode = new RoadNode(latitude, differentLongitude);
-		RoadNode totallyDifferentNode = new RoadNode(differentLatitude, differentLongitude);
+		RoadNode node = new RoadNode(id, latitude, longitude);
+		RoadNode differentLatNode = new RoadNode(id, differentLatitude, longitude);
+		RoadNode differentLongNode = new RoadNode(id, latitude, differentLongitude);
+		RoadNode totallyDifferentNode = new RoadNode(differentId, differentLatitude, differentLongitude);
 
-		RoadNode sameNode = new RoadNode(latitude, longitude);
+		RoadNode sameNode = new RoadNode(id, latitude, longitude);
+		RoadNode sameIdNode = new RoadNode(id, differentLatitude, differentLongitude);
 
 		Assert.assertEquals(node.hashCode(), node.hashCode());
 		Assert.assertEquals(sameNode.hashCode(), node.hashCode());
-		Assert.assertNotEquals(differentLatNode.hashCode(), node.hashCode());
-		Assert.assertNotEquals(differentLongNode.hashCode(), node.hashCode());
+		Assert.assertEquals(sameIdNode.hashCode(), node.hashCode());
+		Assert.assertEquals(differentLatNode.hashCode(), node.hashCode());
+		Assert.assertEquals(differentLongNode.hashCode(), node.hashCode());
 		Assert.assertNotEquals(totallyDifferentNode.hashCode(), node.hashCode());
 	}
 
@@ -115,17 +141,30 @@ public final class RoadNodeTest {
 	 */
 	@Test
 	public void testRoadNode() {
+		int id = 0;
 		int latitude = 10;
 		int longitude = 20;
-		RoadNode node = new RoadNode(latitude, longitude);
+		RoadNode node = new RoadNode(id, latitude, longitude);
 		Assert.assertEquals(latitude, node.getLatitude(), 0);
 		Assert.assertEquals(longitude, node.getLongitude(), 0);
 
 		int anotherLatitude = -10;
 		int anotherLongitude = 14;
-		RoadNode anotherNode = new RoadNode(anotherLatitude, anotherLongitude);
+		int anotherId = 1;
+		RoadNode anotherNode = new RoadNode(anotherId, anotherLatitude, anotherLongitude);
 		Assert.assertEquals(anotherLatitude, anotherNode.getLatitude(), 0);
 		Assert.assertEquals(anotherLongitude, anotherNode.getLongitude(), 0);
 	}
 
+	/**
+	 * Test method for {@link RoadNode#toString()}.
+	 */
+	@Test
+	public void testToString() {
+		RoadNode node = new RoadNode(1, 10, 20);
+		RoadNode anotherNode = new RoadNode(3, -14, 75);
+
+		Assert.assertEquals("1", node.toString());
+		Assert.assertEquals("3", anotherNode.toString());
+	}
 }
