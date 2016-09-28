@@ -4,78 +4,78 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test for {@link IdNode}.
+ * Test for {@link Node}.
  * 
  * @author Zabuza
  *
  */
-public final class IdNodeTest {
+public final class NodeTest {
 
 	/**
-	 * Test method for {@link IdNode#equals(Object)}.
+	 * Test method for {@link Node#equals(Object)}.
 	 */
 	@Test
 	public void testEqualsObject() {
 		int id = 0;
 		int anotherId = 1;
-		IdNode node = new IdNode(id);
-		IdNode anotherNode = new IdNode(anotherId);
+		Node node = new Node(id);
+		Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node, node);
 		Assert.assertNotEquals(anotherNode, node);
 	}
 
 	/**
-	 * Test method for {@link IdNode#getId()}.
+	 * Test method for {@link Node#getId()}.
 	 */
 	@Test
 	public void testGetId() {
 		int id = 0;
 		int anotherId = 1;
-		IdNode node = new IdNode(id);
-		IdNode anotherNode = new IdNode(anotherId);
+		Node node = new Node(id);
+		Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(id, node.getId());
 		Assert.assertEquals(anotherId, anotherNode.getId());
 	}
 
 	/**
-	 * Test method for {@link IdNode#hashCode()}.
+	 * Test method for {@link Node#hashCode()}.
 	 */
 	@Test
 	public void testHashCode() {
 		int id = 0;
 		int anotherId = 1;
-		IdNode node = new IdNode(id);
-		IdNode anotherNode = new IdNode(anotherId);
+		Node node = new Node(id);
+		Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node.hashCode(), node.hashCode());
 		Assert.assertNotEquals(anotherNode.hashCode(), node.hashCode());
 	}
 
 	/**
-	 * Test method for {@link IdNode#IdNode(int)}.
+	 * Test method for {@link Node#Node(int)}.
 	 */
 	@Test
-	public void testIdNode() {
+	public void testNode() {
 		int id = 0;
 		int anotherId = 1;
-		IdNode node = new IdNode(id);
-		IdNode anotherNode = new IdNode(anotherId);
+		Node node = new Node(id);
+		Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node, node);
 		Assert.assertNotEquals(anotherNode, node);
 	}
 
 	/**
-	 * Test method for {@link IdNode#toString()}.
+	 * Test method for {@link Node#toString()}.
 	 */
 	@Test
 	public void testToString() {
 		int id = 0;
 		int anotherId = 1;
-		IdNode node = new IdNode(id);
-		IdNode anotherNode = new IdNode(anotherId);
+		Node node = new Node(id);
+		Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(id + "", node.toString());
 		Assert.assertEquals(anotherId + "", anotherNode.toString());

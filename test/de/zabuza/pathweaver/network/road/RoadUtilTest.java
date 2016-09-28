@@ -30,6 +30,15 @@ public final class RoadUtilTest {
 	}
 
 	/**
+	 * Test method for {@link RoadUtil#getRoadTypeFromOsm(String)}.
+	 */
+	@Test
+	public void testGetRoadTypeFromOsm() {
+		Assert.assertEquals(ERoadType.MOTORWAY, RoadUtil.getRoadTypeFromOsm("motorway"));
+		Assert.assertEquals(ERoadType.PRIMARY_LINK, RoadUtil.getRoadTypeFromOsm("primary_link"));
+	}
+
+	/**
 	 * Test method for {@link RoadUtil#getTravelTime(float, float)}.
 	 */
 	@Test

@@ -16,8 +16,8 @@ public final class IncomingEdgeTest {
 	 */
 	@Test
 	public void testGetSource() {
-		Node node = new Node();
-		Node differentNode = new Node();
+		Node node = new Node(0);
+		Node differentNode = new Node(1);
 		int cost = 5;
 		IncomingEdge edge = new IncomingEdge(node, cost);
 		IncomingEdge anotherEdge = new IncomingEdge(differentNode, cost);
@@ -31,13 +31,13 @@ public final class IncomingEdgeTest {
 	 */
 	@Test
 	public void testIncomingEdge() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
 		IncomingEdge edge = new IncomingEdge(node, cost);
 		Assert.assertEquals(node, edge.getSource());
 		Assert.assertEquals(cost, edge.getCost());
 
-		Node anotherNode = new Node();
+		Node anotherNode = new Node(1);
 		int anotherCost = 2;
 		IncomingEdge anotherEdge = new IncomingEdge(anotherNode, anotherCost);
 		Assert.assertEquals(anotherNode, anotherEdge.getSource());

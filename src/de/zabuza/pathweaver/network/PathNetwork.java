@@ -32,9 +32,9 @@ public class PathNetwork {
 	private int mAmountOfNodes;
 
 	/**
-	 * The set of nodes the network currently has.
+	 * The set of nodes the network currently has, accessible by their IDs.
 	 */
-	private final HashSet<Node> mNodes;
+	private final HashMap<Integer, Node> mIdToNodes;
 
 	/**
 	 * Maps nodes to their incoming edges.
@@ -52,7 +52,7 @@ public class PathNetwork {
 	public PathNetwork() {
 		mAmountOfNodes = 0;
 		mAmountOfEdges = 0;
-		mNodes = new HashSet<>();
+		mIdToNodes = new HashMap<>();
 		mNodeToOutgoingEdges = new HashMap<>();
 		mNodeToIncomingEdges = new HashMap<>();
 	}
@@ -72,7 +72,7 @@ public class PathNetwork {
 	 *            ADirectedEdge(Node, int)}.
 	 */
 	public void addEdge(final Node source, final Node destination, final int cost) {
-		if (!containsNode(source) || !containsNode(destination)) {
+		if (!containsNodeId(source.getId()) || !containsNodeId(destination.getId())) {
 			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
 		}
 		OutgoingEdge outgoingEdge = new OutgoingEdge(destination, cost);
@@ -103,24 +103,26 @@ public class PathNetwork {
 	 *         contained. <tt>False</tt> otherwise.
 	 */
 	public boolean addNode(final Node node) {
-		boolean wasAdded = mNodes.add(node);
-		if (wasAdded) {
+		Node previousElement = mIdToNodes.get(node.getId());
+		boolean getsAdded = previousElement == null;
+		if (getsAdded) {
+			mIdToNodes.put(node.getId(), node);
 			mAmountOfNodes++;
-			assert mAmountOfNodes == mNodes.size();
+			assert mAmountOfNodes == mIdToNodes.size();
 		}
-		return wasAdded;
+		return getsAdded;
 	}
 
 	/**
 	 * Returns whether the network contains the given node or not.
 	 * 
-	 * @param node
-	 *            The node to check
+	 * @param nodeId
+	 *            The node ID to check
 	 * @return <tt>True</tt> if the node is contained in the network,
 	 *         <tt>false</tt> otherwise
 	 */
-	public boolean containsNode(final Node node) {
-		return mNodes.contains(node);
+	public boolean containsNodeId(final int nodeId) {
+		return mIdToNodes.containsKey(nodeId);
 	}
 
 	/**
@@ -157,6 +159,18 @@ public class PathNetwork {
 		} else {
 			return Collections.unmodifiableSet(incomingEdges);
 		}
+	}
+
+	/**
+	 * Returns the node with the given id, if it is contained in the network.
+	 * 
+	 * @param id
+	 *            The id of the node to get
+	 * @return The node with the given id, if it is contained in the network or
+	 *         <tt>null</tt> if that is not the case.
+	 */
+	public Node getNodeById(final int id) {
+		return mIdToNodes.get(id);
 	}
 
 	/**

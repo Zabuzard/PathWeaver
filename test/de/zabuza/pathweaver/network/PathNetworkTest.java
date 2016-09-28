@@ -21,8 +21,8 @@ public final class PathNetworkTest {
 	@Test
 	public void testAddEdge() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		network.addNode(node);
 		network.addNode(anotherNode);
 
@@ -43,33 +43,53 @@ public final class PathNetworkTest {
 	@Test
 	public void testAddNode() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 
-		Assert.assertFalse(network.containsNode(node));
+		Assert.assertFalse(network.containsNodeId(0));
 		network.addNode(node);
-		Assert.assertTrue(network.containsNode(node));
+		Assert.assertTrue(network.containsNodeId(0));
 		network.addNode(anotherNode);
-		Assert.assertTrue(network.containsNode(anotherNode));
+		Assert.assertTrue(network.containsNodeId(1));
 
 		network.addNode(node);
-		Assert.assertTrue(network.containsNode(node));
+		Assert.assertTrue(network.containsNodeId(0));
 	}
 
 	/**
-	 * Test method for {@link PathNetwork#containsNode(Node)}.
+	 * Test method for {@link PathNetwork#containsNodeId(Node)}.
 	 */
 	@Test
 	public void testContainsNode() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 
-		Assert.assertFalse(network.containsNode(node));
+		Assert.assertFalse(network.containsNodeId(0));
 		network.addNode(node);
-		Assert.assertTrue(network.containsNode(node));
+		Assert.assertTrue(network.containsNodeId(0));
 		network.addNode(anotherNode);
-		Assert.assertTrue(network.containsNode(anotherNode));
+		Assert.assertTrue(network.containsNodeId(1));
+	}
+
+	/**
+	 * Test method for {@link PathNetwork#containsNodeId(int)}.
+	 */
+	@Test
+	public void testContainsNodeId() {
+		PathNetwork network = new PathNetwork();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
+
+		Assert.assertFalse(network.containsNodeId(0));
+		network.addNode(node);
+		Assert.assertTrue(network.containsNodeId(0));
+		network.addNode(anotherNode);
+		Assert.assertTrue(network.containsNodeId(1));
+
+		Assert.assertTrue(network.containsNodeId(0));
+		network.addNode(anotherNode);
+		Assert.assertTrue(network.containsNodeId(1));
 	}
 
 	/**
@@ -79,8 +99,8 @@ public final class PathNetworkTest {
 	public void testGetAmountOfEdges() {
 		PathNetwork network = new PathNetwork();
 		Assert.assertEquals(0, network.getAmountOfEdges());
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		network.addNode(node);
 		network.addNode(anotherNode);
 
@@ -102,8 +122,8 @@ public final class PathNetworkTest {
 	public void testGetAmountOfNodes() {
 		PathNetwork network = new PathNetwork();
 		Assert.assertEquals(0, network.getAmountOfNodes());
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		network.addNode(node);
 		Assert.assertEquals(1, network.getAmountOfNodes());
 		network.addNode(anotherNode);
@@ -119,8 +139,8 @@ public final class PathNetworkTest {
 	@Test
 	public void testGetIncomingEdges() {
 		PathNetwork network = new PathNetwork();
-		Node source = new Node();
-		Node destination = new Node();
+		Node source = new Node(0);
+		Node destination = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
 		Set<OutgoingEdge> emptySet = Collections.emptySet();
@@ -157,13 +177,33 @@ public final class PathNetworkTest {
 	}
 
 	/**
+	 * Test method for {@link PathNetwork#getNodeById(int)}.
+	 */
+	@Test
+	public void testGetNodeById() {
+		PathNetwork network = new PathNetwork();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
+
+		Assert.assertNull(network.getNodeById(0));
+		network.addNode(node);
+		Assert.assertEquals(node, network.getNodeById(0));
+		network.addNode(anotherNode);
+		Assert.assertEquals(anotherNode, network.getNodeById(1));
+
+		Assert.assertTrue(network.containsNodeId(0));
+		network.addNode(anotherNode);
+		Assert.assertTrue(network.containsNodeId(1));
+	}
+
+	/**
 	 * Test method for {@link PathNetwork#getOutgoingEdges(Node)}.
 	 */
 	@Test
 	public void testGetOutgoingEdges() {
 		PathNetwork network = new PathNetwork();
-		Node source = new Node();
-		Node destination = new Node();
+		Node source = new Node(0);
+		Node destination = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
 		Set<OutgoingEdge> emptySet = Collections.emptySet();
@@ -205,8 +245,8 @@ public final class PathNetworkTest {
 	@Test
 	public void testHasIncomingEdge() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
 
@@ -231,8 +271,8 @@ public final class PathNetworkTest {
 	@Test
 	public void testHasOutgoingEdge() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node();
-		Node anotherNode = new Node();
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
 
@@ -276,8 +316,8 @@ public final class PathNetworkTest {
 	public void testToString() {
 		PathNetwork network = new PathNetwork();
 		Assert.assertEquals("Network[#nodes=0,#edges=0,edges={}]", network.toString());
-		IdNode node = new IdNode(0);
-		IdNode anotherNode = new IdNode(1);
+		Node node = new Node(0);
+		Node anotherNode = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
 
@@ -292,5 +332,4 @@ public final class PathNetworkTest {
 		Assert.assertTrue(networkAsText.startsWith("Network[#nodes=2,#edges=3,edges={"));
 		Assert.assertTrue(networkAsText.endsWith("}]"));
 	}
-
 }

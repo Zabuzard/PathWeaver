@@ -69,6 +69,7 @@ public final class RoadUtil {
 	 * The average speed on a tertiary road in km/h.
 	 */
 	private static final float TERTIARY_SPEED = 50;
+
 	/**
 	 * The average speed on a trunk link in km/h.
 	 */
@@ -83,7 +84,6 @@ public final class RoadUtil {
 	 * The average speed on an unclassified road in km/h.
 	 */
 	private static final float UNCLASSIFIED_SPEED = 40;
-
 	/**
 	 * The average speed on an unsurfaced road in km/h.
 	 */
@@ -129,8 +129,10 @@ public final class RoadUtil {
 	 * @param type
 	 *            The road type to get the average speed for
 	 * @return The average speed for the given road type in km/h
+	 * @throws IllegalArgumentException
+	 *             If the given road type is not supported by this operation.
 	 */
-	public static float getAverageSpeedOfRoadType(final ERoadType type) {
+	public static float getAverageSpeedOfRoadType(final ERoadType type) throws IllegalArgumentException {
 		if (type == ERoadType.MOTORWAY) {
 			return MOTORWAY_SPEED;
 		} else if (type == ERoadType.TRUNK) {
@@ -164,6 +166,21 @@ public final class RoadUtil {
 		} else {
 			throw new IllegalArgumentException(ILLEGAL_ROAD_TYPE);
 		}
+	}
+
+	/**
+	 * Gets the road type corresponding to the type of the OSM-format.
+	 * 
+	 * @param osmRoadType
+	 *            The road type from the OSM-format
+	 * @return The road type corresponding to the type of the OSM-format
+	 * @throws IllegalArgumentException
+	 *             If the given road type is not supported by this operation.
+	 */
+	public static ERoadType getRoadTypeFromOsm(final String osmRoadType) throws IllegalArgumentException {
+		String upperCase = osmRoadType.toUpperCase();
+		ERoadType type = ERoadType.valueOf(upperCase);
+		return type;
 	}
 
 	/**

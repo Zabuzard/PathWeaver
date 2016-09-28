@@ -23,13 +23,13 @@ public final class ADirectedEdgeTest {
 	 */
 	@Test
 	public void testADirectedEdge() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
 		ADirectedEdge edge = new IncomingEdge(node, cost);
 		Assert.assertEquals(node, edge.getTarget());
 		Assert.assertEquals(cost, edge.getCost());
 
-		Node anotherNode = new Node();
+		Node anotherNode = new Node(1);
 		int anotherCost = 2;
 		ADirectedEdge anotherEdge = new IncomingEdge(anotherNode, anotherCost);
 		Assert.assertEquals(anotherNode, anotherEdge.getTarget());
@@ -41,9 +41,9 @@ public final class ADirectedEdgeTest {
 	 */
 	@Test
 	public void testEqualsObject() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
-		Node differentNode = new Node();
+		Node differentNode = new Node(1);
 		int differentCost = 2;
 
 		ADirectedEdge edge = new IncomingEdge(node, cost);
@@ -65,7 +65,7 @@ public final class ADirectedEdgeTest {
 	 */
 	@Test
 	public void testGetCost() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
 		int differentCost = 2;
 		ADirectedEdge edge = new IncomingEdge(node, cost);
@@ -87,8 +87,8 @@ public final class ADirectedEdgeTest {
 	 */
 	@Test
 	public void testGetTarget() {
-		Node node = new Node();
-		Node differentNode = new Node();
+		Node node = new Node(0);
+		Node differentNode = new Node(1);
 		int cost = 5;
 		ADirectedEdge edge = new IncomingEdge(node, cost);
 		ADirectedEdge anotherEdge = new IncomingEdge(differentNode, cost);
@@ -102,9 +102,9 @@ public final class ADirectedEdgeTest {
 	 */
 	@Test
 	public void testHashCode() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
-		Node differentNode = new Node();
+		Node differentNode = new Node(1);
 		int differentCost = 2;
 
 		ADirectedEdge edge = new IncomingEdge(node, cost);

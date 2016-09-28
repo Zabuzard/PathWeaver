@@ -16,8 +16,8 @@ public final class OutgoingEdgeTest {
 	 */
 	@Test
 	public void testGetDestination() {
-		Node node = new Node();
-		Node differentNode = new Node();
+		Node node = new Node(0);
+		Node differentNode = new Node(1);
 		int cost = 5;
 		OutgoingEdge edge = new OutgoingEdge(node, cost);
 		OutgoingEdge anotherEdge = new OutgoingEdge(differentNode, cost);
@@ -31,13 +31,13 @@ public final class OutgoingEdgeTest {
 	 */
 	@Test
 	public void testOutgoingEdge() {
-		Node node = new Node();
+		Node node = new Node(0);
 		int cost = 5;
 		OutgoingEdge edge = new OutgoingEdge(node, cost);
 		Assert.assertEquals(node, edge.getDestination());
 		Assert.assertEquals(cost, edge.getCost());
 
-		Node anotherNode = new Node();
+		Node anotherNode = new Node(1);
 		int anotherCost = 2;
 		OutgoingEdge anotherEdge = new OutgoingEdge(anotherNode, anotherCost);
 		Assert.assertEquals(anotherNode, anotherEdge.getDestination());
