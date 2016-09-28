@@ -15,7 +15,7 @@ import java.util.Set;
  * @author Zabuza
  *
  */
-public class PathNetwork {
+public class PathNetwork implements IPathNetwork {
 	/**
 	 * Message for the exception thrown when the given nodes where not added to
 	 * the network previously though needed.
@@ -57,21 +57,15 @@ public class PathNetwork {
 		mNodeToIncomingEdges = new HashMap<>();
 	}
 
-	/**
-	 * Adds an directed edge with a given source and destination node. Also a
-	 * cost for using the edge must be given. Be aware that this method allows
-	 * adding an edge multiple times.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param source
-	 *            The source of the directed edge
-	 * @param destination
-	 *            The destination of the directed edge
-	 * @param cost
-	 *            The cost of the edge which must be inside the limit specified
-	 *            by {@link ADirectedEdge#ADirectedEdge(Node, int)
-	 *            ADirectedEdge(Node, int)}.
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#addEdge(de.zabuza.pathweaver.
+	 * network.Node, de.zabuza.pathweaver.network.Node, float)
 	 */
-	public void addEdge(final Node source, final Node destination, final int cost) {
+	@Override
+	public void addEdge(final Node source, final Node destination, final float cost) {
 		if (!containsNodeId(source.getId()) || !containsNodeId(destination.getId())) {
 			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
 		}
@@ -94,14 +88,14 @@ public class PathNetwork {
 		mAmountOfEdges++;
 	}
 
-	/**
-	 * Adds the given node to the graph if not already contained.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param node
-	 *            The node to add
-	 * @return <tt>True</tt> if the node was added, i.e. it was not already
-	 *         contained. <tt>False</tt> otherwise.
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#addNode(de.zabuza.pathweaver.
+	 * network.Node)
 	 */
+	@Override
 	public boolean addNode(final Node node) {
 		Node previousElement = mIdToNodes.get(node.getId());
 		boolean getsAdded = previousElement == null;
@@ -113,45 +107,44 @@ public class PathNetwork {
 		return getsAdded;
 	}
 
-	/**
-	 * Returns whether the network contains the given node or not.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param nodeId
-	 *            The node ID to check
-	 * @return <tt>True</tt> if the node is contained in the network,
-	 *         <tt>false</tt> otherwise
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#containsNodeId(int)
 	 */
+	@Override
 	public boolean containsNodeId(final int nodeId) {
 		return mIdToNodes.containsKey(nodeId);
 	}
 
-	/**
-	 * Gets the amount of edges the network currently has.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return The amount of edges the network currently has.
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#getAmountOfEdges()
 	 */
+	@Override
 	public int getAmountOfEdges() {
 		return mAmountOfEdges;
 	}
 
-	/**
-	 * Gets the amount of nodes the network currently has.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return The amount of nodes the network currently has.
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#getAmountOfNodes()
 	 */
+	@Override
 	public int getAmountOfNodes() {
 		return mAmountOfNodes;
 	}
 
-	/**
-	 * Gets an unmodifiable set of all incoming edges the given destination has
-	 * or an <tt>empty set</tt> if there are no.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param destination
-	 *            The destination to get its incoming edges from
-	 * @return An unmodifiable set of all incoming edges the given destination
-	 *         has or an <tt>empty set</tt> if there are no
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#getIncomingEdges(de.zabuza.
+	 * pathweaver.network.Node)
 	 */
+	@Override
 	public Set<IncomingEdge> getIncomingEdges(final Node destination) {
 		HashSet<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
@@ -161,27 +154,24 @@ public class PathNetwork {
 		}
 	}
 
-	/**
-	 * Returns the node with the given id, if it is contained in the network.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param id
-	 *            The id of the node to get
-	 * @return The node with the given id, if it is contained in the network or
-	 *         <tt>null</tt> if that is not the case.
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#getNodeById(int)
 	 */
+	@Override
 	public Node getNodeById(final int id) {
 		return mIdToNodes.get(id);
 	}
 
-	/**
-	 * Gets an unmodifiable set of all outgoing edges the given source has or an
-	 * <tt>empty set</tt> if there are no.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param source
-	 *            The source to get its outgoing edges from
-	 * @return An unmodifiable set of all outgoing edges the given source has or
-	 *         an <tt>empty set</tt> if there are no
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#getOutgoingEdges(de.zabuza.
+	 * pathweaver.network.Node)
 	 */
+	@Override
 	public Set<OutgoingEdge> getOutgoingEdges(final Node source) {
 		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
@@ -191,16 +181,13 @@ public class PathNetwork {
 		}
 	}
 
-	/**
-	 * Returns whether the node has the given incoming edge or not.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param destination
-	 *            The destination to check
-	 * @param incomingEdge
-	 *            The incoming edge to check
-	 * @return <tt>True</tt> if the node has the incoming edge, <tt>false</tt>
-	 *         otherwise
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#hasIncomingEdge(de.zabuza.
+	 * pathweaver.network.Node, de.zabuza.pathweaver.network.IncomingEdge)
 	 */
+	@Override
 	public boolean hasIncomingEdge(final Node destination, final IncomingEdge incomingEdge) {
 		HashSet<IncomingEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
@@ -210,16 +197,13 @@ public class PathNetwork {
 		}
 	}
 
-	/**
-	 * Returns whether the node has the given outgoing edge or not.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param source
-	 *            The source to check
-	 * @param outgoingEdge
-	 *            The outgoing edge to check
-	 * @return <tt>True</tt> if the node has the outgoing edge, <tt>false</tt>
-	 *         otherwise
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#hasOutgoingEdge(de.zabuza.
+	 * pathweaver.network.Node, de.zabuza.pathweaver.network.OutgoingEdge)
 	 */
+	@Override
 	public boolean hasOutgoingEdge(final Node source, final OutgoingEdge outgoingEdge) {
 		HashSet<OutgoingEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
@@ -229,10 +213,12 @@ public class PathNetwork {
 		}
 	}
 
-	/**
-	 * Reduces the graph to its largest strongly connected component. Inside
-	 * such a component every node is reachable from all others.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#reduceToLargestScc()
 	 */
+	@Override
 	public void reduceToLargestScc() {
 		// TODO Implement method
 	}
@@ -253,7 +239,7 @@ public class PathNetwork {
 			Node source = entry.getKey();
 			for (OutgoingEdge outgoingEdge : entry.getValue()) {
 				Node destination = outgoingEdge.getDestination();
-				int cost = outgoingEdge.getCost();
+				float cost = outgoingEdge.getCost();
 				builder.append("(" + source + "-" + cost + "->" + destination + "),");
 			}
 		}

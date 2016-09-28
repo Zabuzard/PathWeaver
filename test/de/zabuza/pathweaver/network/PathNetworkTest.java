@@ -155,14 +155,14 @@ public final class PathNetworkTest {
 		Assert.assertEquals(1, firstEdgeSet.size());
 		IncomingEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(source, edge.getSource());
-		Assert.assertEquals(cost, edge.getCost());
+		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
 		Set<IncomingEdge> secondEdgeSet = network.getIncomingEdges(source);
 		Assert.assertEquals(1, secondEdgeSet.size());
 		IncomingEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(destination, secondEdge.getSource());
-		Assert.assertEquals(anotherCost, secondEdge.getCost());
+		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
 		Set<IncomingEdge> thirdEdgeSet = network.getIncomingEdges(destination);
@@ -170,10 +170,10 @@ public final class PathNetworkTest {
 		Iterator<IncomingEdge> iter = thirdEdgeSet.iterator();
 		IncomingEdge thirdEdge = iter.next();
 		Assert.assertEquals(source, thirdEdge.getSource());
-		Assert.assertEquals(cost, thirdEdge.getCost());
+		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
 		IncomingEdge fourthEdge = iter.next();
 		Assert.assertEquals(source, fourthEdge.getSource());
-		Assert.assertEquals(anotherCost, fourthEdge.getCost());
+		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
 
 	/**
@@ -218,14 +218,14 @@ public final class PathNetworkTest {
 		Assert.assertEquals(1, firstEdgeSet.size());
 		OutgoingEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(destination, edge.getDestination());
-		Assert.assertEquals(cost, edge.getCost());
+		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
 		Set<OutgoingEdge> secondEdgeSet = network.getOutgoingEdges(destination);
 		Assert.assertEquals(1, secondEdgeSet.size());
 		OutgoingEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(source, secondEdge.getDestination());
-		Assert.assertEquals(anotherCost, secondEdge.getCost());
+		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
 		Set<OutgoingEdge> thirdEdgeSet = network.getOutgoingEdges(source);
@@ -233,10 +233,10 @@ public final class PathNetworkTest {
 		Iterator<OutgoingEdge> iter = thirdEdgeSet.iterator();
 		OutgoingEdge thirdEdge = iter.next();
 		Assert.assertEquals(destination, thirdEdge.getDestination());
-		Assert.assertEquals(cost, thirdEdge.getCost());
+		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
 		OutgoingEdge fourthEdge = iter.next();
 		Assert.assertEquals(destination, fourthEdge.getDestination());
-		Assert.assertEquals(anotherCost, fourthEdge.getCost());
+		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
 
 	/**

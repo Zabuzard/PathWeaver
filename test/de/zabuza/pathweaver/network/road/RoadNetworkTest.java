@@ -71,13 +71,13 @@ public class RoadNetworkTest {
 		Assert.assertEquals(1, firstEdges.size());
 		OutgoingEdge firstEdge = firstEdges.iterator().next();
 		Assert.assertEquals(destination, firstEdge.getDestination());
-		Assert.assertEquals(169, firstEdge.getCost());
+		Assert.assertEquals(169, firstEdge.getCost(), 0);
 
 		Set<OutgoingEdge> secondEdges = network.getOutgoingEdges(destination);
 		Assert.assertEquals(1, secondEdges.size());
 		OutgoingEdge secondEdge = secondEdges.iterator().next();
 		Assert.assertEquals(source, secondEdge.getDestination());
-		Assert.assertEquals(266, secondEdge.getCost());
+		Assert.assertEquals(266, secondEdge.getCost(), 0);
 	}
 
 	/**

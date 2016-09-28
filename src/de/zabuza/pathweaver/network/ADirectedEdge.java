@@ -16,7 +16,7 @@ public abstract class ADirectedEdge {
 	/**
 	 * The cost of this edge which must be greater than <tt>zero</tt>.
 	 */
-	private final int mCost;
+	private final float mCost;
 
 	/**
 	 * The target of this directed edge. This can either be the head or tail
@@ -35,7 +35,7 @@ public abstract class ADirectedEdge {
 	 * @throws IllegalArgumentException
 	 *             When cost is not greater than <tt>zero</tt>.
 	 */
-	public ADirectedEdge(final Node target, final int cost) throws IllegalArgumentException {
+	public ADirectedEdge(final Node target, final float cost) throws IllegalArgumentException {
 		if (cost <= 0) {
 			throw new IllegalArgumentException(EXCEPTION_COST_ILLEGAL + cost);
 		}
@@ -48,7 +48,7 @@ public abstract class ADirectedEdge {
 	 * 
 	 * @return The cost of this edge
 	 */
-	public int getCost() {
+	public float getCost() {
 		return mCost;
 	}
 

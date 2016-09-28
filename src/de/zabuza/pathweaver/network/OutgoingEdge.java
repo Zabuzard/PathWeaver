@@ -17,7 +17,7 @@ public final class OutgoingEdge extends ADirectedEdge {
 	 * @throws IllegalArgumentException
 	 *             When cost is not greater than <tt>zero</tt>.
 	 */
-	public OutgoingEdge(final Node destination, final int cost) throws IllegalArgumentException {
+	public OutgoingEdge(final Node destination, final float cost) throws IllegalArgumentException {
 		super(destination, cost);
 	}
 

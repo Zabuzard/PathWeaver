@@ -27,13 +27,13 @@ public final class ADirectedEdgeTest {
 		int cost = 5;
 		ADirectedEdge edge = new IncomingEdge(node, cost);
 		Assert.assertEquals(node, edge.getTarget());
-		Assert.assertEquals(cost, edge.getCost());
+		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		Node anotherNode = new Node(1);
 		int anotherCost = 2;
 		ADirectedEdge anotherEdge = new IncomingEdge(anotherNode, anotherCost);
 		Assert.assertEquals(anotherNode, anotherEdge.getTarget());
-		Assert.assertEquals(anotherCost, anotherEdge.getCost());
+		Assert.assertEquals(anotherCost, anotherEdge.getCost(), 0);
 	}
 
 	/**
@@ -71,8 +71,8 @@ public final class ADirectedEdgeTest {
 		ADirectedEdge edge = new IncomingEdge(node, cost);
 		ADirectedEdge anotherEdge = new IncomingEdge(node, differentCost);
 
-		Assert.assertEquals(cost, edge.getCost());
-		Assert.assertEquals(differentCost, anotherEdge.getCost());
+		Assert.assertEquals(cost, edge.getCost(), 0);
+		Assert.assertEquals(differentCost, anotherEdge.getCost(), 0);
 
 		// Test cost which are out of the bounds, i.e. not greater than zero
 		int zeroCost = 0;

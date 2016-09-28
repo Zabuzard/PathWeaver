@@ -242,7 +242,7 @@ public final class RoadNetwork extends PathNetwork {
 	 * {@link #addRoad(RoadNode, RoadNode)} instead.
 	 */
 	@Override
-	public void addEdge(final Node source, final Node destination, final int cost)
+	public void addEdge(final Node source, final Node destination, final float cost)
 			throws UnsupportedOperationException {
 		throw new UnsupportedOperationException(UNSUPPORTED_ADD_EDGE);
 	}
@@ -269,7 +269,8 @@ public final class RoadNetwork extends PathNetwork {
 
 		int amountOfRoadNodes = road.getRoadNodesAmount();
 		if (amountOfRoadNodes < 2) {
-			throw new IllegalStateException(ILLEGAL_AMOUNT_OF_ROAD_NODES);
+			System.err.println("Warning: " + ILLEGAL_AMOUNT_OF_ROAD_NODES);
+			return;
 		}
 
 		// Forward direction
@@ -314,8 +315,12 @@ public final class RoadNetwork extends PathNetwork {
 	 */
 	public void addRoad(final RoadNode source, final RoadNode destination, final ERoadType type) {
 		float distance = RoadUtil.distanceEquiRect(source, destination);
+		if (distance == 0.0f) {
+			System.err.println("Warning: The given road was not added because the distance was zero.");
+			return;
+		}
 		float speed = RoadUtil.getAverageSpeedOfRoadType(type);
-		int timeToTravel = RoadUtil.getTravelTime(distance, speed);
+		float timeToTravel = RoadUtil.getTravelTime(distance, speed);
 		super.addEdge(source, destination, timeToTravel);
 	}
 

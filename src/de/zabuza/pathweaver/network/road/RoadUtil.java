@@ -192,9 +192,9 @@ public final class RoadUtil {
 	 *            The speed to use in km/h
 	 * @return The time needed to travel the given distance with the given speed
 	 */
-	public static int getTravelTime(final float distance, final float speed) {
+	public static float getTravelTime(final float distance, final float speed) {
 		float speedInMs = kmhToMs(speed);
-		int travelTime = (int) Math.round(distance / speedInMs);
+		float travelTime = distance / speedInMs;
 		return travelTime;
 	}
 
