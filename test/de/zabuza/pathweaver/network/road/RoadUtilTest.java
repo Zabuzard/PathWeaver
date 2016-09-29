@@ -43,7 +43,7 @@ public final class RoadUtilTest {
 	 */
 	@Test
 	public void testGetTravelTime() {
-		Assert.assertEquals(1800, RoadUtil.getTravelTime(5000, 10), 0);
+		Assert.assertEquals(1800, RoadUtil.getTravelTime(5000, 10), 2);
 	}
 
 	/**
