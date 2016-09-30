@@ -1,5 +1,7 @@
 package de.zabuza.pathweaver.network;
 
+import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -55,13 +57,6 @@ public interface IPathNetwork {
 	public int getAmountOfEdges();
 
 	/**
-	 * Gets the amount of nodes the network currently has.
-	 * 
-	 * @return The amount of nodes the network currently has.
-	 */
-	public int getAmountOfNodes();
-
-	/**
 	 * Gets an unmodifiable set of all incoming edges the given destination has
 	 * or an <tt>empty set</tt> if there are no.
 	 * 
@@ -83,6 +78,13 @@ public interface IPathNetwork {
 	public Node getNodeById(final int id);
 
 	/**
+	 * Gets all nodes that belong to this network.
+	 * 
+	 * @return All nodes that belong to this network
+	 */
+	public Collection<Node> getNodes();
+
+	/**
 	 * Gets an unmodifiable set of all outgoing edges the given source has or an
 	 * <tt>empty set</tt> if there are no.
 	 * 
@@ -92,6 +94,13 @@ public interface IPathNetwork {
 	 *         an <tt>empty set</tt> if there are no
 	 */
 	public Set<DirectedWeightedEdge> getOutgoingEdges(final Node source);
+
+	/**
+	 * Gets the size of this network, i.e. the amount of nodes.
+	 * 
+	 * @return The size of this network, i.e. the amount of nodes
+	 */
+	public int getSize();
 
 	/**
 	 * Returns whether the node has the given incoming edge or not.
@@ -122,4 +131,15 @@ public interface IPathNetwork {
 	 * such a component every node is reachable from all others.
 	 */
 	public void reduceToLargestScc();
+
+	/**
+	 * Removes the given node and all its in- and outgoing edges from the
+	 * network.
+	 * 
+	 * @param node
+	 *            The node to remove
+	 * @throws NoSuchElementException
+	 *             If the node is not contained in the network
+	 */
+	public void removeNode(final Node node) throws NoSuchElementException;
 }

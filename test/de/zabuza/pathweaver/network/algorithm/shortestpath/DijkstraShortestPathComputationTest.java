@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm;
+package de.zabuza.pathweaver.network.algorithm.shortestpath;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +11,7 @@ import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.Path;
 import de.zabuza.pathweaver.network.PathNetwork;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.DijkstraShortestPathComputation;
 
 /**
  * Test for {@link DijkstraShortestPathComputation}.
@@ -18,7 +19,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * @author Zabuza
  *
  */
-public class DijkstraShortestPathComputationTest {
+public final class DijkstraShortestPathComputationTest {
 
 	/**
 	 * Test method for

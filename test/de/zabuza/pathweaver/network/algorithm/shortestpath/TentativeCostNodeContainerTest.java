@@ -1,10 +1,11 @@
-package de.zabuza.pathweaver.network.algorithm;
+package de.zabuza.pathweaver.network.algorithm.shortestpath;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.TentativeNodeContainer;
 
 /**
  * Test for {@link TentativeNodeContainer}.
@@ -12,7 +13,7 @@ import de.zabuza.pathweaver.network.Node;
  * @author Zabuza
  *
  */
-public class TentativeCostNodeContainerTest {
+public final class TentativeCostNodeContainerTest {
 
 	/**
 	 * Test method for

@@ -33,7 +33,7 @@ public final class RoadNetworkExample {
 		RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
 		long endTimestamp = System.currentTimeMillis();
 		float durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-		System.out.println("Nodes: " + network.getAmountOfNodes() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
 		System.out.println("Time needed: " + durationSeconds + " seconds");
 	}
 }

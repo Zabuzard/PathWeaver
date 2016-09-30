@@ -18,7 +18,7 @@ import de.zabuza.pathweaver.network.Node;
  * @author Zabuza
  *
  */
-public class RoadNetworkTest {
+public final class RoadNetworkTest {
 	/**
 	 * Rule for expecting exceptions.
 	 */
@@ -100,7 +100,7 @@ public class RoadNetworkTest {
 		firstRoad.setRoadType(ERoadType.PRIMARY);
 		firstRoad.setIsOneway(true);
 		network.addRoad(firstRoad);
-		Assert.assertEquals(3, network.getAmountOfNodes());
+		Assert.assertEquals(3, network.getSize());
 		Assert.assertEquals(2, network.getAmountOfEdges());
 		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(network.getNodeById(0)).iterator().next();
 		Assert.assertEquals(secondNode, firstEdge.getDestination());
@@ -111,7 +111,7 @@ public class RoadNetworkTest {
 		secondRoad.setRoadType(ERoadType.MOTORWAY);
 		secondRoad.setIsOneway(false);
 		network.addRoad(secondRoad);
-		Assert.assertEquals(3, network.getAmountOfNodes());
+		Assert.assertEquals(3, network.getSize());
 		Assert.assertEquals(4, network.getAmountOfEdges());
 	}
 
@@ -132,7 +132,7 @@ public class RoadNetworkTest {
 
 		network.addRoadNode(node);
 		Assert.assertTrue(network.containsNodeId(0));
-		Assert.assertEquals(2, network.getAmountOfNodes());
+		Assert.assertEquals(2, network.getSize());
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class RoadNetworkTest {
 						+ "		<tag k=\"highway\" v=\"motorway\" />\n" + "		<tag k=\"ref\" v=\"A 6\" />\n"
 						+ "	</way>\n" + "</osm>");
 		RoadNetwork network = RoadNetwork.createFromOsmReader(reader);
-		Assert.assertEquals(3, network.getAmountOfNodes());
+		Assert.assertEquals(3, network.getSize());
 		Assert.assertEquals(5, network.getAmountOfEdges());
 
 		RoadNode firstNode = (RoadNode) network.getNodeById(470552);
@@ -173,7 +173,7 @@ public class RoadNetworkTest {
 	@Test
 	public void testRoadNetwork() {
 		RoadNetwork network = new RoadNetwork();
-		Assert.assertEquals(0, network.getAmountOfNodes());
+		Assert.assertEquals(0, network.getSize());
 		Assert.assertEquals(0, network.getAmountOfEdges());
 	}
 

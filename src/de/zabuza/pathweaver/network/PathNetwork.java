@@ -1,10 +1,17 @@
 package de.zabuza.pathweaver.network;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Map.Entry;
+
+import de.zabuza.pathweaver.network.algorithm.scc.ISccComputation;
+import de.zabuza.pathweaver.network.algorithm.scc.TarjanSccComputation;
+
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -129,16 +136,6 @@ public class PathNetwork implements IPathNetwork {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.zabuza.pathweaver.network.IPathNetwork#getAmountOfNodes()
-	 */
-	@Override
-	public int getAmountOfNodes() {
-		return mAmountOfNodes;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * de.zabuza.pathweaver.network.IPathNetwork#getIncomingEdges(de.zabuza.
 	 * pathweaver.network.Node)
@@ -166,6 +163,16 @@ public class PathNetwork implements IPathNetwork {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#getNodes()
+	 */
+	@Override
+	public Collection<Node> getNodes() {
+		return mIdToNodes.values();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * de.zabuza.pathweaver.network.IPathNetwork#getOutgoingEdges(de.zabuza.
 	 * pathweaver.network.Node)
@@ -178,6 +185,16 @@ public class PathNetwork implements IPathNetwork {
 		} else {
 			return Collections.unmodifiableSet(outgoingEdges);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#getSize()
+	 */
+	@Override
+	public int getSize() {
+		return mAmountOfNodes;
 	}
 
 	/*
@@ -219,7 +236,55 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public void reduceToLargestScc() {
-		// TODO Implement method
+		ISccComputation sccComputation = new TarjanSccComputation(this);
+		Set<Node> largestScc = sccComputation.getLargestScc();
+		LinkedList<Node> nodesToRemove = new LinkedList<>();
+		for (Node node : getNodes()) {
+			if (largestScc.contains(node)) {
+				continue;
+			}
+			nodesToRemove.add(node);
+		}
+		for (Node node : nodesToRemove) {
+			removeNode(node);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#removeNode(de.zabuza.pathweaver
+	 * .network.Node)
+	 */
+	@Override
+	public void removeNode(final Node node) throws NoSuchElementException {
+		if (!mIdToNodes.containsKey(node.getId())) {
+			throw new NoSuchElementException();
+		}
+
+		// First remove all in- and outgoing edges
+		Set<DirectedWeightedEdge> outgoingEdges = getOutgoingEdges(node);
+		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+			// Remove this edge from destinations incoming edges
+			Node destination = outgoingEdge.getDestination();
+			mNodeToIncomingEdges.get(destination).remove(outgoingEdge);
+			mAmountOfEdges--;
+		}
+		Set<DirectedWeightedEdge> incomingEdges = getIncomingEdges(node);
+		for (DirectedWeightedEdge incomingEdge : incomingEdges) {
+			// Remove this edge from sources outgoing edges
+			Node source = incomingEdge.getSource();
+			mNodeToOutgoingEdges.get(source).remove(incomingEdge);
+			mAmountOfEdges--;
+		}
+
+		// At this point no other node has a link to the node to delete
+		// Now delete the node and its links
+		mNodeToIncomingEdges.remove(node);
+		mNodeToOutgoingEdges.remove(node);
+		mIdToNodes.remove(node.getId());
+		mAmountOfNodes--;
 	}
 
 	/*

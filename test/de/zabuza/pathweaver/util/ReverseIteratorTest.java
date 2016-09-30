@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Zabuza
  *
  */
-public class ReverseIteratorTest {
+public final class ReverseIteratorTest {
 
 	/**
 	 * Test method for {@link ReverseIterator#hasNext()}.

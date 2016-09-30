@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm;
+package de.zabuza.pathweaver.network.algorithm.shortestpath;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,6 +32,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * Creates a new shortest path computation object
 	 * 
 	 * @param network
+	 *            The network to work on
 	 */
 	public DijkstraShortestPathComputation(final IPathNetwork network) {
 		mNetwork = network;
@@ -167,7 +168,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			}
 
 			// Relax all outgoing edges
-			Set<DirectedWeightedEdge> outgoingEdges = mNetwork.getOutgoingEdges(currentNode);
+			Set<DirectedWeightedEdge> outgoingEdges = getPathNetwork().getOutgoingEdges(currentNode);
 			if (outgoingEdges == null || outgoingEdges.isEmpty()) {
 				continue;
 			}

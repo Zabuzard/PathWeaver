@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm;
+package de.zabuza.pathweaver.network.algorithm.shortestpath;
 
 import java.util.Map;
 

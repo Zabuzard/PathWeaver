@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author Zabuza
  *
  */
-public class RoadTest {
+public final class RoadTest {
 
 	/**
 	 * Test method for {@link Road#addRoadNode(int)}.
