@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.OutgoingEdge;
 
 /**
- * Test for {@link TentativeCostNodeContainer}.
+ * Test for {@link TentativeNodeContainer}.
  * 
  * @author Zabuza
  *
@@ -15,81 +16,82 @@ public class TentativeCostNodeContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link TentativeCostNodeContainer#compareTo(TentativeCostNodeContainer)}.
+	 * {@link TentativeNodeContainer#compareTo(TentativeNodeContainer)}.
 	 */
 	@Test
 	public void testCompareTo() {
 		Node node = new Node(0);
 		float cost = 1;
 		float anotherCost = 2;
-		TentativeCostNodeContainer container = new TentativeCostNodeContainer(node, cost);
-		TentativeCostNodeContainer anotherContainer = new TentativeCostNodeContainer(node, anotherCost);
-		TentativeCostNodeContainer yetAnotherContainer = new TentativeCostNodeContainer(node, cost);
+		float estCost = 3;
+		float anotherEstCost = 1;
+
+		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
+		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(node, null, anotherCost);
+		TentativeNodeContainer yetAnotherContainer = new TentativeNodeContainer(node, null, cost);
 		Assert.assertEquals(0, container.compareTo(yetAnotherContainer), 0);
 		Assert.assertTrue(container.compareTo(anotherContainer) < 0);
 		Assert.assertTrue(anotherContainer.compareTo(container) > 0);
+
+		container = new TentativeNodeContainer(node, null, 0, estCost);
+		anotherContainer = new TentativeNodeContainer(node, null, 0, anotherEstCost);
+		yetAnotherContainer = new TentativeNodeContainer(node, null, 0, estCost);
+		Assert.assertEquals(0, container.compareTo(yetAnotherContainer), 0);
+		Assert.assertTrue(container.compareTo(anotherContainer) < 0);
+		Assert.assertTrue(anotherContainer.compareTo(container) > 0);
+
+		container = new TentativeNodeContainer(node, null, cost, estCost);
+		anotherContainer = new TentativeNodeContainer(node, null, anotherCost, anotherEstCost);
+		yetAnotherContainer = new TentativeNodeContainer(node, null, cost, anotherEstCost);
+		Assert.assertTrue(container.compareTo(yetAnotherContainer) > 0);
+		Assert.assertTrue(container.compareTo(anotherContainer) > 0);
+		Assert.assertTrue(anotherContainer.compareTo(container) < 0);
+		Assert.assertTrue(anotherContainer.compareTo(yetAnotherContainer) > 0);
 	}
 
 	/**
-	 * Test method for {@link TentativeCostNodeContainer#getNode()}.
+	 * Test method for {@link TentativeNodeContainer#getNode()}.
 	 */
 	@Test
 	public void testGetNode() {
 		Node node = new Node(0);
 		Node anotherNode = new Node(1);
 		float cost = 1;
-		TentativeCostNodeContainer container = new TentativeCostNodeContainer(node, cost);
-		TentativeCostNodeContainer anotherContainer = new TentativeCostNodeContainer(anotherNode, cost);
+		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
+		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(anotherNode, null, cost);
 		Assert.assertEquals(node, container.getNode());
 		Assert.assertEquals(anotherNode, anotherContainer.getNode());
 	}
 
 	/**
-	 * Test method for {@link TentativeCostNodeContainer#getTentativeCost()}.
+	 * Test method for {@link TentativeNodeContainer#getTentativeCost()}.
 	 */
 	@Test
 	public void testGetTentativeCost() {
 		Node node = new Node(0);
 		float cost = 1;
 		float anotherCost = 2;
-		TentativeCostNodeContainer container = new TentativeCostNodeContainer(node, cost);
-		TentativeCostNodeContainer anotherContainer = new TentativeCostNodeContainer(node, anotherCost);
+		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
+		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(node, null, anotherCost);
 		Assert.assertEquals(cost, container.getTentativeCost(), 0);
 		Assert.assertEquals(anotherCost, anotherContainer.getTentativeCost(), 0);
 	}
 
 	/**
 	 * Test method for
-	 * {@link TentativeCostNodeContainer#setTentativeCost(float)}.
-	 */
-	@Test
-	public void testSetTentativeCost() {
-		Node node = new Node(0);
-		float cost = 1;
-		float anotherCost = 2;
-		TentativeCostNodeContainer container = new TentativeCostNodeContainer(node, cost);
-		TentativeCostNodeContainer anotherContainer = new TentativeCostNodeContainer(node, anotherCost);
-		Assert.assertEquals(cost, container.getTentativeCost(), 0);
-		Assert.assertEquals(anotherCost, anotherContainer.getTentativeCost(), 0);
-
-		container.setTentativeCost(anotherCost);
-		anotherContainer.setTentativeCost(cost);
-		Assert.assertEquals(anotherCost, container.getTentativeCost(), 0);
-		Assert.assertEquals(cost, anotherContainer.getTentativeCost(), 0);
-	}
-
-	/**
-	 * Test method for
-	 * {@link TentativeCostNodeContainer#TentativeCostNodeContainer(Node, float)}
-	 * .
+	 * {@link TentativeNodeContainer#TentativeCostNodeContainer(Node, float)} .
 	 */
 	@Test
 	public void testTentativeCostNodeContainer() {
 		Node node = new Node(0);
 		float cost = 1;
-		TentativeCostNodeContainer container = new TentativeCostNodeContainer(node, cost);
+		float estCostToDest = 2;
+		OutgoingEdge edge = new OutgoingEdge(node, cost);
+		TentativeNodeContainer container = new TentativeNodeContainer(node, edge, cost, estCostToDest);
 		Assert.assertEquals(node, container.getNode());
 		Assert.assertEquals(cost, container.getTentativeCost(), 0);
+		Assert.assertEquals(estCostToDest, container.getEstCostToDest(), 0);
+		Assert.assertEquals(edge, container.getParentEdge());
 	}
 
 }

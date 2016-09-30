@@ -2,6 +2,7 @@ package de.zabuza.pathweaver.network.algorithm;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -42,9 +43,9 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public float computeShortestPathCost(Node source, Node destination) {
-		Map<Node, Float> mapping = computeShortestPathCostHelper(source, Optional.of(destination));
-		assert (mapping.containsKey(destination));
-		return mapping.get(destination);
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
+		assert (nodeToData.containsKey(destination));
+		return nodeToData.get(destination).getTentativeCost();
 	}
 
 	/*
@@ -55,7 +56,14 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Map<Node, Float> computeShortestPathCostsReachable(Node source) {
-		return computeShortestPathCostHelper(source, Optional.empty());
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.empty());
+		Map<Node, Float> nodeToCost = new HashMap<Node, Float>();
+		for (Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
+			nodeToCost.put(entry.getKey(), entry.getValue().getTentativeCost());
+			// TODO Possibly concurrent modification exception
+			nodeToData.remove(entry.getKey());
+		}
+		return nodeToCost;
 	}
 
 	/*
@@ -81,23 +89,30 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 *            If not present, then all, from source, reachable nodes get
 	 *            considered as destinations.
 	 * @return A mapping of all, from source, reachable destination nodes to the
-	 *         costs of the shortest paths from the source to the given
+	 *         data container of the shortest paths from the source to the given
 	 *         destinations. If a destination is given, then it will also be
-	 *         contained in this mapping.
+	 *         contained in this mapping and the rest will be nodes that are
+	 *         reachable in shorter time than this destination.
 	 */
-	private Map<Node, Float> computeShortestPathCostHelper(final Node source, final Optional<Node> destination) {
-		HashMap<Node, TentativeCostNodeContainer> nodeToContainer = new HashMap<>();
-		PriorityQueue<TentativeCostNodeContainer> activeNodes = new PriorityQueue<TentativeCostNodeContainer>();
-		HashMap<Node, Float> nodeToSettledCost = new HashMap<>();
+	private Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Node source,
+			final Optional<Node> destination) {
+		HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
+		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<TentativeNodeContainer>();
+		HashMap<Node, TentativeNodeContainer> nodeToSettledContainer = new HashMap<>();
 
 		// Start with the source as initial node
-		TentativeCostNodeContainer sourceContainer = new TentativeCostNodeContainer(source, 0);
+		TentativeNodeContainer sourceContainer;
+		if (destination.isPresent()) {
+			sourceContainer = new TentativeNodeContainer(source, null, 0, getEstCostToDest(source, destination.get()));
+		} else {
+			sourceContainer = new TentativeNodeContainer(source, null, 0);
+		}
 		nodeToContainer.put(source, sourceContainer);
 		activeNodes.add(sourceContainer);
 
 		while (!activeNodes.isEmpty()) {
 			// Poll the node with the lowest cost
-			TentativeCostNodeContainer currentNodeContainer = activeNodes.poll();
+			TentativeNodeContainer currentNodeContainer = activeNodes.poll();
 			assert (currentNodeContainer != null);
 			float currentTentativeCost = currentNodeContainer.getTentativeCost();
 			Node currentNode = currentNodeContainer.getNode();
@@ -105,12 +120,12 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			// If the node was already settled before, this container was
 			// previously abandoned while updating the tentative costs for this
 			// node.
-			if (nodeToSettledCost.containsKey(currentNode)) {
+			if (nodeToSettledContainer.containsKey(currentNode)) {
 				continue;
 			}
 
 			// Settle the current node
-			Float previousValue = nodeToSettledCost.put(currentNode, currentTentativeCost);
+			TentativeNodeContainer previousValue = nodeToSettledContainer.put(currentNode, currentNodeContainer);
 			assert (previousValue == null);
 
 			// End if destination was settled
@@ -128,14 +143,20 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 				float tentativeEdgeCost = currentTentativeCost + outgoingEdge.getCost();
 
 				// Check if there is already a container, if not create one
-				TentativeCostNodeContainer edgeDestinationContainer = nodeToContainer.get(edgeDestination);
+				TentativeNodeContainer edgeDestinationContainer = nodeToContainer.get(edgeDestination);
 				if (edgeDestinationContainer == null) {
 					// Edge destination is visited for the first time
-					edgeDestinationContainer = new TentativeCostNodeContainer(edgeDestination, tentativeEdgeCost);
+					if (destination.isPresent()) {
+						edgeDestinationContainer = new TentativeNodeContainer(edgeDestination, outgoingEdge,
+								tentativeEdgeCost, getEstCostToDest(edgeDestination, destination.get()));
+					} else {
+						edgeDestinationContainer = new TentativeNodeContainer(edgeDestination, outgoingEdge,
+								tentativeEdgeCost);
+					}
 					nodeToContainer.put(edgeDestination, edgeDestinationContainer);
 					activeNodes.add(edgeDestinationContainer);
 				} else {
-					if (nodeToSettledCost.containsKey(edgeDestination)) {
+					if (nodeToSettledContainer.containsKey(edgeDestination)) {
 						// Settled nodes can not be improved anymore
 						continue;
 					}
@@ -147,15 +168,39 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 						// old container, it holds an non optimal value, then
 						// creating a new container with improved costs and add
 						// it to the queue.
-						TentativeCostNodeContainer betterEdgeDestinationContainer = new TentativeCostNodeContainer(
-								edgeDestination, tentativeEdgeCost);
+						TentativeNodeContainer betterEdgeDestinationContainer;
+						if (destination.isPresent()) {
+							betterEdgeDestinationContainer = new TentativeNodeContainer(edgeDestination, outgoingEdge,
+									tentativeEdgeCost, getEstCostToDest(edgeDestination, destination.get()));
+						} else {
+							betterEdgeDestinationContainer = new TentativeNodeContainer(edgeDestination, outgoingEdge,
+									tentativeEdgeCost);
+						}
+
 						nodeToContainer.put(edgeDestination, betterEdgeDestinationContainer);
 						activeNodes.add(betterEdgeDestinationContainer);
 					}
 				}
 			}
 		}
-		return nodeToSettledCost;
+		return nodeToSettledContainer;
+	}
+
+	/**
+	 * Gets the estimated cost needed to reach the given destination from the
+	 * given node.
+	 * 
+	 * @param node
+	 *            Node in question
+	 * @param dest
+	 *            Destination to estimate required costs for reaching it
+	 * @return The estimated cost needed to reach the given destination from the
+	 *         given node
+	 */
+	protected float getEstCostToDest(final Node node, final Node dest) {
+		// Dijkstras algorithm does not use such estimations. Thus it is
+		// extremely optimistic and guesses zero costs in any case.
+		return 0;
 	}
 
 }
