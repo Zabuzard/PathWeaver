@@ -4,6 +4,7 @@ import java.util.Map;
 
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.Path;
 import de.zabuza.pathweaver.network.PathNetwork;
 
 /**
@@ -16,8 +17,19 @@ import de.zabuza.pathweaver.network.PathNetwork;
 public interface IShortestPathComputation {
 	/**
 	 * Computes the shortest path in the network specified by
-	 * {@link #getPathNetwork()} between the given source and destination. After
-	 * that it returns the cost of this path.
+	 * {@link #getPathNetwork()} between the given source and destination.
+	 * 
+	 * @param source
+	 *            Source node to compute the shortest path from
+	 * @param destination
+	 *            Destination node to compute the shortest path to
+	 * @return The shortest path between the given source and destination
+	 */
+	public Path computeShortestPath(final Node source, final Node destination);
+
+	/**
+	 * Computes the costs of the shortest path in the network specified by
+	 * {@link #getPathNetwork()} between the given source and destination.
 	 * 
 	 * @param source
 	 *            Source node to compute the shortest path from
@@ -28,9 +40,9 @@ public interface IShortestPathComputation {
 	public float computeShortestPathCost(final Node source, final Node destination);
 
 	/**
-	 * Computes the shortest path in the network specified by
+	 * Computes the costs of the shortest path in the network specified by
 	 * {@link #getPathNetwork()} between the given source and every reachable
-	 * destination. After that it returns the costs of those paths.
+	 * destination.
 	 * 
 	 * @param source
 	 *            Source node to compute the shortest path from

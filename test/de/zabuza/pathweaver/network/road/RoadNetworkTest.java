@@ -9,8 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
-import de.zabuza.pathweaver.network.OutgoingEdge;
 
 /**
  * Test for {@link RoadNetwork}.
@@ -67,15 +67,15 @@ public class RoadNetworkTest {
 		network.addRoad(destination, source, ERoadType.PRIMARY);
 
 		Assert.assertEquals(2, network.getAmountOfEdges());
-		Set<OutgoingEdge> firstEdges = network.getOutgoingEdges(source);
+		Set<DirectedWeightedEdge> firstEdges = network.getOutgoingEdges(source);
 		Assert.assertEquals(1, firstEdges.size());
-		OutgoingEdge firstEdge = firstEdges.iterator().next();
+		DirectedWeightedEdge firstEdge = firstEdges.iterator().next();
 		Assert.assertEquals(destination, firstEdge.getDestination());
 		Assert.assertEquals(169, firstEdge.getCost(), 2);
 
-		Set<OutgoingEdge> secondEdges = network.getOutgoingEdges(destination);
+		Set<DirectedWeightedEdge> secondEdges = network.getOutgoingEdges(destination);
 		Assert.assertEquals(1, secondEdges.size());
-		OutgoingEdge secondEdge = secondEdges.iterator().next();
+		DirectedWeightedEdge secondEdge = secondEdges.iterator().next();
 		Assert.assertEquals(source, secondEdge.getDestination());
 		Assert.assertEquals(266, secondEdge.getCost(), 2);
 	}
@@ -102,7 +102,7 @@ public class RoadNetworkTest {
 		network.addRoad(firstRoad);
 		Assert.assertEquals(3, network.getAmountOfNodes());
 		Assert.assertEquals(2, network.getAmountOfEdges());
-		OutgoingEdge firstEdge = network.getOutgoingEdges(network.getNodeById(0)).iterator().next();
+		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(network.getNodeById(0)).iterator().next();
 		Assert.assertEquals(secondNode, firstEdge.getDestination());
 
 		Road secondRoad = new Road(1);
@@ -163,7 +163,7 @@ public class RoadNetworkTest {
 
 		RoadNode firstNode = (RoadNode) network.getNodeById(470552);
 		RoadNode secondNode = (RoadNode) network.getNodeById(470553);
-		OutgoingEdge edge = network.getOutgoingEdges(firstNode).iterator().next();
+		DirectedWeightedEdge edge = network.getOutgoingEdges(firstNode).iterator().next();
 		Assert.assertEquals(secondNode, edge.getDestination());
 	}
 

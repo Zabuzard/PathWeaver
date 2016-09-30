@@ -6,7 +6,7 @@ package de.zabuza.pathweaver.network;
  * @author Zabuza
  *
  */
-public abstract class ADirectedEdge {
+public final class DirectedWeightedEdge {
 	/**
 	 * Message for the exception thrown when the given cost of the edge is
 	 * illegal.
@@ -19,28 +19,34 @@ public abstract class ADirectedEdge {
 	private final float mCost;
 
 	/**
-	 * The target of this directed edge. This can either be the head or tail
-	 * depending on the perspective.
+	 * The destination of this directed edge.
 	 */
-	private final Node mTarget;
+	private final Node mDestination;
+	/**
+	 * The source of this directed edge.
+	 */
+	private final Node mSource;
 
 	/**
-	 * Creates an directed edge with a given target and cost.
+	 * Creates an directed edge with a given source, destination and cost.
 	 * 
-	 * @param target
-	 *            The target of this directed edge. This can either be the head
-	 *            or tail depending on the perspective.
+	 * @param source
+	 *            The source of this directed edge.
+	 * @param destination
+	 *            The destination of this directed edge.
 	 * @param cost
 	 *            The cost of this edge which must be greater than <tt>zero</tt>
 	 * @throws IllegalArgumentException
 	 *             When cost is not greater than <tt>zero</tt>.
 	 */
-	public ADirectedEdge(final Node target, final float cost) throws IllegalArgumentException {
+	public DirectedWeightedEdge(final Node source, final Node destination, final float cost)
+			throws IllegalArgumentException {
 		if (cost <= 0) {
 			throw new IllegalArgumentException(EXCEPTION_COST_ILLEGAL + cost);
 		}
 		mCost = cost;
-		mTarget = target;
+		mSource = source;
+		mDestination = destination;
 	}
 
 	/**
@@ -53,13 +59,20 @@ public abstract class ADirectedEdge {
 	}
 
 	/**
-	 * Gets the target of this directed edge. This can either be the head or
-	 * tail depending on the perspective.
+	 * Gets the destination of this directed edge.
 	 * 
-	 * @return The target of this directed edge. This can either be the head or
-	 *         tail depending on the perspective.
+	 * @return The destination of this directed edge.
 	 */
-	protected Node getTarget() {
-		return mTarget;
+	public Node getDestination() {
+		return mDestination;
+	}
+
+	/**
+	 * Gets the source of this directed edge.
+	 * 
+	 * @return The source of this directed edge.
+	 */
+	public Node getSource() {
+		return mSource;
 	}
 }

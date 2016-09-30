@@ -1,15 +1,18 @@
 package de.zabuza.pathweaver.network.algorithm;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
-import de.zabuza.pathweaver.network.OutgoingEdge;
+import de.zabuza.pathweaver.network.Path;
 import de.zabuza.pathweaver.network.PathNetwork;
 
 /**
@@ -38,6 +41,38 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * (non-Javadoc)
 	 * 
 	 * @see de.zabuza.pathweaver.network.algorithm.IShortestPathComputation#
+	 * computeShortestPath(de.zabuza.pathweaver.network.Node,
+	 * de.zabuza.pathweaver.network.Node)
+	 */
+	@Override
+	public Path computeShortestPath(final Node source, final Node destination) {
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
+		assert (nodeToData.containsKey(destination));
+
+		LinkedList<DirectedWeightedEdge> edgesBackwards = new LinkedList<>();
+		Node currentNode = destination;
+		while (currentNode != source) {
+			TentativeNodeContainer container = nodeToData.get(currentNode);
+			DirectedWeightedEdge parentEdge = container.getParentEdge();
+			edgesBackwards.add(parentEdge);
+
+			currentNode = parentEdge.getSource();
+		}
+
+		Path path = new Path(source);
+		Collections.reverse(edgesBackwards);
+		while (!edgesBackwards.isEmpty()) {
+			path.addEdge(edgesBackwards.poll());
+		}
+		assert (path.getSource() == source && path.getDestination() == destination);
+
+		return path;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.IShortestPathComputation#
 	 * computeShortestPathCost(de.zabuza.pathweaver.network.Node,
 	 * de.zabuza.pathweaver.network.Node)
 	 */
@@ -60,8 +95,6 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 		Map<Node, Float> nodeToCost = new HashMap<Node, Float>();
 		for (Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
 			nodeToCost.put(entry.getKey(), entry.getValue().getTentativeCost());
-			// TODO Possibly concurrent modification exception
-			nodeToData.remove(entry.getKey());
 		}
 		return nodeToCost;
 	}
@@ -134,11 +167,11 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			}
 
 			// Relax all outgoing edges
-			Set<OutgoingEdge> outgoingEdges = mNetwork.getOutgoingEdges(currentNode);
+			Set<DirectedWeightedEdge> outgoingEdges = mNetwork.getOutgoingEdges(currentNode);
 			if (outgoingEdges == null || outgoingEdges.isEmpty()) {
 				continue;
 			}
-			for (OutgoingEdge outgoingEdge : outgoingEdges) {
+			for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 				Node edgeDestination = outgoingEdge.getDestination();
 				float tentativeEdgeCost = currentTentativeCost + outgoingEdge.getCost();
 

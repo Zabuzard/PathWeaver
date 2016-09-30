@@ -23,11 +23,11 @@ public final class Path {
 	/**
 	 * A list of all edges this path represents.
 	 */
-	private final LinkedList<OutgoingEdge> mEdges;
+	private final LinkedList<DirectedWeightedEdge> mEdges;
 	/**
 	 * The current head edge of this path.
 	 */
-	private OutgoingEdge mHeadEdge;
+	private DirectedWeightedEdge mHeadEdge;
 	/**
 	 * The length of this path, i.e. the amount of nodes.
 	 */
@@ -61,7 +61,7 @@ public final class Path {
 	 * @param edge
 	 *            The edge to add
 	 */
-	public void addEdge(final OutgoingEdge edge) {
+	public void addEdge(final DirectedWeightedEdge edge) {
 		mEdges.add(edge);
 		mTotalCost += edge.getCost();
 		mLength++;
@@ -99,7 +99,7 @@ public final class Path {
 	 * @return All edges this path consists of. The first edge starts at the
 	 *         source and the last ends at the destination.
 	 */
-	public List<OutgoingEdge> getEdges() {
+	public List<DirectedWeightedEdge> getEdges() {
 		return mEdges;
 	}
 

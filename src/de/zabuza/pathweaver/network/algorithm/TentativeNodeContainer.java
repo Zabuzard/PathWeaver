@@ -1,7 +1,7 @@
 package de.zabuza.pathweaver.network.algorithm;
 
+import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
-import de.zabuza.pathweaver.network.OutgoingEdge;
 
 /**
  * Container which assigns a given node tentative data.
@@ -25,7 +25,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	/**
 	 * The edge pointing to the node which this container belongs to.
 	 */
-	private final OutgoingEdge mParentEdge;
+	private final DirectedWeightedEdge mParentEdge;
 	/**
 	 * The tentative cost of this container.
 	 */
@@ -43,7 +43,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @param tentativeCost
 	 *            The tentative cost of this container
 	 */
-	public TentativeNodeContainer(final Node node, final OutgoingEdge parentEdge, final float tentativeCost) {
+	public TentativeNodeContainer(final Node node, final DirectedWeightedEdge parentEdge, final float tentativeCost) {
 		this(node, parentEdge, tentativeCost, DEFAULT_EST_COST_TO_DEST);
 	}
 
@@ -59,7 +59,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @param estCostToDest
 	 *            The estimated remaining cost to reach the destination
 	 */
-	public TentativeNodeContainer(final Node node, final OutgoingEdge parentEdge, final float tentativeCost,
+	public TentativeNodeContainer(final Node node, final DirectedWeightedEdge parentEdge, final float tentativeCost,
 			final float estCostToDest) {
 		mNode = node;
 		mTentativeCost = tentativeCost;
@@ -101,7 +101,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * 
 	 * @return The edge pointing to the node which this container belongs to
 	 */
-	public OutgoingEdge getParentEdge() {
+	public DirectedWeightedEdge getParentEdge() {
 		return mParentEdge;
 	}
 

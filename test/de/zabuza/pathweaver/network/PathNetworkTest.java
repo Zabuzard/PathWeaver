@@ -143,7 +143,7 @@ public final class PathNetworkTest {
 		Node destination = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
-		Set<OutgoingEdge> emptySet = Collections.emptySet();
+		Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
 
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(destination));
 		network.addNode(source);
@@ -151,27 +151,27 @@ public final class PathNetworkTest {
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(destination));
 
 		network.addEdge(source, destination, cost);
-		Set<IncomingEdge> firstEdgeSet = network.getIncomingEdges(destination);
+		Set<DirectedWeightedEdge> firstEdgeSet = network.getIncomingEdges(destination);
 		Assert.assertEquals(1, firstEdgeSet.size());
-		IncomingEdge edge = firstEdgeSet.iterator().next();
+		DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(source, edge.getSource());
 		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
-		Set<IncomingEdge> secondEdgeSet = network.getIncomingEdges(source);
+		Set<DirectedWeightedEdge> secondEdgeSet = network.getIncomingEdges(source);
 		Assert.assertEquals(1, secondEdgeSet.size());
-		IncomingEdge secondEdge = secondEdgeSet.iterator().next();
+		DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(destination, secondEdge.getSource());
 		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
-		Set<IncomingEdge> thirdEdgeSet = network.getIncomingEdges(destination);
+		Set<DirectedWeightedEdge> thirdEdgeSet = network.getIncomingEdges(destination);
 		Assert.assertEquals(2, thirdEdgeSet.size());
-		Iterator<IncomingEdge> iter = thirdEdgeSet.iterator();
-		IncomingEdge thirdEdge = iter.next();
+		Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
+		DirectedWeightedEdge thirdEdge = iter.next();
 		Assert.assertEquals(source, thirdEdge.getSource());
 		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
-		IncomingEdge fourthEdge = iter.next();
+		DirectedWeightedEdge fourthEdge = iter.next();
 		Assert.assertEquals(source, fourthEdge.getSource());
 		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
@@ -206,7 +206,7 @@ public final class PathNetworkTest {
 		Node destination = new Node(1);
 		int cost = 1;
 		int anotherCost = 2;
-		Set<OutgoingEdge> emptySet = Collections.emptySet();
+		Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
 
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(source));
 		network.addNode(source);
@@ -214,27 +214,27 @@ public final class PathNetworkTest {
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(source));
 
 		network.addEdge(source, destination, cost);
-		Set<OutgoingEdge> firstEdgeSet = network.getOutgoingEdges(source);
+		Set<DirectedWeightedEdge> firstEdgeSet = network.getOutgoingEdges(source);
 		Assert.assertEquals(1, firstEdgeSet.size());
-		OutgoingEdge edge = firstEdgeSet.iterator().next();
+		DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(destination, edge.getDestination());
 		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
-		Set<OutgoingEdge> secondEdgeSet = network.getOutgoingEdges(destination);
+		Set<DirectedWeightedEdge> secondEdgeSet = network.getOutgoingEdges(destination);
 		Assert.assertEquals(1, secondEdgeSet.size());
-		OutgoingEdge secondEdge = secondEdgeSet.iterator().next();
+		DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(source, secondEdge.getDestination());
 		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
-		Set<OutgoingEdge> thirdEdgeSet = network.getOutgoingEdges(source);
+		Set<DirectedWeightedEdge> thirdEdgeSet = network.getOutgoingEdges(source);
 		Assert.assertEquals(2, thirdEdgeSet.size());
-		Iterator<OutgoingEdge> iter = thirdEdgeSet.iterator();
-		OutgoingEdge thirdEdge = iter.next();
+		Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
+		DirectedWeightedEdge thirdEdge = iter.next();
 		Assert.assertEquals(destination, thirdEdge.getDestination());
 		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
-		OutgoingEdge fourthEdge = iter.next();
+		DirectedWeightedEdge fourthEdge = iter.next();
 		Assert.assertEquals(destination, fourthEdge.getDestination());
 		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
@@ -245,24 +245,25 @@ public final class PathNetworkTest {
 	@Test
 	public void testHasIncomingEdge() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		Node src = new Node(0);
+		Node dest = new Node(1);
+		Node anotherSrc = new Node(2);
 		int cost = 1;
 		int anotherCost = 2;
 
-		Assert.assertFalse(network.hasIncomingEdge(node, new IncomingEdge(anotherNode, cost)));
-		network.addNode(node);
-		network.addNode(anotherNode);
-		Assert.assertFalse(network.hasIncomingEdge(node, new IncomingEdge(anotherNode, cost)));
-		network.addEdge(node, anotherNode, cost);
-		network.addEdge(anotherNode, node, anotherCost);
+		Assert.assertFalse(network.hasIncomingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
+		network.addNode(src);
+		network.addNode(anotherSrc);
+		Assert.assertFalse(network.hasIncomingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
+		network.addEdge(src, anotherSrc, cost);
+		network.addEdge(anotherSrc, src, anotherCost);
 
-		IncomingEdge firstEdge = network.getIncomingEdges(anotherNode).iterator().next();
-		IncomingEdge secondEdge = network.getIncomingEdges(node).iterator().next();
-		Assert.assertTrue(network.hasIncomingEdge(anotherNode, firstEdge));
-		Assert.assertTrue(network.hasIncomingEdge(node, secondEdge));
-		Assert.assertFalse(network.hasIncomingEdge(anotherNode, secondEdge));
-		Assert.assertFalse(network.hasIncomingEdge(node, firstEdge));
+		DirectedWeightedEdge firstEdge = network.getIncomingEdges(anotherSrc).iterator().next();
+		DirectedWeightedEdge secondEdge = network.getIncomingEdges(src).iterator().next();
+		Assert.assertTrue(network.hasIncomingEdge(anotherSrc, firstEdge));
+		Assert.assertTrue(network.hasIncomingEdge(src, secondEdge));
+		Assert.assertFalse(network.hasIncomingEdge(anotherSrc, secondEdge));
+		Assert.assertFalse(network.hasIncomingEdge(src, firstEdge));
 	}
 
 	/**
@@ -271,24 +272,25 @@ public final class PathNetworkTest {
 	@Test
 	public void testHasOutgoingEdge() {
 		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		Node src = new Node(0);
+		Node dest = new Node(1);
+		Node anotherSrc = new Node(2);
 		int cost = 1;
 		int anotherCost = 2;
 
-		Assert.assertFalse(network.hasOutgoingEdge(node, new OutgoingEdge(anotherNode, cost)));
-		network.addNode(node);
-		network.addNode(anotherNode);
-		Assert.assertFalse(network.hasOutgoingEdge(node, new OutgoingEdge(anotherNode, cost)));
-		network.addEdge(node, anotherNode, cost);
-		network.addEdge(anotherNode, node, anotherCost);
+		Assert.assertFalse(network.hasOutgoingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
+		network.addNode(src);
+		network.addNode(anotherSrc);
+		Assert.assertFalse(network.hasOutgoingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
+		network.addEdge(src, anotherSrc, cost);
+		network.addEdge(anotherSrc, src, anotherCost);
 
-		OutgoingEdge firstEdge = network.getOutgoingEdges(node).iterator().next();
-		OutgoingEdge secondEdge = network.getOutgoingEdges(anotherNode).iterator().next();
-		Assert.assertTrue(network.hasOutgoingEdge(node, firstEdge));
-		Assert.assertTrue(network.hasOutgoingEdge(anotherNode, secondEdge));
-		Assert.assertFalse(network.hasOutgoingEdge(node, secondEdge));
-		Assert.assertFalse(network.hasOutgoingEdge(anotherNode, firstEdge));
+		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(src).iterator().next();
+		DirectedWeightedEdge secondEdge = network.getOutgoingEdges(anotherSrc).iterator().next();
+		Assert.assertTrue(network.hasOutgoingEdge(src, firstEdge));
+		Assert.assertTrue(network.hasOutgoingEdge(anotherSrc, secondEdge));
+		Assert.assertFalse(network.hasOutgoingEdge(src, secondEdge));
+		Assert.assertFalse(network.hasOutgoingEdge(anotherSrc, firstEdge));
 	}
 
 	/**

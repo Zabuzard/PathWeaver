@@ -1,11 +1,15 @@
 package de.zabuza.pathweaver.network.algorithm;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.Path;
 import de.zabuza.pathweaver.network.PathNetwork;
 
 /**
@@ -15,6 +19,77 @@ import de.zabuza.pathweaver.network.PathNetwork;
  *
  */
 public class DijkstraShortestPathComputationTest {
+
+	/**
+	 * Test method for
+	 * {@link DijkstraShortestPathComputation#computeShortestPath(Node, Node)} .
+	 */
+	@Test
+	public void testComputeShortestPath() {
+		PathNetwork network = new PathNetwork();
+		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+
+		Node firstNode = new Node(0);
+		Node secondNode = new Node(1);
+		Node thirdNode = new Node(2);
+		Node fourthNode = new Node(3);
+		Node fifthNode = new Node(4);
+		Node sixthNode = new Node(5);
+
+		network.addNode(firstNode);
+		network.addNode(secondNode);
+		network.addNode(thirdNode);
+		network.addNode(fourthNode);
+		network.addNode(fifthNode);
+		network.addNode(sixthNode);
+
+		network.addEdge(firstNode, secondNode, 1);
+		network.addEdge(secondNode, thirdNode, 1);
+		network.addEdge(firstNode, thirdNode, 3);
+		network.addEdge(thirdNode, fourthNode, 1);
+		network.addEdge(firstNode, fourthNode, 10);
+		network.addEdge(firstNode, fifthNode, 4);
+		network.addEdge(fifthNode, secondNode, 5);
+		network.addEdge(fifthNode, sixthNode, 3);
+		network.addEdge(sixthNode, fourthNode, 1);
+
+		network.addEdge(secondNode, firstNode, 1);
+		network.addEdge(thirdNode, secondNode, 1);
+		network.addEdge(thirdNode, firstNode, 3);
+		network.addEdge(fourthNode, thirdNode, 1);
+		network.addEdge(fourthNode, firstNode, 10);
+		network.addEdge(fifthNode, firstNode, 4);
+		network.addEdge(secondNode, fifthNode, 5);
+		network.addEdge(sixthNode, fifthNode, 3);
+		network.addEdge(fourthNode, sixthNode, 1);
+
+		Path path = computation.computeShortestPath(firstNode, fourthNode);
+
+		Assert.assertEquals(3, path.getCost(), 0);
+		Assert.assertEquals(firstNode, path.getSource());
+		Assert.assertEquals(fourthNode, path.getDestination());
+		Assert.assertEquals(4, path.getLength());
+
+		List<DirectedWeightedEdge> edges = path.getEdges();
+		Iterator<DirectedWeightedEdge> edgeIter = edges.iterator();
+
+		DirectedWeightedEdge firstEdge = edgeIter.next();
+		Assert.assertEquals(1, firstEdge.getCost(), 0);
+		Assert.assertEquals(firstNode, firstEdge.getSource());
+		Assert.assertEquals(secondNode, firstEdge.getDestination());
+
+		DirectedWeightedEdge secondEdge = edgeIter.next();
+		Assert.assertEquals(1, secondEdge.getCost(), 0);
+		Assert.assertEquals(secondNode, secondEdge.getSource());
+		Assert.assertEquals(thirdNode, secondEdge.getDestination());
+
+		DirectedWeightedEdge thirdEdge = edgeIter.next();
+		Assert.assertEquals(1, thirdEdge.getCost(), 0);
+		Assert.assertEquals(thirdNode, thirdEdge.getSource());
+		Assert.assertEquals(fourthNode, thirdEdge.getDestination());
+
+		Assert.assertFalse(edgeIter.hasNext());
+	}
 
 	/**
 	 * Test method for

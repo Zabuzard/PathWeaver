@@ -22,7 +22,7 @@ public interface IPathNetwork {
 	 *            The destination of the directed edge
 	 * @param cost
 	 *            The cost of the edge which must be inside the limit specified
-	 *            by {@link ADirectedEdge#ADirectedEdge(Node, int)
+	 *            by {@link DirectedWeightedEdge#ADirectedEdge(Node, int)
 	 *            ADirectedEdge(Node, int)}.
 	 */
 	public void addEdge(final Node source, final Node destination, final float cost);
@@ -70,7 +70,7 @@ public interface IPathNetwork {
 	 * @return An unmodifiable set of all incoming edges the given destination
 	 *         has or an <tt>empty set</tt> if there are no
 	 */
-	public Set<IncomingEdge> getIncomingEdges(final Node destination);
+	public Set<DirectedWeightedEdge> getIncomingEdges(final Node destination);
 
 	/**
 	 * Returns the node with the given id, if it is contained in the network.
@@ -91,7 +91,7 @@ public interface IPathNetwork {
 	 * @return An unmodifiable set of all outgoing edges the given source has or
 	 *         an <tt>empty set</tt> if there are no
 	 */
-	public Set<OutgoingEdge> getOutgoingEdges(final Node source);
+	public Set<DirectedWeightedEdge> getOutgoingEdges(final Node source);
 
 	/**
 	 * Returns whether the node has the given incoming edge or not.
@@ -103,7 +103,7 @@ public interface IPathNetwork {
 	 * @return <tt>True</tt> if the node has the incoming edge, <tt>false</tt>
 	 *         otherwise
 	 */
-	public boolean hasIncomingEdge(final Node destination, final IncomingEdge incomingEdge);
+	public boolean hasIncomingEdge(final Node destination, final DirectedWeightedEdge incomingEdge);
 
 	/**
 	 * Returns whether the node has the given outgoing edge or not.
@@ -115,7 +115,7 @@ public interface IPathNetwork {
 	 * @return <tt>True</tt> if the node has the outgoing edge, <tt>false</tt>
 	 *         otherwise
 	 */
-	public boolean hasOutgoingEdge(final Node source, final OutgoingEdge outgoingEdge);
+	public boolean hasOutgoingEdge(final Node source, final DirectedWeightedEdge outgoingEdge);
 
 	/**
 	 * Reduces the graph to its largest strongly connected component. Inside
