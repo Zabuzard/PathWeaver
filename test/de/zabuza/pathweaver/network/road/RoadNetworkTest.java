@@ -15,7 +15,7 @@ import de.zabuza.pathweaver.network.Node;
 /**
  * Test for {@link RoadNetwork}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadNetworkTest {

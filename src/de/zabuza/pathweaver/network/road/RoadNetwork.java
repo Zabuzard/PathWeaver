@@ -17,7 +17,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * A path network which consists of roads and road crossings. The cost of a road
  * is measured in seconds.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadNetwork extends PathNetwork {

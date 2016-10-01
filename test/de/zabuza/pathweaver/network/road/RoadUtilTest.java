@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Test for {@link RoadUtil}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadUtilTest {

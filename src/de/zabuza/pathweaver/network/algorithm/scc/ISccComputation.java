@@ -11,7 +11,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * Interface for algorithm which solve strongly connected component computation
  * tasks in {@link PathNetwork}s.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public interface ISccComputation {

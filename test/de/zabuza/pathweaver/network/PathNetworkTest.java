@@ -13,7 +13,7 @@ import org.junit.rules.ExpectedException;
 /**
  * Test for {@link PathNetwork}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class PathNetworkTest {

@@ -10,7 +10,7 @@ import de.zabuza.pathweaver.network.algorithm.shortestpath.TentativeNodeContaine
 /**
  * Test for {@link TentativeNodeContainer}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class TentativeCostNodeContainerTest {

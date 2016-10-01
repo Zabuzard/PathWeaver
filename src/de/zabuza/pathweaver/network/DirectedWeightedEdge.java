@@ -3,7 +3,7 @@ package de.zabuza.pathweaver.network;
 /**
  * A class which represents directed edges in a {@link PathNetwork}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class DirectedWeightedEdge {

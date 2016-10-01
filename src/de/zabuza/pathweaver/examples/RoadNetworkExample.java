@@ -10,7 +10,7 @@ import de.zabuza.pathweaver.network.road.RoadNetwork;
  * Class which demonstrates the usage of reading an OSM-File into a road
  * network.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadNetworkExample {

@@ -16,7 +16,7 @@ import de.zabuza.pathweaver.network.algorithm.shortestpath.DijkstraShortestPathC
 /**
  * Test for {@link DijkstraShortestPathComputation}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class DijkstraShortestPathComputationTest {

@@ -19,7 +19,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * Dijkstras shortest path algorithm which solves shortest path computation
  * tasks in {@link PathNetwork}s.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public class DijkstraShortestPathComputation implements IShortestPathComputation {

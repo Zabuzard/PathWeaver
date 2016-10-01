@@ -3,7 +3,7 @@ package de.zabuza.pathweaver.network;
 /**
  * A node object which is identified by an Id.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public class Node {

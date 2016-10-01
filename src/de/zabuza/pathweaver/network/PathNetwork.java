@@ -19,7 +19,7 @@ import java.util.Set;
  * nodes. Edges have costs for using them. The network can be used for computing
  * shortest paths and similar tasks.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public class PathNetwork implements IPathNetwork {

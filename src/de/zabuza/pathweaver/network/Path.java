@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a path from a source node to a destination using edges between
  * nodes. It has properties like a length and a total cost.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class Path {

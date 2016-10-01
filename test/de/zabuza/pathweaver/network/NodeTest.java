@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Test for {@link Node}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class NodeTest {

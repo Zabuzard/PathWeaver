@@ -7,7 +7,7 @@ import java.util.ListIterator;
 /**
  * An iterator which traverses the elements in reversed order.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  * @param <E>
  *            The class of the objects the iterator contains

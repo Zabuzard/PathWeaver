@@ -5,7 +5,7 @@ import de.zabuza.pathweaver.network.Node;
 /**
  * Class for nodes that represent geographical road crossings.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public class RoadNode extends Node {

@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * Test for {@link Road}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadTest {

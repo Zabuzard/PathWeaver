@@ -16,7 +16,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * Tarjans strongly connected component algorithm which solves strongly
  * connected component computation tasks in {@link PathNetwork}s.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class TarjanSccComputation implements ISccComputation {

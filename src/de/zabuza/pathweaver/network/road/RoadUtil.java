@@ -3,7 +3,7 @@ package de.zabuza.pathweaver.network.road;
 /**
  * Utility class which offers methods useful for road networks.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class RoadUtil {

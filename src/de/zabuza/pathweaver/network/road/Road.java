@@ -9,7 +9,7 @@ import de.zabuza.pathweaver.util.ReverseIterator;
 /**
  * Data container used for constructing roads.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class Road {

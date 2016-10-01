@@ -3,7 +3,7 @@ package de.zabuza.pathweaver.network.road;
 /**
  * Types of roads.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public enum ERoadType {

@@ -6,7 +6,7 @@ import de.zabuza.pathweaver.network.Node;
 /**
  * Container which assigns a given node tentative data.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class TentativeNodeContainer implements Comparable<TentativeNodeContainer> {

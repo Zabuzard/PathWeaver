@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Test for {@link ReverseIterator}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class ReverseIteratorTest {

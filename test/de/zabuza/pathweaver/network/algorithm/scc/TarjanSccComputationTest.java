@@ -12,7 +12,7 @@ import de.zabuza.pathweaver.network.PathNetwork;
 /**
  * Test for {@link TarjanSccComputation}.
  * 
- * @author Zabuza
+ * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
 public final class TarjanSccComputationTest {
