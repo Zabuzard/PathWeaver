@@ -263,7 +263,6 @@ public final class RoadNetwork extends PathNetwork {
 	 *            The road to add
 	 */
 	public void addRoad(final Road road) {
-		// TODO Do something with the road id
 		ERoadType type = road.getRoadType();
 		boolean isOneWay = road.isOneway();
 

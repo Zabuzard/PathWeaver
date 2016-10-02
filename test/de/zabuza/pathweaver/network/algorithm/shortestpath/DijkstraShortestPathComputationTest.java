@@ -64,7 +64,7 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Path path = computation.computeShortestPath(firstNode, fourthNode);
+		Path path = computation.computeShortestPath(firstNode, fourthNode).get();
 
 		Assert.assertEquals(3, path.getCost(), 0);
 		Assert.assertEquals(firstNode, path.getSource());
@@ -136,7 +136,7 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Assert.assertEquals(3, computation.computeShortestPathCost(firstNode, fourthNode), 0);
+		Assert.assertEquals(3, computation.computeShortestPathCost(firstNode, fourthNode).get(), 0);
 	}
 
 	/**

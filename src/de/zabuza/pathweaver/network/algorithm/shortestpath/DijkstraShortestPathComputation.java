@@ -46,9 +46,11 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * de.zabuza.pathweaver.network.Node)
 	 */
 	@Override
-	public Path computeShortestPath(final Node source, final Node destination) {
+	public Optional<Path> computeShortestPath(final Node source, final Node destination) {
 		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
-		assert (nodeToData.containsKey(destination));
+		if (!nodeToData.containsKey(destination)) {
+			return Optional.empty();
+		}
 
 		LinkedList<DirectedWeightedEdge> edgesBackwards = new LinkedList<>();
 		Node currentNode = destination;
@@ -67,7 +69,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 		}
 		assert (path.getSource() == source && path.getDestination() == destination);
 
-		return path;
+		return Optional.of(path);
 	}
 
 	/*
@@ -78,10 +80,13 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * de.zabuza.pathweaver.network.Node)
 	 */
 	@Override
-	public float computeShortestPathCost(Node source, Node destination) {
+	public Optional<Float> computeShortestPathCost(Node source, Node destination) {
 		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
-		assert (nodeToData.containsKey(destination));
-		return nodeToData.get(destination).getTentativeCost();
+		if (nodeToData.containsKey(destination)) {
+			return Optional.of(nodeToData.get(destination).getTentativeCost());
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	/*

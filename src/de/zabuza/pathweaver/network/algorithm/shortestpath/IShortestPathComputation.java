@@ -1,6 +1,7 @@
 package de.zabuza.pathweaver.network.algorithm.shortestpath;
 
 import java.util.Map;
+import java.util.Optional;
 
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
@@ -23,9 +24,10 @@ public interface IShortestPathComputation {
 	 *            Source node to compute the shortest path from
 	 * @param destination
 	 *            Destination node to compute the shortest path to
-	 * @return The shortest path between the given source and destination
+	 * @return The shortest path between the given source and destination if
+	 *         present, if not present there is no such path.
 	 */
-	public Path computeShortestPath(final Node source, final Node destination);
+	public Optional<Path> computeShortestPath(final Node source, final Node destination);
 
 	/**
 	 * Computes the costs of the shortest path in the network specified by
@@ -35,9 +37,10 @@ public interface IShortestPathComputation {
 	 *            Source node to compute the shortest path from
 	 * @param destination
 	 *            Destination node to compute the shortest path to
-	 * @return The cost of the shortest path
+	 * @return The cost of the shortest path if present, if not present there is
+	 *         no such path.
 	 */
-	public float computeShortestPathCost(final Node source, final Node destination);
+	public Optional<Float> computeShortestPathCost(final Node source, final Node destination);
 
 	/**
 	 * Computes the costs of the shortest path in the network specified by
