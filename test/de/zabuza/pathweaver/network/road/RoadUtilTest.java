@@ -30,6 +30,23 @@ public final class RoadUtilTest {
 	}
 
 	/**
+	 * Test method for {@link RoadUtil#getFastestRoadType()}.
+	 */
+	@Test
+	public void testGetFastestRoadType() {
+		float speedAccordingToMethod = RoadUtil.getAverageSpeedOfRoadType(RoadUtil.getFastestRoadType());
+		float fastestKnownSpeed = -1;
+		for (ERoadType type : ERoadType.values()) {
+			float speedOfType = RoadUtil.getAverageSpeedOfRoadType(type);
+			if (speedOfType > fastestKnownSpeed) {
+				fastestKnownSpeed = speedOfType;
+			}
+		}
+
+		Assert.assertEquals(fastestKnownSpeed, speedAccordingToMethod, 0);
+	}
+
+	/**
 	 * Test method for {@link RoadUtil#getRoadTypeFromOsm(String)}.
 	 */
 	@Test

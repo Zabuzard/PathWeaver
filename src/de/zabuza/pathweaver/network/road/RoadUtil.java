@@ -169,6 +169,15 @@ public final class RoadUtil {
 	}
 
 	/**
+	 * Gets the road type with the fastest average speed.
+	 * 
+	 * @return The road type with the fastest average speed
+	 */
+	public static ERoadType getFastestRoadType() {
+		return ERoadType.MOTORWAY;
+	}
+
+	/**
 	 * Gets the road type corresponding to the type of the OSM-format.
 	 * 
 	 * @param osmRoadType

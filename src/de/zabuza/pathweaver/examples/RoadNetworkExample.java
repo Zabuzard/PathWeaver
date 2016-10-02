@@ -7,8 +7,9 @@ import java.util.Optional;
 import java.util.Random;
 
 import de.zabuza.pathweaver.network.Node;
-import de.zabuza.pathweaver.network.algorithm.shortestpath.DijkstraShortestPathComputation;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.AStarShortestPathComputation;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.IShortestPathComputation;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.StraightLineRoadTimeMetric;
 import de.zabuza.pathweaver.network.road.RoadNetwork;
 
 /**
@@ -51,7 +52,8 @@ public final class RoadNetworkExample {
 //		System.out.println("Time needed: " + durationSeconds + " seconds");
 
 		System.out.println("Preparing random queries...");
-		IShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+//		IShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		IShortestPathComputation computation = new AStarShortestPathComputation(network, new StraightLineRoadTimeMetric());
 		Object[] nodes = network.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 		Random rnd = new Random();
