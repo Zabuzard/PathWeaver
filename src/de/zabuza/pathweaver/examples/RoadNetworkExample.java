@@ -31,38 +31,57 @@ public final class RoadNetworkExample {
 	 *             If the given file was not found
 	 */
 	public static void main(final String[] args) throws FileNotFoundException, IOException {
+		// Loading file
 		System.out.println("Loading file...");
-		File osmFile = new File("res/examples/baden-wuerttemberg.osm");
+		File osmFile = new File("res/examples/saarland.osm");
 
+		// Creating road network
 		System.out.println("Creating road network...");
 		long startTimestamp = System.currentTimeMillis();
 		RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
 		long endTimestamp = System.currentTimeMillis();
 		float durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
-		System.out.println("Time needed: " + durationSeconds + " seconds");
+		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("\tTime needed: " + durationSeconds + " seconds");
 
+		// Reducing to largest SCC
 		System.out.println("Reducing to largest SCC...");
 		startTimestamp = System.currentTimeMillis();
 		network.reduceToLargestScc();
 		endTimestamp = System.currentTimeMillis();
 		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
-		System.out.println("Time needed: " + durationSeconds + " seconds");
+		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("\tTime needed: " + durationSeconds + " seconds");
+		
+		// Reducing to largest SCC
+		System.out.println("Reversing...");
+		startTimestamp = System.currentTimeMillis();
+		network.reverse();
+		endTimestamp = System.currentTimeMillis();
+		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
+		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("\tTime needed: " + durationSeconds + " seconds");
+		System.out.println("Reversing again...");
+		startTimestamp = System.currentTimeMillis();
+		network.reverse();
+		endTimestamp = System.currentTimeMillis();
+		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
+		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("\tTime needed: " + durationSeconds + " seconds");
 
+		// Preparing random queries
 		System.out.println("Preparing random queries...");
-		// IShortestPathComputation computation = new
-		// DijkstraShortestPathComputation(network);
 		IShortestPathComputation computation = new AStarShortestPathComputation(network,
 				new StraightLineRoadTimeMetric());
 		Object[] nodes = network.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 		Random rnd = new Random();
 		int queryAmount = 100;
-		int logEvery = 5;
+		int logEvery = 10;
 		long totalRunningTime = 0;
 		double totalCost = 0.0;
 
+		// Starting random queries
 		System.out.println("Starting random queries...");
 		for (int i = 1; i <= queryAmount; i++) {
 			int sourceIndex = rnd.nextInt(amountOfNodes);
@@ -74,8 +93,6 @@ public final class RoadNetworkExample {
 			Optional<Float> result = computation.computeShortestPathCost(source, destination);
 			// Ignore queries where source can not reach destination
 			if (!result.isPresent()) {
-				// TODO REmove print
-				System.out.println("\t\tIgnoring query, not possible.");
 				i--;
 				continue;
 			}
@@ -84,13 +101,12 @@ public final class RoadNetworkExample {
 			totalRunningTime += (endTimestamp - startTimestamp);
 
 			if (i % logEvery == 0) {
-				System.out.println("\tProcessed " + i + " queries.");
+				System.out.println("\t\tProcessed " + i + " queries.");
 			}
 		}
-
 		double averageCost = totalCost / queryAmount;
 		float averageTimeInSeconds = (totalRunningTime / queryAmount + 0.0f) / 1000;
-		System.out.println("Average cost: " + averageCost);
-		System.out.println("Average time: " + averageTimeInSeconds);
+		System.out.println("\tAverage cost: " + averageCost);
+		System.out.println("\tAverage time: " + averageTimeInSeconds);
 	}
 }
