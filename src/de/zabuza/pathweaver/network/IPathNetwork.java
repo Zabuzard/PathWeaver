@@ -142,4 +142,9 @@ public interface IPathNetwork {
 	 *             If the node is not contained in the network
 	 */
 	public void removeNode(final Node node) throws NoSuchElementException;
+
+	/**
+	 * Reverses the network, i.e. changing the direction of every edge.
+	 */
+	public void reverse();
 }

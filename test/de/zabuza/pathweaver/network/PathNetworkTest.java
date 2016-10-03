@@ -457,6 +457,32 @@ public final class PathNetworkTest {
 	}
 
 	/**
+	 * Test method for {@link PathNetwork#reverse()}.
+	 */
+	@Test
+	public void testReverse() {
+		PathNetwork network = new PathNetwork();
+		Node firstNode = new Node(0);
+		Node secondNode = new Node(1);
+		int cost = 1;
+
+		network.addNode(firstNode);
+		network.addNode(secondNode);
+		network.addEdge(firstNode, firstNode, cost);
+		network.addEdge(firstNode, secondNode, cost);
+
+		network.reverse();
+
+		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(firstNode).iterator().next();
+		DirectedWeightedEdge secondEdge = network.getOutgoingEdges(secondNode).iterator().next();
+
+		Assert.assertEquals(firstNode, firstEdge.getSource());
+		Assert.assertEquals(firstNode, firstEdge.getDestination());
+		Assert.assertEquals(secondNode, secondEdge.getSource());
+		Assert.assertEquals(firstNode, secondEdge.getDestination());
+	}
+
+	/**
 	 * Test method for {@link PathNetwork#toString()}.
 	 */
 	@Test

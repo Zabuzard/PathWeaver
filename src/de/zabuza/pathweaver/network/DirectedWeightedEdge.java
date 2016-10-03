@@ -17,11 +17,15 @@ public final class DirectedWeightedEdge {
 	 * The cost of this edge which must be greater than <tt>zero</tt>.
 	 */
 	private final float mCost;
-
 	/**
 	 * The destination of this directed edge.
 	 */
 	private final Node mDestination;
+
+	/**
+	 * Whether the edge is reversed or not.
+	 */
+	private boolean mIsReversed;
 	/**
 	 * The source of this directed edge.
 	 */
@@ -47,6 +51,7 @@ public final class DirectedWeightedEdge {
 		mCost = cost;
 		mSource = source;
 		mDestination = destination;
+		mIsReversed = false;
 	}
 
 	/**
@@ -64,7 +69,11 @@ public final class DirectedWeightedEdge {
 	 * @return The destination of this directed edge.
 	 */
 	public Node getDestination() {
-		return mDestination;
+		if (!mIsReversed) {
+			return mDestination;
+		} else {
+			return mSource;
+		}
 	}
 
 	/**
@@ -73,6 +82,18 @@ public final class DirectedWeightedEdge {
 	 * @return The source of this directed edge.
 	 */
 	public Node getSource() {
-		return mSource;
+		if (!mIsReversed) {
+			return mSource;
+		} else {
+			return mDestination;
+		}
+	}
+
+	/**
+	 * Reverses the edge. This changes its direction, i.e. source to destination
+	 * and vice versa.
+	 */
+	public void reverse() {
+		mIsReversed = !mIsReversed;
 	}
 }

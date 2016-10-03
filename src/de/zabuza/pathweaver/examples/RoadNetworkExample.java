@@ -51,8 +51,10 @@ public final class RoadNetworkExample {
 		System.out.println("Time needed: " + durationSeconds + " seconds");
 
 		System.out.println("Preparing random queries...");
-//		IShortestPathComputation computation = new DijkstraShortestPathComputation(network);
-		IShortestPathComputation computation = new AStarShortestPathComputation(network, new StraightLineRoadTimeMetric());
+		// IShortestPathComputation computation = new
+		// DijkstraShortestPathComputation(network);
+		IShortestPathComputation computation = new AStarShortestPathComputation(network,
+				new StraightLineRoadTimeMetric());
 		Object[] nodes = network.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 		Random rnd = new Random();

@@ -35,7 +35,7 @@ public final class StraightLineRoadTimeMetricTest {
 		float expectedDistance = 109486.33f;
 		Assert.assertEquals(RoadUtil.getTravelTime(expectedDistance, expectedSpeed),
 				metric.distance(firstNode, secondNode), 0);
-		
+
 		Node thirdNode = new Node(2);
 		Node fourthNode = new Node(3);
 		exception.expect(IllegalArgumentException.class);

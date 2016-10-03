@@ -47,12 +47,12 @@ public class PathNetwork implements IPathNetwork {
 	/**
 	 * Maps nodes to their incoming edges.
 	 */
-	private final HashMap<Node, HashSet<DirectedWeightedEdge>> mNodeToIncomingEdges;
+	private HashMap<Node, HashSet<DirectedWeightedEdge>> mNodeToIncomingEdges;
 
 	/**
 	 * Maps nodes to their outgoing edges.
 	 */
-	private final HashMap<Node, HashSet<DirectedWeightedEdge>> mNodeToOutgoingEdges;
+	private HashMap<Node, HashSet<DirectedWeightedEdge>> mNodeToOutgoingEdges;
 
 	/**
 	 * Creates a new empty path network.
@@ -287,6 +287,26 @@ public class PathNetwork implements IPathNetwork {
 		mNodeToOutgoingEdges.remove(node);
 		mIdToNodes.remove(node.getId());
 		mAmountOfNodes--;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.IPathNetwork#reverse()
+	 */
+	@Override
+	public void reverse() {
+		// Iterate every edge exactly one time and reverse it
+		for (HashSet<DirectedWeightedEdge> edges : mNodeToOutgoingEdges.values()) {
+			for (DirectedWeightedEdge edge : edges) {
+				edge.reverse();
+			}
+		}
+
+		// Exchange the internal edge maps
+		HashMap<Node, HashSet<DirectedWeightedEdge>> tmpNodeToIncomingEdges = mNodeToIncomingEdges;
+		mNodeToIncomingEdges = mNodeToOutgoingEdges;
+		mNodeToOutgoingEdges = tmpNodeToIncomingEdges;
 	}
 
 	/*

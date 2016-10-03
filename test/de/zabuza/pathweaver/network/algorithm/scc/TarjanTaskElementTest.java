@@ -27,21 +27,21 @@ public final class TarjanTaskElementTest {
 	public void testGetCurrentTask() {
 		Node node = new Node(0);
 		TarjanTaskElement taskElement = new TarjanTaskElement(node);
-		
+
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.INDEX, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.GET_SUCCESSORS, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.SET_LOWLINK, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
-		
+
 		exception.expect(IllegalStateException.class);
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
@@ -88,21 +88,21 @@ public final class TarjanTaskElementTest {
 	public void testReportTaskAccomplished() {
 		Node node = new Node(0);
 		TarjanTaskElement taskElement = new TarjanTaskElement(node);
-		
+
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.INDEX, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.GET_SUCCESSORS, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.SET_LOWLINK, taskElement.getCurrentTask().get());
-		
+
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
-		
+
 		exception.expect(IllegalStateException.class);
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
