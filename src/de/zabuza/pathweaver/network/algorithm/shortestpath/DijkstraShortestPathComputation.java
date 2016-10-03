@@ -47,14 +47,26 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Optional<Path> computeShortestPath(final Node source, final Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
+		return computeShortestPath(Collections.singleton(source), destination);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.shortestpath.
+	 * IShortestPathComputation#computeShortestPath(java.util.List,
+	 * de.zabuza.pathweaver.network.Node)
+	 */
+	@Override
+	public Optional<Path> computeShortestPath(final Set<Node> sources, final Node destination) {
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		if (!nodeToData.containsKey(destination)) {
 			return Optional.empty();
 		}
 
 		LinkedList<DirectedWeightedEdge> edgesBackwards = new LinkedList<>();
 		Node currentNode = destination;
-		while (currentNode != source) {
+		while (!sources.contains(currentNode)) {
 			TentativeNodeContainer container = nodeToData.get(currentNode);
 			DirectedWeightedEdge parentEdge = container.getParentEdge();
 			edgesBackwards.add(parentEdge);
@@ -62,12 +74,12 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			currentNode = parentEdge.getSource();
 		}
 
-		Path path = new Path(source);
+		Path path = new Path(currentNode);
 		Collections.reverse(edgesBackwards);
 		while (!edgesBackwards.isEmpty()) {
 			path.addEdge(edgesBackwards.poll());
 		}
-		assert (path.getSource() == source && path.getDestination() == destination);
+		assert (path.getSource() == currentNode && path.getDestination() == destination);
 
 		return Optional.of(path);
 	}
@@ -80,8 +92,20 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * de.zabuza.pathweaver.network.Node)
 	 */
 	@Override
-	public Optional<Float> computeShortestPathCost(Node source, Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.of(destination));
+	public Optional<Float> computeShortestPathCost(final Node source, final Node destination) {
+		return computeShortestPathCost(Collections.singleton(source), destination);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.shortestpath.
+	 * IShortestPathComputation#computeShortestPathCost(java.util.List,
+	 * de.zabuza.pathweaver.network.Node)
+	 */
+	@Override
+	public Optional<Float> computeShortestPathCost(final Set<Node> sources, final Node destination) {
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		if (nodeToData.containsKey(destination)) {
 			return Optional.of(nodeToData.get(destination).getTentativeCost());
 		} else {
@@ -96,8 +120,20 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * computeShortestPathCostsReachable(de.zabuza.pathweaver.network.Node)
 	 */
 	@Override
-	public Map<Node, Float> computeShortestPathCostsReachable(Node source) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(source, Optional.empty());
+	public Map<Node, Float> computeShortestPathCostsReachable(final Node source) {
+		return computeShortestPathCostsReachable(Collections.singleton(source));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.shortestpath.
+	 * IShortestPathComputation#computeShortestPathCostsReachable(java.util.
+	 * List)
+	 */
+	@Override
+	public Map<Node, Float> computeShortestPathCostsReachable(final Set<Node> sources) {
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
 		Map<Node, Float> nodeToCost = new HashMap<Node, Float>();
 		for (Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
 			nodeToCost.put(entry.getKey(), entry.getValue().getTentativeCost());
@@ -117,37 +153,41 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	}
 
 	/**
-	 * Helper method for computing shortest paths between the source and a given
-	 * destination. If the destination is not given, then all, from source,
-	 * reachable nodes get considered as destinations.
+	 * Helper method for computing shortest paths between the set of sources and
+	 * a given destination. If the destination is not given, then all, from
+	 * source, reachable nodes get considered as destinations.
 	 * 
-	 * @param source
-	 *            Source node to compute the shortest path from
+	 * @param sources
+	 *            Set of source nodes to compute the shortest path from
 	 * @param destination
 	 *            Destination node to compute the shortest path to, if present.
-	 *            If not present, then all, from source, reachable nodes get
-	 *            considered as destinations.
-	 * @return A mapping of all, from source, reachable destination nodes to the
-	 *         data container of the shortest paths from the source to the given
-	 *         destinations. If a destination is given, then it will also be
-	 *         contained in this mapping and the rest will be nodes that are
-	 *         reachable in shorter time than this destination.
+	 *            If not present, then all, from the set of sources, reachable
+	 *            nodes get considered as destinations.
+	 * @return A mapping of all, from the set of sources, reachable destination
+	 *         nodes to the data container of the shortest paths from the
+	 *         sources to the given destinations. If a destination is given,
+	 *         then it will also be contained in this mapping and the rest will
+	 *         be nodes that are reachable in shorter time than this
+	 *         destination.
 	 */
-	private Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Node source,
+	private Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Set<Node> sources,
 			final Optional<Node> destination) {
 		HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
 		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<TentativeNodeContainer>();
 		HashMap<Node, TentativeNodeContainer> nodeToSettledContainer = new HashMap<>();
 
-		// Start with the source as initial node
-		TentativeNodeContainer sourceContainer;
-		if (destination.isPresent()) {
-			sourceContainer = new TentativeNodeContainer(source, null, 0, getEstCostToDest(source, destination.get()));
-		} else {
-			sourceContainer = new TentativeNodeContainer(source, null, 0);
+		// Start with the set of sources as initial node
+		for (Node source : sources) {
+			TentativeNodeContainer sourceContainer;
+			if (destination.isPresent()) {
+				sourceContainer = new TentativeNodeContainer(source, null, 0,
+						getEstCostToDest(source, destination.get()));
+			} else {
+				sourceContainer = new TentativeNodeContainer(source, null, 0);
+			}
+			nodeToContainer.put(source, sourceContainer);
+			activeNodes.add(sourceContainer);
 		}
-		nodeToContainer.put(source, sourceContainer);
-		activeNodes.add(sourceContainer);
 
 		while (!activeNodes.isEmpty()) {
 			// Poll the node with the lowest cost
