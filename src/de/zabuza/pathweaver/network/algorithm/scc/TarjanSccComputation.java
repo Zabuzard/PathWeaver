@@ -19,48 +19,64 @@ import de.zabuza.pathweaver.network.PathNetwork;
  * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
-public final class TarjanSccComputation implements ISccComputation {
+public class TarjanSccComputation implements ISccComputation {
 	/**
 	 * The index for nodes to start with.
 	 */
 	private static final int STARTING_INDEX = 0;
 	/**
-	 * The current index for nodes to use.
+	 * The currently largest known SCC.
 	 */
-	private int mCurrentIndex;
+	private StronglyConnectedComponent mLargestKnownScc;
 	/**
-	 * A deque which contains nodes to work.
+	 * The size of the currently largest known SCC.
 	 */
-	private Deque<Node> mDeque;
-	/**
-	 * Set of nodes that currently are in the deque.
-	 */
-	private HashSet<Node> mInDeque;
-	/**
-	 * The path network this object works on.
-	 */
-	private final IPathNetwork mNetwork;
-	/**
-	 * Maps nodes to their assigned index.
-	 */
-	private HashMap<Node, Integer> mNodeToIndex;
-	/**
-	 * Maps nodes to their low link value.
-	 */
-	private HashMap<Node, Integer> mNodeToLowLink;
+	private int mLargestKnownSccSize;
 	/**
 	 * The current list of known SCCs.
 	 */
-	private List<Set<Node>> mSccs;
+	private List<StronglyConnectedComponent> mSccs;
+	/**
+	 * The current index for nodes to use.
+	 */
+	protected int mCurrentIndex;
+	/**
+	 * A deque which contains nodes to process.
+	 */
+	protected Deque<Node> mDeque;
+	/**
+	 * Set of nodes that currently are in the deque.
+	 */
+	protected HashSet<Node> mInDeque;
+	/**
+	 * The path network this object works on.
+	 */
+	protected final IPathNetwork mNetwork;
+	/**
+	 * Maps nodes to their assigned index.
+	 */
+	protected HashMap<Node, Integer> mNodeToIndex;
+	/**
+	 * Maps nodes to their low link value.
+	 */
+	protected HashMap<Node, Integer> mNodeToLowLink;
 
 	/**
-	 * Creates a new strongly connected component computation object
+	 * Creates a new strongly connected component computation object and starts
+	 * the computation.
 	 * 
 	 * @param network
 	 *            The network to work on
 	 */
 	public TarjanSccComputation(final IPathNetwork network) {
 		mNetwork = network;
+
+		clear();
+		for (Node node : getPathNetwork().getNodes()) {
+			if (!mNodeToIndex.containsKey(node)) {
+				strongConnect(node);
+			}
+		}
 	}
 
 	/*
@@ -71,17 +87,8 @@ public final class TarjanSccComputation implements ISccComputation {
 	 * )
 	 */
 	@Override
-	public Set<Node> getLargestScc() {
-		int largestKnownSize = 0;
-		Set<Node> largestKnownScc = null;
-		for (Set<Node> scc : getSccs()) {
-			int size = scc.size();
-			if (size > largestKnownSize) {
-				largestKnownScc = scc;
-				largestKnownSize = size;
-			}
-		}
-		return largestKnownScc;
+	public StronglyConnectedComponent getLargestScc() {
+		return mLargestKnownScc;
 	}
 
 	/*
@@ -102,28 +109,66 @@ public final class TarjanSccComputation implements ISccComputation {
 	 * @see de.zabuza.pathweaver.network.algorithm.scc.ISccComputation#getSccs()
 	 */
 	@Override
-	public List<Set<Node>> getSccs() {
-		clear();
-		for (Node node : getPathNetwork().getNodes()) {
-			if (!mNodeToIndex.containsKey(node)) {
-				strongConnect(node);
-			}
-		}
-
+	public List<StronglyConnectedComponent> getSccs() {
 		return mSccs;
 	}
 
 	/**
-	 * Clears the internal used structures and prepares them for a new task.
+	 * Processes the successor of the given node.
+	 * 
+	 * @param node
+	 *            Node to process
+	 * @param successor
+	 *            Successor to process
 	 */
-	private void clear() {
+	private void processSuccessor(final Node node, final Node successor) {
+		if (!mNodeToIndex.containsKey(successor)) {
+			strongConnect(successor);
+			updateLowLink(node, mNodeToLowLink.get(successor));
+		} else if (mInDeque.contains(successor)) {
+			updateLowLink(node, mNodeToIndex.get(successor));
+		}
+	}
+
+	/**
+	 * Clears the internal used structures and prepares them for the
+	 * computation.
+	 */
+	protected void clear() {
 		IPathNetwork network = getPathNetwork();
 		mNodeToIndex = new HashMap<>(network.getSize());
 		mNodeToLowLink = new HashMap<>(network.getSize());
-		mDeque = new LinkedList<Node>();
-		mInDeque = new HashSet<Node>();
+		mDeque = new LinkedList<>();
+		mInDeque = new HashSet<>();
 		mSccs = new LinkedList<>();
 		mCurrentIndex = STARTING_INDEX;
+		mLargestKnownSccSize = -1;
+	}
+
+	/**
+	 * Establishes a new SCC using the elements currently in the deque.
+	 * 
+	 * @param rootNode
+	 *            The root node of this SCC
+	 */
+	protected void establishScc(final Node rootNode) {
+		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		Node dequeElement;
+		do {
+			dequeElement = mDeque.pop();
+			mInDeque.remove(dequeElement);
+			scc.addNode(dequeElement);
+		} while (!rootNode.equals(dequeElement));
+
+		scc.setRootNode(rootNode);
+		mSccs.add(scc);
+
+		// Update largest known values
+		int sccSize = scc.getSize();
+		if (sccSize > mLargestKnownSccSize) {
+			mLargestKnownSccSize = sccSize;
+			mLargestKnownScc = scc;
+		}
 	}
 
 	/**
@@ -133,11 +178,11 @@ public final class TarjanSccComputation implements ISccComputation {
 	 * @param node
 	 *            Node to connect
 	 */
-	private void strongConnect(final Node node) {
+	protected void strongConnect(final Node node) {
+		assert (!mNodeToIndex.containsKey(node) && !mNodeToLowLink.containsKey(node));
 		IPathNetwork network = getPathNetwork();
 		mNodeToIndex.put(node, mCurrentIndex);
 		mNodeToLowLink.put(node, mCurrentIndex);
-		assert (!mNodeToIndex.containsKey(node) && mNodeToLowLink.containsKey(node));
 		mCurrentIndex++;
 
 		mDeque.push(node);
@@ -145,31 +190,31 @@ public final class TarjanSccComputation implements ISccComputation {
 
 		Set<DirectedWeightedEdge> outgoingEdges = network.getOutgoingEdges(node);
 
+		// Start a depth-first-search over all successors
 		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 			Node successor = outgoingEdge.getDestination();
-			if (!mNodeToIndex.containsKey(successor)) {
-				strongConnect(successor);
-				if (mNodeToLowLink.get(successor) < mNodeToLowLink.get(node)) {
-					mNodeToLowLink.put(node, mNodeToLowLink.get(successor));
-				}
-			} else if (mInDeque.contains(successor)) {
-				if (mNodeToIndex.get(successor) < mNodeToLowLink.get(node)) {
-					mNodeToLowLink.put(node, mNodeToIndex.get(successor));
-				}
-			}
+			processSuccessor(node, successor);
 		}
 
+		// At this point all, from this node, reachable nodes where visited.
+		// If this values low link value is equals to its index, then it is the
+		// root of this SCC.
 		if (mNodeToIndex.get(node).equals(mNodeToLowLink.get(node))) {
-			HashSet<Node> scc = new HashSet<>();
-			Node element;
-			do {
-				element = mDeque.pop();
-				mInDeque.remove(element);
-				scc.add(element);
-			} while (!element.equals(node));
-
-			mSccs.add(scc);
+			establishScc(node);
 		}
 	}
 
+	/**
+	 * Updates the low link value of the given node if the value candidate is
+	 * smaller then the currently set value.
+	 * 
+	 * @param node
+	 *            Node to update its low link value
+	 * @param valueCandidate
+	 *            The candidate for the new value
+	 */
+	protected void updateLowLink(final Node node, final int valueCandidate) {
+		int minValue = Math.min(mNodeToLowLink.get(node), valueCandidate);
+		mNodeToLowLink.put(node, minValue);
+	}
 }

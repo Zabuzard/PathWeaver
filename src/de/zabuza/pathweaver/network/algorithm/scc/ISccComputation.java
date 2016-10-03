@@ -1,10 +1,8 @@
 package de.zabuza.pathweaver.network.algorithm.scc;
 
 import java.util.List;
-import java.util.Set;
 
 import de.zabuza.pathweaver.network.IPathNetwork;
-import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
 
 /**
@@ -22,7 +20,7 @@ public interface ISccComputation {
 	 * 
 	 * @return The largest SCC of the graph
 	 */
-	public Set<Node> getLargestScc();
+	public StronglyConnectedComponent getLargestScc();
 
 	/**
 	 * Gets the path network this object works on.
@@ -38,5 +36,5 @@ public interface ISccComputation {
 	 * 
 	 * @return A list of all SCCs of the graph
 	 */
-	public List<Set<Node>> getSccs();
+	public List<StronglyConnectedComponent> getSccs();
 }

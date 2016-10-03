@@ -52,39 +52,30 @@ public final class RoadNetworkTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link RoadNetwork#addRoad(RoadNode, RoadNode, ERoadType)}.
+	 * Test method for {@link RoadNetwork#addRoadNode(RoadNode)}.
 	 */
 	@Test
-	public void testAddRoad() {
+	public void testAddRoadNode() {
 		RoadNetwork network = new RoadNetwork();
-		RoadNode source = new RoadNode(0, 49.3413853f, 7.3014897f);
-		RoadNode destination = new RoadNode(1, 49.3080623f, 7.2517281f);
+		RoadNode node = new RoadNode(0, 1, 1);
+		RoadNode anotherNode = new RoadNode(1, 2, 2);
 
-		network.addRoadNode(source);
-		network.addRoadNode(destination);
-		network.addRoad(source, destination, ERoadType.MOTORWAY);
-		network.addRoad(destination, source, ERoadType.PRIMARY);
+		Assert.assertFalse(network.containsNodeId(0));
+		network.addRoadNode(node);
+		Assert.assertTrue(network.containsNodeId(0));
+		network.addRoadNode(anotherNode);
+		Assert.assertTrue(network.containsNodeId(1));
 
-		Assert.assertEquals(2, network.getAmountOfEdges());
-		Set<DirectedWeightedEdge> firstEdges = network.getOutgoingEdges(source);
-		Assert.assertEquals(1, firstEdges.size());
-		DirectedWeightedEdge firstEdge = firstEdges.iterator().next();
-		Assert.assertEquals(destination, firstEdge.getDestination());
-		Assert.assertEquals(169, firstEdge.getCost(), 2);
-
-		Set<DirectedWeightedEdge> secondEdges = network.getOutgoingEdges(destination);
-		Assert.assertEquals(1, secondEdges.size());
-		DirectedWeightedEdge secondEdge = secondEdges.iterator().next();
-		Assert.assertEquals(source, secondEdge.getDestination());
-		Assert.assertEquals(266, secondEdge.getCost(), 2);
+		network.addRoadNode(node);
+		Assert.assertTrue(network.containsNodeId(0));
+		Assert.assertEquals(2, network.getSize());
 	}
 
 	/**
 	 * Test method for {@link RoadNetwork#addRoad(Road)}.
 	 */
 	@Test
-	public void testAddRoad2() {
+	public void testAddRoadRoad() {
 		RoadNetwork network = new RoadNetwork();
 		RoadNode firstNode = new RoadNode(0, 1, 1);
 		RoadNode secondNode = new RoadNode(1, 2, 2);
@@ -116,23 +107,32 @@ public final class RoadNetworkTest {
 	}
 
 	/**
-	 * Test method for {@link RoadNetwork#addRoadNode(RoadNode)}.
+	 * Test method for
+	 * {@link RoadNetwork#addRoad(RoadNode, RoadNode, ERoadType)}.
 	 */
 	@Test
-	public void testAddRoadNode() {
+	public void testAddRoadRoadNodeRoadNodeERoadType() {
 		RoadNetwork network = new RoadNetwork();
-		RoadNode node = new RoadNode(0, 1, 1);
-		RoadNode anotherNode = new RoadNode(1, 2, 2);
+		RoadNode source = new RoadNode(0, 49.3413853f, 7.3014897f);
+		RoadNode destination = new RoadNode(1, 49.3080623f, 7.2517281f);
 
-		Assert.assertFalse(network.containsNodeId(0));
-		network.addRoadNode(node);
-		Assert.assertTrue(network.containsNodeId(0));
-		network.addRoadNode(anotherNode);
-		Assert.assertTrue(network.containsNodeId(1));
+		network.addRoadNode(source);
+		network.addRoadNode(destination);
+		network.addRoad(source, destination, ERoadType.MOTORWAY);
+		network.addRoad(destination, source, ERoadType.PRIMARY);
 
-		network.addRoadNode(node);
-		Assert.assertTrue(network.containsNodeId(0));
-		Assert.assertEquals(2, network.getSize());
+		Assert.assertEquals(2, network.getAmountOfEdges());
+		Set<DirectedWeightedEdge> firstEdges = network.getOutgoingEdges(source);
+		Assert.assertEquals(1, firstEdges.size());
+		DirectedWeightedEdge firstEdge = firstEdges.iterator().next();
+		Assert.assertEquals(destination, firstEdge.getDestination());
+		Assert.assertEquals(169, firstEdge.getCost(), 2);
+
+		Set<DirectedWeightedEdge> secondEdges = network.getOutgoingEdges(destination);
+		Assert.assertEquals(1, secondEdges.size());
+		DirectedWeightedEdge secondEdge = secondEdges.iterator().next();
+		Assert.assertEquals(source, secondEdge.getDestination());
+		Assert.assertEquals(266, secondEdge.getCost(), 2);
 	}
 
 	/**

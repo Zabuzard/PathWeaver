@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import de.zabuza.pathweaver.network.algorithm.scc.ISccComputation;
-import de.zabuza.pathweaver.network.algorithm.scc.TarjanSccComputation;
+import de.zabuza.pathweaver.network.algorithm.scc.StronglyConnectedComponent;
+import de.zabuza.pathweaver.network.algorithm.scc.TarjanNonRecursiveSccComputation;
 
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -236,11 +237,12 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public void reduceToLargestScc() {
-		ISccComputation sccComputation = new TarjanSccComputation(this);
-		Set<Node> largestScc = sccComputation.getLargestScc();
+		ISccComputation sccComputation = new TarjanNonRecursiveSccComputation(this);
+		StronglyConnectedComponent largestScc = sccComputation.getLargestScc();
+		Set<Node> largestSccNodes = largestScc.getNodes();
 		LinkedList<Node> nodesToRemove = new LinkedList<>();
 		for (Node node : getNodes()) {
-			if (largestScc.contains(node)) {
+			if (largestSccNodes.contains(node)) {
 				continue;
 			}
 			nodesToRemove.add(node);

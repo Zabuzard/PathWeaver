@@ -32,7 +32,7 @@ public final class RoadNetworkExample {
 	 */
 	public static void main(final String[] args) throws FileNotFoundException, IOException {
 		System.out.println("Loading file...");
-		File osmFile = new File("res/examples/saarland.osm");
+		File osmFile = new File("res/examples/baden-wuerttemberg.osm");
 
 		System.out.println("Creating road network...");
 		long startTimestamp = System.currentTimeMillis();
@@ -42,14 +42,13 @@ public final class RoadNetworkExample {
 		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
 		System.out.println("Time needed: " + durationSeconds + " seconds");
 
-		// TODO Disabled due to StackOverflow, the graph is too large
-//		System.out.println("Reducing to largest SCC...");
-//		startTimestamp = System.currentTimeMillis();
-//		network.reduceToLargestScc();
-//		endTimestamp = System.currentTimeMillis();
-//		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-//		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
-//		System.out.println("Time needed: " + durationSeconds + " seconds");
+		System.out.println("Reducing to largest SCC...");
+		startTimestamp = System.currentTimeMillis();
+		network.reduceToLargestScc();
+		endTimestamp = System.currentTimeMillis();
+		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
+		System.out.println("Nodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("Time needed: " + durationSeconds + " seconds");
 
 		System.out.println("Preparing random queries...");
 //		IShortestPathComputation computation = new DijkstraShortestPathComputation(network);
@@ -73,6 +72,8 @@ public final class RoadNetworkExample {
 			Optional<Float> result = computation.computeShortestPathCost(source, destination);
 			// Ignore queries where source can not reach destination
 			if (!result.isPresent()) {
+				// TODO REmove print
+				System.out.println("\t\tIgnoring query, not possible.");
 				i--;
 				continue;
 			}

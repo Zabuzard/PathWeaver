@@ -10,15 +10,15 @@ import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
 
 /**
- * Test for {@link TarjanSccComputation}.
+ * Test for {@link TarjanNonRecursiveSccComputation}.
  * 
  * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
-public final class TarjanSccComputationTest {
+public final class TarjanNonRecursiveSccComputationTest {
 
 	/**
-	 * Test method for {@link TarjanSccComputation#getLargestScc()}.
+	 * Test method for {@link TarjanNonRecursiveSccComputation#getLargestScc()}.
 	 */
 	@Test
 	public void testGetLargestScc() {
@@ -74,7 +74,7 @@ public final class TarjanSccComputationTest {
 		network.addEdge(ninthNode, seventhNode, 1);
 		network.addEdge(tenthNode, eighthNode, 1);
 
-		TarjanSccComputation computation = new TarjanSccComputation(network);
+		TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		StronglyConnectedComponent scc = computation.getLargestScc();
 		Set<Node> nodes = scc.getNodes();
 		Assert.assertEquals(6, scc.getSize());
@@ -92,21 +92,22 @@ public final class TarjanSccComputationTest {
 	}
 
 	/**
-	 * Test method for {@link TarjanSccComputation#getPathNetwork()}.
+	 * Test method for
+	 * {@link TarjanNonRecursiveSccComputation#getPathNetwork()}.
 	 */
 	@Test
 	public void testGetPathNetwork() {
 		PathNetwork network = new PathNetwork();
-		TarjanSccComputation computation = new TarjanSccComputation(network);
+		TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		PathNetwork anotherNetwork = new PathNetwork();
-		TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
+		TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
 	}
 
 	/**
-	 * Test method for {@link TarjanSccComputation#getSccs()}.
+	 * Test method for {@link TarjanNonRecursiveSccComputation#getSccs()}.
 	 */
 	@Test
 	public void testGetSccs() {
@@ -162,7 +163,7 @@ public final class TarjanSccComputationTest {
 		network.addEdge(ninthNode, seventhNode, 1);
 		network.addEdge(tenthNode, eighthNode, 1);
 
-		TarjanSccComputation computation = new TarjanSccComputation(network);
+		TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		List<StronglyConnectedComponent> sccs = computation.getSccs();
 		Assert.assertEquals(3, sccs.size());
 
@@ -202,14 +203,15 @@ public final class TarjanSccComputationTest {
 
 	/**
 	 * Test method for
-	 * {@link TarjanSccComputation#TarjanSccComputation(IPathNetwork)}.
+	 * {@link TarjanNonRecursiveSccComputation#TarjanNonRecursiveSccComputation(IPathNetwork)}
+	 * .
 	 */
 	@Test
-	public void testTarjanSccComputation() {
+	public void testTarjanNonRecursiveSccComputation() {
 		PathNetwork network = new PathNetwork();
-		TarjanSccComputation computation = new TarjanSccComputation(network);
+		TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		PathNetwork anotherNetwork = new PathNetwork();
-		TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
+		TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
