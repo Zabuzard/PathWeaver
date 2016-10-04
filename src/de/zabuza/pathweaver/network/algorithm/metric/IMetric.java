@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.shortestpath;
+package de.zabuza.pathweaver.network.algorithm.metric;
 
 /**
  * Interface for metrics. Computes distances between two given elements.

@@ -3,6 +3,7 @@ package de.zabuza.pathweaver.network.algorithm.shortestpath;
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
+import de.zabuza.pathweaver.network.algorithm.metric.IMetric;
 
 /**
  * A-star shortest path algorithm which solves shortest path computation tasks

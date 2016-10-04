@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.algorithm.metric.StraightLineRoadTimeMetric;
 import de.zabuza.pathweaver.network.road.RoadNode;
 import de.zabuza.pathweaver.network.road.RoadUtil;
 

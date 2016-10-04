@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.shortestpath;
+package de.zabuza.pathweaver.network.algorithm.metric;
 
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.road.RoadNode;

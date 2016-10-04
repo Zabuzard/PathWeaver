@@ -7,9 +7,9 @@ import java.util.Optional;
 import java.util.Random;
 
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.algorithm.metric.LandmarkMetric;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.AStarShortestPathComputation;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.IShortestPathComputation;
-import de.zabuza.pathweaver.network.algorithm.shortestpath.StraightLineRoadTimeMetric;
 import de.zabuza.pathweaver.network.road.RoadNetwork;
 
 /**
@@ -52,7 +52,7 @@ public final class RoadNetworkExample {
 		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
 		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
 		System.out.println("\tTime needed: " + durationSeconds + " seconds");
-		
+
 		// Reducing to largest SCC
 		System.out.println("Reversing...");
 		startTimestamp = System.currentTimeMillis();
@@ -72,7 +72,7 @@ public final class RoadNetworkExample {
 		// Preparing random queries
 		System.out.println("Preparing random queries...");
 		IShortestPathComputation computation = new AStarShortestPathComputation(network,
-				new StraightLineRoadTimeMetric());
+				new LandmarkMetric(42, network));
 		Object[] nodes = network.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 		Random rnd = new Random();
