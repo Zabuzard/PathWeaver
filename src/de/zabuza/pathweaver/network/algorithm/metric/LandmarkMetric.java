@@ -64,8 +64,7 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 *            The network at which this metric is defined
 	 */
 	public LandmarkMetric(final int amount, final IPathNetwork network) {
-		this(amount, network, new RandomLandmarkProvider(network));
-		// TODO Exchange with greedy fast
+		this(amount, network, new GreedyFarthestLandmarkProvider(network));
 	}
 
 	/**
@@ -105,13 +104,13 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 */
 	@Override
 	public float distance(final Node first, final Node second) {
-		float startingDistance = -1;
+		float startingDistance = 0;
 		float greatestDistanceWithLandmark = startingDistance;
 		for (Node landmark : mLandmarks) {
-			float landmarkBehindDestinationCost = Math
-					.abs(mNodeToLandmarkCost.get(first, landmark) - mNodeToLandmarkCost.get(second, landmark));
-			float landmarkBeforeSourceCost = Math
-					.abs(mLandmarkToNodeCost.get(landmark, second) - mLandmarkToNodeCost.get(landmark, first));
+			float landmarkBehindDestinationCost = mNodeToLandmarkCost.get(first, landmark)
+					- mNodeToLandmarkCost.get(second, landmark);
+			float landmarkBeforeSourceCost = mLandmarkToNodeCost.get(landmark, second)
+					- mLandmarkToNodeCost.get(landmark, first);
 			float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
 
 			if (distanceWithLandmark > greatestDistanceWithLandmark) {
@@ -119,9 +118,6 @@ public final class LandmarkMetric implements IMetric<Node> {
 			}
 		}
 
-		if (greatestDistanceWithLandmark == startingDistance) {
-			throw new AssertionError();
-		}
 		assert greatestDistanceWithLandmark >= 0;
 
 		return greatestDistanceWithLandmark;

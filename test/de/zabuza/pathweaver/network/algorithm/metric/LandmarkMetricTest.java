@@ -40,7 +40,7 @@ public final class LandmarkMetricTest {
 		Assert.assertEquals(0, firstDistance, 0);
 
 		float secondDistance = metric.distance(firstNode, fourthNode);
-		Assert.assertTrue(secondDistance == 1 || secondDistance == 3);
+		Assert.assertTrue(secondDistance == 0 || secondDistance == 1 || secondDistance == 3);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public final class LandmarkMetricTest {
 		Assert.assertEquals(0, firstDistance, 0);
 
 		float secondDistance = metric.distance(firstNode, fourthNode);
-		Assert.assertTrue(secondDistance == 1 || secondDistance == 3);
+		Assert.assertTrue(secondDistance == 0 || secondDistance == 1 || secondDistance == 3);
 	}
 
 }

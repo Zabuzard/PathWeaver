@@ -14,7 +14,7 @@ import de.zabuza.pathweaver.network.Node;
  * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
-public class RandomLandmarkProvider implements ILandmarkProvider<Node> {
+public final class RandomLandmarkProvider implements ILandmarkProvider<Node> {
 
 	/**
 	 * Message which is shown when requesting an amount of landmarks that is not

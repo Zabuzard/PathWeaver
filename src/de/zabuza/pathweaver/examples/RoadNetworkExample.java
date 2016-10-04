@@ -71,6 +71,7 @@ public final class RoadNetworkExample {
 
 		// Preparing random queries
 		System.out.println("Preparing random queries...");
+		startTimestamp = System.currentTimeMillis();
 		IShortestPathComputation computation = new AStarShortestPathComputation(network,
 				new LandmarkMetric(42, network));
 		Object[] nodes = network.getNodes().toArray();
@@ -80,6 +81,10 @@ public final class RoadNetworkExample {
 		int logEvery = 10;
 		long totalRunningTime = 0;
 		double totalCost = 0.0;
+		endTimestamp = System.currentTimeMillis();
+		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
+		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
+		System.out.println("\tTime needed: " + durationSeconds + " seconds");
 
 		// Starting random queries
 		System.out.println("Starting random queries...");
