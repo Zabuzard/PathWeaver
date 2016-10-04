@@ -143,6 +143,38 @@ public final class DijkstraShortestPathComputationTest {
 
 	/**
 	 * Test method for
+	 * {@link DijkstraShortestPathComputation#computeShortestPathCost(java.util.Set, Node)}
+	 * .
+	 */
+	@Test
+	public void testComputeShortestPathCostSetNode() {
+		PathNetwork network = new PathNetwork();
+		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+
+		Node firstNode = new Node(0);
+		Node secondNode = new Node(1);
+		Node thirdNode = new Node(2);
+		Node fourthNode = new Node(3);
+
+		network.addNode(firstNode);
+		network.addNode(secondNode);
+		network.addNode(thirdNode);
+		network.addNode(fourthNode);
+
+		network.addEdge(secondNode, firstNode, 1);
+		network.addEdge(secondNode, thirdNode, 10);
+		network.addEdge(thirdNode, secondNode, 10);
+		network.addEdge(thirdNode, fourthNode, 2);
+
+		Set<Node> sources = new HashSet<>();
+		sources.add(secondNode);
+		sources.add(thirdNode);
+		Assert.assertEquals(1, computation.computeShortestPathCost(sources, firstNode).get(), 0);
+		Assert.assertEquals(2, computation.computeShortestPathCost(sources, fourthNode).get(), 0);
+	}
+
+	/**
+	 * Test method for
 	 * {@link DijkstraShortestPathComputation#computeShortestPathCostsReachable(Node)}
 	 * .
 	 */
@@ -224,38 +256,6 @@ public final class DijkstraShortestPathComputationTest {
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
-	}
-
-	/**
-	 * Test method for
-	 * {@link DijkstraShortestPathComputation#computeShortestPathCost(java.util.Set, Node)}
-	 * .
-	 */
-	@Test
-	public void testComputeShortestPathCostSetNode() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
-
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-
-		network.addNode(firstNode);
-		network.addNode(secondNode);
-		network.addNode(thirdNode);
-		network.addNode(fourthNode);
-
-		network.addEdge(secondNode, firstNode, 1);
-		network.addEdge(secondNode, thirdNode, 10);
-		network.addEdge(thirdNode, secondNode, 10);
-		network.addEdge(thirdNode, fourthNode, 2);
-
-		Set<Node> sources = new HashSet<>();
-		sources.add(secondNode);
-		sources.add(thirdNode);
-		Assert.assertEquals(1, computation.computeShortestPathCost(sources, firstNode).get(), 0);
-		Assert.assertEquals(2, computation.computeShortestPathCost(sources, fourthNode).get(), 0);
 	}
 
 }

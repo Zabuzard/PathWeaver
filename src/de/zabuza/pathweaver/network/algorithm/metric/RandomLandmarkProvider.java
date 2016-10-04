@@ -67,7 +67,7 @@ public class RandomLandmarkProvider implements ILandmarkProvider<Node> {
 		Object[] nodes = mNetwork.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 
-		while (landmarks.size() <= amount) {
+		while (landmarks.size() < amount) {
 			int candidateIndex = mRandom.nextInt(amountOfNodes);
 			Node candidate = (Node) nodes[candidateIndex];
 			landmarks.add(candidate);

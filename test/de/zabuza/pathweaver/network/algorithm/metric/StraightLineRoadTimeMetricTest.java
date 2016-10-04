@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.shortestpath;
+package de.zabuza.pathweaver.network.algorithm.metric;
 
 import org.junit.Assert;
 import org.junit.Rule;

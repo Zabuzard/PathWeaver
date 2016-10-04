@@ -101,6 +101,34 @@ public final class RoadUtil {
 	}
 
 	/**
+	 * Computes the distance between the two given positions using an
+	 * approximation of the earth as an equirectangular projection.
+	 * 
+	 * @param firstLatitudeDeg
+	 *            The latitude of the first position in degrees
+	 * @param firstLongitudeDeg
+	 *            The longitude of the first position in degrees
+	 * @param secondLatitudeDeg
+	 *            The latitude of the second position in degrees
+	 * @param secondLongitudeDeg
+	 *            The longitude of the second position in degrees
+	 * @return The distance between the two given positions in meter
+	 */
+	public static float distanceEquiRect(final float firstLatitudeDeg, final float firstLongitudeDeg,
+			final float secondLatitudeDeg, final float secondLongitudeDeg) {
+		double firstLatitudeRad = degToRad(firstLatitudeDeg);
+		double firstLongitudeRad = degToRad(firstLongitudeDeg);
+		double secondLatitudeRad = degToRad(secondLatitudeDeg);
+		double secondLongitudeRad = degToRad(secondLongitudeDeg);
+
+		double x = ((secondLongitudeRad - firstLongitudeRad) * Math.cos((firstLatitudeRad + secondLatitudeRad) / 2));
+		double y = (secondLatitudeRad - firstLatitudeRad);
+		float distance = (float) (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * EARTH_RADIUS_MEAN);
+
+		return distance;
+	}
+
+	/**
 	 * Computes the distance between the two given road nodes using an
 	 * approximation of the earth as an equirectangular projection.
 	 * 
@@ -111,16 +139,8 @@ public final class RoadUtil {
 	 * @return The distance between the two given nodes in meter
 	 */
 	public static float distanceEquiRect(final RoadNode firstNode, final RoadNode secondNode) {
-		double firstLatitude = degToRad(firstNode.getLatitude());
-		double firstLongitude = degToRad(firstNode.getLongitude());
-		double secondLatitude = degToRad(secondNode.getLatitude());
-		double secondLongitude = degToRad(secondNode.getLongitude());
-
-		double x = ((secondLongitude - firstLongitude) * Math.cos((firstLatitude + secondLatitude) / 2));
-		double y = (secondLatitude - firstLatitude);
-		float distance = (float) (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * EARTH_RADIUS_MEAN);
-
-		return distance;
+		return distanceEquiRect(firstNode.getLatitude(), firstNode.getLongitude(), secondNode.getLatitude(),
+				secondNode.getLongitude());
 	}
 
 	/**

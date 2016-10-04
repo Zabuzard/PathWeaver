@@ -335,4 +335,35 @@ public final class RoadNetwork extends PathNetwork {
 		boolean wasAdded = super.addNode(node);
 		return wasAdded;
 	}
+
+	/**
+	 * Gets the road node of the network which is nearest to the given position.
+	 * 
+	 * @param latitude
+	 *            The latitude of the position to get in degrees
+	 * @param longitude
+	 *            The longitude of the position to get in degrees
+	 * @return The road node of the network which is nearest to the given
+	 *         position
+	 */
+	public RoadNode getNearestRoadNode(final float latitude, final float longitude) {
+		RoadNode nearestKnownNode = null;
+		float startingDistance = Integer.MAX_VALUE;
+		float nearestKnownDistance = startingDistance;
+		for (Node node : getNodes()) {
+			RoadNode roadNode = (RoadNode) node;
+			float nodeLatitude = roadNode.getLatitude();
+			float nodeLongitude = roadNode.getLongitude();
+
+			float distance = RoadUtil.distanceEquiRect(latitude, longitude, nodeLatitude, nodeLongitude);
+			if (distance < nearestKnownDistance) {
+				nearestKnownDistance = distance;
+				nearestKnownNode = roadNode;
+			}
+		}
+
+		assert nearestKnownNode != null && nearestKnownDistance >= 0 && nearestKnownDistance < startingDistance;
+
+		return nearestKnownNode;
+	}
 }

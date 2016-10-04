@@ -168,6 +168,21 @@ public final class RoadNetworkTest {
 	}
 
 	/**
+	 * Test method for {@link RoadNetwork#getNearestRoadNode(float, float)}.
+	 */
+	@Test
+	public void testGetNearestRoadNode() {
+		RoadNetwork network = new RoadNetwork();
+		RoadNode firstNode = new RoadNode(0, 49.3413853f, 7.3014897f);
+		RoadNode secondNode = new RoadNode(1, 49.3080623f, 7.2517281f);
+		network.addRoadNode(firstNode);
+		network.addRoadNode(secondNode);
+
+		Assert.assertEquals(secondNode, network.getNearestRoadNode(49.319078f, 7.263090f));
+		Assert.assertEquals(firstNode, network.getNearestRoadNode(49.336991f, 7.290105f));
+	}
+
+	/**
 	 * Test method for {@link RoadNetwork#RoadNetwork()}.
 	 */
 	@Test

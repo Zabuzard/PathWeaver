@@ -105,12 +105,13 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 */
 	@Override
 	public float distance(final Node first, final Node second) {
-		float greatestDistanceWithLandmark = -1;
+		float startingDistance = -1;
+		float greatestDistanceWithLandmark = startingDistance;
 		for (Node landmark : mLandmarks) {
-			float landmarkBehindDestinationCost = mNodeToLandmarkCost.get(first, landmark)
-					- mNodeToLandmarkCost.get(second, landmark);
-			float landmarkBeforeSourceCost = mLandmarkToNodeCost.get(landmark, second)
-					- mLandmarkToNodeCost.get(landmark, first);
+			float landmarkBehindDestinationCost = Math
+					.abs(mNodeToLandmarkCost.get(first, landmark) - mNodeToLandmarkCost.get(second, landmark));
+			float landmarkBeforeSourceCost = Math
+					.abs(mLandmarkToNodeCost.get(landmark, second) - mLandmarkToNodeCost.get(landmark, first));
 			float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
 
 			if (distanceWithLandmark > greatestDistanceWithLandmark) {
@@ -118,9 +119,19 @@ public final class LandmarkMetric implements IMetric<Node> {
 			}
 		}
 
+		if (greatestDistanceWithLandmark == startingDistance) {
+			throw new AssertionError();
+		}
+		assert greatestDistanceWithLandmark >= 0;
+
 		return greatestDistanceWithLandmark;
 	}
 
+	/**
+	 * Initializes the metric by computing costs from and to all landmarks. This
+	 * may take some time depending on the size of the network and the amount of
+	 * landmarks.
+	 */
 	private void initialize() {
 		mLandmarks = mLandmarkProvider.getLandmarks(mAmount);
 
