@@ -7,21 +7,23 @@ import java.util.Optional;
 import java.util.Random;
 
 import de.zabuza.pathweaver.network.Node;
-import de.zabuza.pathweaver.network.algorithm.metric.landmark.LandmarkMetric;
-import de.zabuza.pathweaver.network.algorithm.shortestpath.AStarShortestPathComputation;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.IShortestPathComputation;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.arcflag.ArcFlagShortestPathComputation;
+import de.zabuza.pathweaver.network.algorithm.shortestpath.arcflag.OneAxisRectanglePartitioningProvider;
 import de.zabuza.pathweaver.network.road.RoadNetwork;
+import de.zabuza.pathweaver.network.road.RoadNode;
 
 /**
- * Class which demonstrates the usage of reading an OSM-File into a road
- * network.
+ * Class which demonstrates the usage of reading an OSM-File into a road network
+ * and then applying arc flag shortest path computation.
  * 
  * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *
  */
-public final class RoadNetworkExample {
+public final class ArcFlagExample {
 	/**
-	 * Demonstrates the usage of reading an OSM-File into a road network.
+	 * Demonstrates the usage of reading an OSM-File into a road network and
+	 * then applying arc flag shortest path computation.
 	 * 
 	 * @param args
 	 *            Not supported
@@ -53,33 +55,21 @@ public final class RoadNetworkExample {
 		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
 		System.out.println("\tTime needed: " + durationSeconds + " seconds");
 
-		// Reversing the network
-		System.out.println("Reversing...");
-		startTimestamp = System.currentTimeMillis();
-		network.reverse();
-		endTimestamp = System.currentTimeMillis();
-		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
-		System.out.println("\tTime needed: " + durationSeconds + " seconds");
-		// Reversing the network again
-		System.out.println("Reversing again...");
-		startTimestamp = System.currentTimeMillis();
-		network.reverse();
-		endTimestamp = System.currentTimeMillis();
-		durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
-		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
-		System.out.println("\tTime needed: " + durationSeconds + " seconds");
-
 		// Preparing random queries
 		System.out.println("Preparing random queries...");
 		startTimestamp = System.currentTimeMillis();
-		IShortestPathComputation computation = new AStarShortestPathComputation(network,
-				new LandmarkMetric(42, network));
+		float latitudeMin = 49.20f;
+		float latitudeMax = 49.25f;
+		float longitudeMin = 6.95f;
+		float longitudeMax = 7.05f;
+		OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network, latitudeMin,
+				latitudeMax, longitudeMin, longitudeMax);
+		IShortestPathComputation computation = new ArcFlagShortestPathComputation(network, provider);
 		Object[] nodes = network.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 		Random rnd = new Random();
 		int queryAmount = 100;
-		int logEvery = 10;
+		int logEvery = 5;
 		long totalRunningTime = 0;
 		double totalCost = 0.0;
 		endTimestamp = System.currentTimeMillis();
@@ -91,9 +81,14 @@ public final class RoadNetworkExample {
 		System.out.println("Starting random queries...");
 		for (int i = 1; i <= queryAmount; i++) {
 			int sourceIndex = rnd.nextInt(amountOfNodes);
-			int destinationIndex = rnd.nextInt(amountOfNodes);
 			Node source = (Node) nodes[sourceIndex];
-			Node destination = (Node) nodes[destinationIndex];
+
+			// Only use destinations which are inside the rectangle
+			Node destination;
+			do {
+				int destinationIndex = rnd.nextInt(amountOfNodes);
+				destination = (Node) nodes[destinationIndex];
+			} while (!provider.isInsideRectangle((RoadNode) destination));
 
 			startTimestamp = System.currentTimeMillis();
 			Optional<Float> result = computation.computeShortestPathCost(source, destination);

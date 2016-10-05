@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.metric;
+package de.zabuza.pathweaver.network.algorithm.metric.landmark;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.Test;
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
+import de.zabuza.pathweaver.network.algorithm.metric.landmark.LandmarkMetric;
 
 /**
  * Test for {@link LandmarkMetric}.

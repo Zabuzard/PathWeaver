@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.metric;
+package de.zabuza.pathweaver.network.algorithm.metric.landmark;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -6,6 +6,7 @@ import java.util.Set;
 
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
+import de.zabuza.pathweaver.network.algorithm.metric.IMetric;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.DijkstraShortestPathComputation;
 import de.zabuza.pathweaver.util.NestedMap2;
 

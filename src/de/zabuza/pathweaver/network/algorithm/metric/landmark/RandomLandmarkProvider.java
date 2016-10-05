@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.metric;
+package de.zabuza.pathweaver.network.algorithm.metric.landmark;
 
 import java.util.HashSet;
 import java.util.Random;

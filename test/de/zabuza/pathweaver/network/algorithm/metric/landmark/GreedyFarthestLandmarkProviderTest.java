@@ -1,4 +1,4 @@
-package de.zabuza.pathweaver.network.algorithm.metric;
+package de.zabuza.pathweaver.network.algorithm.metric.landmark;
 
 import java.util.Collection;
 import java.util.Set;
@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
+import de.zabuza.pathweaver.network.algorithm.metric.landmark.GreedyFarthestLandmarkProvider;
 
 /**
  * Test for {@link GreedyFarthestLandmarkProvider}.

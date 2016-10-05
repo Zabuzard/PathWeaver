@@ -29,7 +29,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	private final IPathNetwork mNetwork;
 
 	/**
-	 * Creates a new shortest path computation object
+	 * Creates a new shortest path computation object.
 	 * 
 	 * @param network
 	 *            The network to work on
@@ -170,7 +170,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 *         be nodes that are reachable in shorter time than this
 	 *         destination.
 	 */
-	private Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Set<Node> sources,
+	protected Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Set<Node> sources,
 			final Optional<Node> destination) {
 		HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
 		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<TentativeNodeContainer>();
@@ -218,6 +218,11 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 				continue;
 			}
 			for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+				// Ignore the edge if it should not be considered
+				if (!considerOutgoingEdgeForRelaxation(outgoingEdge, destination)) {
+					continue;
+				}
+
 				Node edgeDestination = outgoingEdge.getDestination();
 				float tentativeEdgeCost = currentTentativeCost + outgoingEdge.getCost();
 
@@ -263,6 +268,24 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			}
 		}
 		return nodeToSettledContainer;
+	}
+
+	/**
+	 * Whether the outgoing edge should be considered for relaxation or not.
+	 * 
+	 * @param outgoingEdge
+	 *            The edge in question
+	 * @param destination
+	 *            Destination node to compute the shortest path to, if present.
+	 *            If not present, then all, from the set of sources, reachable
+	 *            nodes get considered as destinations.
+	 * @return <tt>True</tt> if the outgoing edge should be considered for
+	 *         relaxation, <tt>false</tt> if not.
+	 */
+	protected boolean considerOutgoingEdgeForRelaxation(final DirectedWeightedEdge outgoingEdge,
+			final Optional<Node> destination) {
+		// Dijkstras algorithm does consider every outgoing edge.
+		return true;
 	}
 
 	/**
