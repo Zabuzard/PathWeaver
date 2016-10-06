@@ -162,7 +162,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Set<Node> computeShortestPathSearchSpace(final Set<Node> sources, final Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		return nodeToData.keySet();
 	}
 

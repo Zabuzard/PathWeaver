@@ -1,10 +1,13 @@
 package de.zabuza.pathweaver.examples;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.algorithm.shortestpath.IShortestPathComputation;
@@ -12,6 +15,7 @@ import de.zabuza.pathweaver.network.algorithm.shortestpath.arcflag.ArcFlagShorte
 import de.zabuza.pathweaver.network.algorithm.shortestpath.arcflag.OneAxisRectanglePartitioningProvider;
 import de.zabuza.pathweaver.network.road.RoadNetwork;
 import de.zabuza.pathweaver.network.road.RoadNode;
+import de.zabuza.pathweaver.network.road.RoadUtil;
 
 /**
  * Class which demonstrates the usage of reading an OSM-File into a road network
@@ -109,5 +113,27 @@ public final class ArcFlagExample {
 		float averageTimeInSeconds = (totalRunningTime / queryAmount + 0.0f) / 1000;
 		System.out.println("\tAverage cost: " + averageCost);
 		System.out.println("\tAverage time: " + averageTimeInSeconds);
+
+		// Starting search space query
+		System.out.println("Starting search space query...");
+		int sourceIndex = rnd.nextInt(amountOfNodes);
+		Node source = (Node) nodes[sourceIndex];
+		// Only use destinations which are inside the rectangle
+		Node destination;
+		do {
+			int destinationIndex = rnd.nextInt(amountOfNodes);
+			destination = (Node) nodes[destinationIndex];
+		} while (!provider.isInsideRectangle((RoadNode) destination));
+		@SuppressWarnings("unchecked")
+		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
+				destination);
+		// Save the search space to a file on the desktop
+		String tsvData = RoadUtil.getPositionsTsv(searchSpace);
+		File desktop = new File(System.getProperty("user.home"), "Desktop");
+		File searchSpaceFile = new File(desktop, "searchSpace.tsv");
+		System.out.println("\tSaving to: " + searchSpaceFile);
+		BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile));
+		bw.write(tsvData);
+		bw.close();
 	}
 }
