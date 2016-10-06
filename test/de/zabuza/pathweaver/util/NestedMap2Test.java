@@ -1,5 +1,7 @@
 package de.zabuza.pathweaver.util;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -56,7 +58,21 @@ public class NestedMap2Test {
 	 */
 	@Test
 	public void testEntrySet() {
-		Assert.fail("Not yet implemented"); // TODO
+		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
+		map.put(1, "a", true);
+		map.put(2, "b", false);
+
+		for (Triple<Integer, String, Boolean> entry : map.entrySet()) {
+			if (entry.getFirst().equals(new Integer(1))) {
+				Assert.assertEquals(new Integer(1), entry.getFirst());
+				Assert.assertEquals("a", entry.getSecond());
+				Assert.assertEquals(Boolean.TRUE, entry.getThird());
+			} else {
+				Assert.assertEquals(new Integer(2), entry.getFirst());
+				Assert.assertEquals("b", entry.getSecond());
+				Assert.assertEquals(Boolean.FALSE, entry.getThird());
+			}
+		}
 	}
 
 	/**
@@ -141,7 +157,21 @@ public class NestedMap2Test {
 	 */
 	@Test
 	public void testKeys2() {
-		Assert.fail("Not yet implemented"); // TODO
+		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
+		map.put(1, "a", true);
+		map.put(2, "b", false);
+		map.put(1, "c", false);
+
+		for (Pair<Integer, String> key : map.keys2()) {
+			Boolean value = map.get(key.getFirst(), key.getSecond());
+			if (key.getFirst().equals(new Integer(1)) && key.getSecond().equals("a")) {
+				Assert.assertEquals(Boolean.TRUE, value);
+			} else if (key.getFirst().equals(new Integer(1)) && key.getSecond().equals("c")) {
+				Assert.assertEquals(Boolean.FALSE, value);
+			} else {
+				Assert.assertEquals(Boolean.FALSE, value);
+			}
+		}
 	}
 
 	/**
@@ -149,7 +179,22 @@ public class NestedMap2Test {
 	 */
 	@Test
 	public void testKeySet() {
-		Assert.fail("Not yet implemented"); // TODO
+		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
+		map.put(1, "a", true);
+		map.put(2, "b", false);
+		map.put(1, "c", false);
+
+		for (Integer key : map.keySet()) {
+			Map<String, Boolean> entry = map.get(key);
+			if (key.equals(new Integer(1))) {
+				Assert.assertEquals(2, entry.size());
+				Assert.assertEquals(Boolean.TRUE, entry.get("a"));
+				Assert.assertEquals(Boolean.FALSE, entry.get("c"));
+			} else {
+				Assert.assertEquals(1, entry.size());
+				Assert.assertEquals(Boolean.FALSE, entry.get("b"));
+			}
+		}
 	}
 
 	/**
@@ -174,7 +219,16 @@ public class NestedMap2Test {
 	 */
 	@Test
 	public void testRemoveK1() {
-		Assert.fail("Not yet implemented"); // TODO
+		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
+		map.put(1, "a", true);
+		map.put(2, "b", false);
+		map.put(1, "c", false);
+
+		Assert.assertEquals(3, map.size());
+		map.remove(new Integer(1));
+		Assert.assertEquals(1, map.size());
+		map.remove(new Integer(2));
+		Assert.assertEquals(0, map.size());
 	}
 
 	/**
@@ -182,7 +236,20 @@ public class NestedMap2Test {
 	 */
 	@Test
 	public void testRemoveK1K2() {
-		Assert.fail("Not yet implemented"); // TODO
+		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
+		map.put(1, "a", true);
+		map.put(2, "b", false);
+		map.put(1, "c", false);
+
+		Assert.assertEquals(3, map.size());
+		map.remove(new Integer(1), "a");
+		Assert.assertEquals(2, map.size());
+		map.remove(new Integer(1), "c");
+		Assert.assertEquals(1, map.size());
+		map.remove(new Integer(1), "c");
+		Assert.assertEquals(1, map.size());
+		map.remove(new Integer(2), "b");
+		Assert.assertEquals(0, map.size());
 	}
 
 	/**
