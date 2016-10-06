@@ -1,5 +1,7 @@
 package de.zabuza.pathweaver.network.road;
 
+import java.util.StringJoiner;
+
 /**
  * Utility class which offers methods useful for road networks.
  * 
@@ -81,9 +83,14 @@ public final class RoadUtil {
 	private static final float TRUNK_SPEED = 110;
 
 	/**
+	 * Separator that is used in TSV-files.
+	 */
+	private final static String TSV_SEPARATOR = "\t";
+	/**
 	 * The average speed on an unclassified road in km/h.
 	 */
 	private static final float UNCLASSIFIED_SPEED = 40;
+
 	/**
 	 * The average speed on an unsurfaced road in km/h.
 	 */
@@ -195,6 +202,32 @@ public final class RoadUtil {
 	 */
 	public static ERoadType getFastestRoadType() {
 		return ERoadType.MOTORWAY;
+	}
+
+	/**
+	 * Gets the positions of given road nodes in a TSV-format.
+	 * 
+	 * @param nodes
+	 *            Nodes to get position of
+	 * @return The positions of the given road nodes in a TSV-format
+	 */
+	public static String getPositionsTsv(final Iterable<RoadNode> nodes) {
+		StringJoiner joiner = new StringJoiner(System.lineSeparator());
+		for (RoadNode node : nodes) {
+			joiner.add(RoadUtil.getPositionTsv(node));
+		}
+		return joiner.toString();
+	}
+
+	/**
+	 * Gets the position of a given road node in a TSV-format.
+	 * 
+	 * @param node
+	 *            Node to get position of
+	 * @return The position of a given road node in a TSV-format
+	 */
+	public static String getPositionTsv(final RoadNode node) {
+		return node.getLatitude() + TSV_SEPARATOR + node.getLongitude();
 	}
 
 	/**

@@ -29,11 +29,15 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 	 * boolean is set to true, then the edge is relevant for reaching the region
 	 * with a shortest path.
 	 */
-	private final NestedMap2<DirectedWeightedEdge, Set<Node>, Boolean> mEdgeAndRegionToRelevance;
+	private final NestedMap2<DirectedWeightedEdge, Integer, Boolean> mEdgeAndRegionIdToRelevance;
 	/**
-	 * Maps each node to the region it is contained in.
+	 * Maps each region with an ID, accessible by the ID.
 	 */
-	private final HashMap<Node, Set<Node>> mNodeToRegion;
+	private final HashMap<Integer, Set<Node>> mIdToRegion;
+	/**
+	 * Maps each node to the region ID it is contained in.
+	 */
+	private final HashMap<Node, Integer> mNodeToRegionId;
 	/**
 	 * Provider used for partitioning the network into regions.
 	 */
@@ -54,8 +58,9 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 			final INetworkPartitioningProvider partitioningProvider) {
 		super(network);
 		mPartitioningProvider = partitioningProvider;
-		mEdgeAndRegionToRelevance = new NestedMap2<>();
-		mNodeToRegion = new HashMap<>();
+		mEdgeAndRegionIdToRelevance = new NestedMap2<>();
+		mNodeToRegionId = new HashMap<>();
+		mIdToRegion = new HashMap<>();
 
 		initialize();
 	}
@@ -72,10 +77,13 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 		// Computation is done on the reversed graph
 		network.reverse();
 
+		int regionId = 0;
 		// Iterate every node of every region
 		for (Set<Node> region : regions) {
+			mIdToRegion.put(regionId, region);
+
 			for (Node node : region) {
-				mNodeToRegion.put(node, region);
+				mNodeToRegionId.put(node, regionId);
 
 				// A boundary node has an incoming edge from another reagion. In
 				// the reversed graph this are outgoing egdes.
@@ -85,7 +93,7 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 					// will be set for the edge
 					boolean isEdgeInside = region.contains(edge.getDestination());
 					if (isEdgeInside) {
-						mEdgeAndRegionToRelevance.put(edge, region, true);
+						mEdgeAndRegionIdToRelevance.put(edge, regionId, Boolean.TRUE);
 					}
 
 					// If the edge is not inside, the node is a boundary node
@@ -94,12 +102,8 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 
 						// Perform a Dijkstra search to compute all shortest
 						// paths to this node
-						// TODO Remove debug print
-						System.out.println("\tDijkstra on boundary node...");
 						Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(
 								Collections.singleton(node), Optional.empty());
-						// TODO Remove debug print
-						System.out.println("\tFinished dijkstra, values: " + nodeToData.size());
 						// Set the flag for every parent edge of a settled node,
 						// as they are part of a shortest path from
 						// the boundary node
@@ -112,17 +116,12 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 							}
 
 							// Settle the flag for the edge
-							mEdgeAndRegionToRelevance.put(parentEdge, region, true);
-							// TODO NestedMap2 seems to be extremely
-							// ineffective, debug this!
+							mEdgeAndRegionIdToRelevance.put(parentEdge, regionId, Boolean.TRUE);
 						}
-						// TODO Remove debug print
-						System.out.println("\t>Finished arcs.");
 					}
 				}
 			}
-			// TODO Remove debug print
-			System.out.println("\tNext region...");
+			regionId++;
 		}
 
 		// Undo the network reversion
@@ -145,8 +144,8 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 			Node destinationNode = destination.get();
 
 			// Get the region of the node
-			Set<Node> region = mNodeToRegion.get(destinationNode);
-			Boolean isEdgeImportant = mEdgeAndRegionToRelevance.get(outgoingEdge, region);
+			Integer regionId = mNodeToRegionId.get(destinationNode);
+			Boolean isEdgeImportant = mEdgeAndRegionIdToRelevance.get(outgoingEdge, regionId);
 			if (isEdgeImportant != null && isEdgeImportant) {
 				// Flag is set, consider the edge
 				return true;

@@ -144,6 +144,31 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.shortestpath.
+	 * IShortestPathComputation#computeShortestPathSearchSpace(de.zabuza.
+	 * pathweaver.network.Node, de.zabuza.pathweaver.network.Node)
+	 */
+	@Override
+	public Set<Node> computeShortestPathSearchSpace(final Node source, final Node destination) {
+		return computeShortestPathSearchSpace(Collections.singleton(source), destination);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.zabuza.pathweaver.network.algorithm.shortestpath.
+	 * IShortestPathComputation#computeShortestPathSearchSpace(java.util.Set,
+	 * de.zabuza.pathweaver.network.Node)
+	 */
+	@Override
+	public Set<Node> computeShortestPathSearchSpace(final Set<Node> sources, final Node destination) {
+		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
+		return nodeToData.keySet();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.zabuza.pathweaver.network.algorithm.IShortestPathComputation#
 	 * getPathNetwork()
 	 */

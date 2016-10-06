@@ -1,5 +1,7 @@
 package de.zabuza.pathweaver.network.road;
 
+import java.util.LinkedList;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -85,6 +87,32 @@ public final class RoadUtilTest {
 	@Test
 	public void testRadToDeg() {
 		Assert.assertEquals(180, RoadUtil.radToDeg(Math.PI), 0);
+	}
+
+	/**
+	 * Test method for {@link RoadUtil#getPositionTsv(RoadNode)}.
+	 */
+	@Test
+	public void testGetPositionTsv() {
+		RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
+		RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
+
+		Assert.assertEquals("47.4\t31.23", RoadUtil.getPositionTsv(firstNode));
+		Assert.assertEquals("11.0\t-5.4", RoadUtil.getPositionTsv(secondNode));
+	}
+
+	/**
+	 * Test method for {@link RoadUtil#getPositionsTsv(Iterable)}.
+	 */
+	@Test
+	public void testGetPositionsTsv() {
+		RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
+		RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
+		LinkedList<RoadNode> nodes = new LinkedList<>();
+		nodes.add(firstNode);
+		nodes.add(secondNode);
+
+		Assert.assertEquals("47.4\t31.23" + System.lineSeparator() + "11.0\t-5.4", RoadUtil.getPositionsTsv(nodes));
 	}
 
 }

@@ -30,6 +30,10 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 */
 	private final DijkstraShortestPathComputation mComputation;
 	/**
+	 * Map which stores the cost needed for traveling from a landmark to a node.
+	 */
+	private final NestedMap2<Integer, Integer, Float> mLandmarkIdAndNodeIdToCost;
+	/**
 	 * Object which provides landmarks.
 	 */
 	private final ILandmarkProvider<Node> mLandmarkProvider;
@@ -38,17 +42,13 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 */
 	private Set<Node> mLandmarks;
 	/**
-	 * Map which stores the cost needed for traveling from a landmark to a node.
-	 */
-	private final NestedMap2<Node, Node, Float> mLandmarkToNodeCost;
-	/**
 	 * The network at which this metric is defined.
 	 */
 	private final IPathNetwork mNetwork;
 	/**
 	 * Map which stores the cost needed for traveling from a node to a landmark.
 	 */
-	private final NestedMap2<Node, Node, Float> mNodeToLandmarkCost;
+	private final NestedMap2<Integer, Integer, Float> mNodeIdAndToLandmarkIdToCost;
 
 	/**
 	 * Creates a new metric which estimates the costs between two given
@@ -89,8 +89,8 @@ public final class LandmarkMetric implements IMetric<Node> {
 		mNetwork = network;
 		mLandmarkProvider = landmarkProvider;
 		mAmount = amount;
-		mLandmarkToNodeCost = new NestedMap2<>();
-		mNodeToLandmarkCost = new NestedMap2<>();
+		mLandmarkIdAndNodeIdToCost = new NestedMap2<>();
+		mNodeIdAndToLandmarkIdToCost = new NestedMap2<>();
 		mComputation = new DijkstraShortestPathComputation(mNetwork);
 
 		initialize();
@@ -108,10 +108,10 @@ public final class LandmarkMetric implements IMetric<Node> {
 		float startingDistance = 0;
 		float greatestDistanceWithLandmark = startingDistance;
 		for (Node landmark : mLandmarks) {
-			float landmarkBehindDestinationCost = mNodeToLandmarkCost.get(first, landmark)
-					- mNodeToLandmarkCost.get(second, landmark);
-			float landmarkBeforeSourceCost = mLandmarkToNodeCost.get(landmark, second)
-					- mLandmarkToNodeCost.get(landmark, first);
+			float landmarkBehindDestinationCost = mNodeIdAndToLandmarkIdToCost.get(first.getId(), landmark.getId())
+					- mNodeIdAndToLandmarkIdToCost.get(second.getId(), landmark.getId());
+			float landmarkBeforeSourceCost = mLandmarkIdAndNodeIdToCost.get(landmark.getId(), second.getId())
+					- mLandmarkIdAndNodeIdToCost.get(landmark.getId(), first.getId());
 			float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
 
 			if (distanceWithLandmark > greatestDistanceWithLandmark) {
@@ -136,7 +136,7 @@ public final class LandmarkMetric implements IMetric<Node> {
 		for (Node landmark : mLandmarks) {
 			Map<Node, Float> nodeToCost = mComputation.computeShortestPathCostsReachable(landmark);
 			for (Entry<Node, Float> entry : nodeToCost.entrySet()) {
-				mLandmarkToNodeCost.put(landmark, entry.getKey(), entry.getValue());
+				mLandmarkIdAndNodeIdToCost.put(landmark.getId(), entry.getKey().getId(), entry.getValue());
 			}
 		}
 
@@ -145,7 +145,7 @@ public final class LandmarkMetric implements IMetric<Node> {
 		for (Node landmark : mLandmarks) {
 			Map<Node, Float> nodeToCost = mComputation.computeShortestPathCostsReachable(landmark);
 			for (Entry<Node, Float> entry : nodeToCost.entrySet()) {
-				mNodeToLandmarkCost.put(entry.getKey(), landmark, entry.getValue());
+				mNodeIdAndToLandmarkIdToCost.put(entry.getKey().getId(), landmark.getId(), entry.getValue());
 			}
 		}
 

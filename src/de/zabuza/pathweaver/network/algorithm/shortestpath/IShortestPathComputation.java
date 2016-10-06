@@ -98,6 +98,38 @@ public interface IShortestPathComputation {
 	public Map<Node, Float> computeShortestPathCostsReachable(final Set<Node> sources);
 
 	/**
+	 * Computes the shortest path in the network specified by
+	 * {@link #getPathNetwork()} between the given source and
+	 * destination and returns the search space. The search space consists of
+	 * all nodes that where visited by the implementing algorithm. Therefore the
+	 * main use of this method is for debugging and algorithm comparison.
+	 * 
+	 * @param source
+	 *            Source node to compute the shortest path from
+	 * @param destination
+	 *            Destination node to compute the shortest path to
+	 * @return The search space, i.e. the set of nodes that where visited by the
+	 *         implementing algorithm
+	 */
+	public Set<Node> computeShortestPathSearchSpace(final Node source, final Node destination);
+
+	/**
+	 * Computes the shortest path in the network specified by
+	 * {@link #getPathNetwork()} between the given set of sources and
+	 * destination and returns the search space. The search space consists of
+	 * all nodes that where visited by the implementing algorithm. Therefore the
+	 * main use of this method is for debugging and algorithm comparison.
+	 * 
+	 * @param sources
+	 *            Set of source nodes to compute the shortest path from
+	 * @param destination
+	 *            Destination node to compute the shortest path to
+	 * @return The search space, i.e. the set of nodes that where visited by the
+	 *         implementing algorithm
+	 */
+	public Set<Node> computeShortestPathSearchSpace(final Set<Node> sources, final Node destination);
+
+	/**
 	 * Gets the path network this object works on.
 	 * 
 	 * @return The path network this object works on
