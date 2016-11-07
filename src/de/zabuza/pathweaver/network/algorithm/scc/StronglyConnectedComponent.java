@@ -37,7 +37,7 @@ public final class StronglyConnectedComponent {
 	/**
 	 * Adds a given node to the SCC.
 	 * 
-	 * @param node
+	 * @param node The node to add
 	 * @throws UnsupportedOperationException
 	 *             If the root node was already set, since the SCC may not be
 	 *             modified after this

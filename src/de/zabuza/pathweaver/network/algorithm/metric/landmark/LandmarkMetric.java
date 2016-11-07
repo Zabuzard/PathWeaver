@@ -54,7 +54,7 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 * Creates a new metric which estimates the costs between two given
 	 * {@link Node}s by computing the cost of the path from source to
 	 * destination over a pre-selected landmark. This constructor will use a
-	 * default {@link ILandmarkProvider} for selecting landmarks.<br/>
+	 * default {@link ILandmarkProvider} for selecting landmarks.<br>
 	 * The constructor may need some time to compute cost values for all
 	 * landmarks.
 	 * 
@@ -72,7 +72,7 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 * Creates a new metric which estimates the costs between two given
 	 * {@link Node}s by computing the cost of the path from source to
 	 * destination over a pre-selected landmark. This constructor will use the
-	 * given {@link ILandmarkProvider} for selecting landmarks.<br/>
+	 * given {@link ILandmarkProvider} for selecting landmarks.<br>
 	 * The constructor may need some time to compute cost values for all
 	 * landmarks.
 	 * 

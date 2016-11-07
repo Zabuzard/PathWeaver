@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test for {@link Triple].
+ * Test for {@link Triple}.
  * 
  * @author Zabuza {@literal <zabuza.dev@gmail.com>}
  *

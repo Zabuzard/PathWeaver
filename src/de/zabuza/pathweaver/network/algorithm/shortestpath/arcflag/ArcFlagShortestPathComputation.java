@@ -45,7 +45,7 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 
 	/**
 	 * Creates a new shortest path computation object with the given
-	 * partitioning provider.<br/>
+	 * partitioning provider.<br>
 	 * The constructor may need some time to compute the flags for all arcs and
 	 * regions.
 	 * 
