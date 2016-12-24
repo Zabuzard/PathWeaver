@@ -26,8 +26,9 @@ public interface IPathNetwork {
 	 *            The cost of the edge which must be inside the limit specified
 	 *            by {@link DirectedWeightedEdge#ADirectedEdge(Node, int)
 	 *            ADirectedEdge(Node, int)}.
+	 * @return The edge that was created and added
 	 */
-	public void addEdge(final Node source, final Node destination, final float cost);
+	public DirectedWeightedEdge addEdge(final Node source, final Node destination, final float cost);
 
 	/**
 	 * Adds the given node to the graph if not already contained.
@@ -131,6 +132,16 @@ public interface IPathNetwork {
 	 * such a component every node is reachable from all others.
 	 */
 	public void reduceToLargestScc();
+
+	/**
+	 * Removes the given edge from the network.
+	 * 
+	 * @param edge
+	 *            The edge to remove
+	 * @throws NoSuchElementException
+	 *             If the edge is not contained in the network
+	 */
+	public void removeEdge(final DirectedWeightedEdge edge) throws NoSuchElementException;
 
 	/**
 	 * Removes the given node and all its in- and outgoing edges from the

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.zabuza.pathweaver.network.DirectedWeightedEdge;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
 
@@ -242,7 +243,7 @@ public final class RoadNetwork extends PathNetwork {
 	 * {@link #addRoad(RoadNode, RoadNode)} instead.
 	 */
 	@Override
-	public void addEdge(final Node source, final Node destination, final float cost)
+	public DirectedWeightedEdge addEdge(final Node source, final Node destination, final float cost)
 			throws UnsupportedOperationException {
 		throw new UnsupportedOperationException(UNSUPPORTED_ADD_EDGE);
 	}

@@ -73,7 +73,7 @@ public class PathNetwork implements IPathNetwork {
 	 * network.Node, de.zabuza.pathweaver.network.Node, float)
 	 */
 	@Override
-	public void addEdge(final Node source, final Node destination, final float cost) {
+	public DirectedWeightedEdge addEdge(final Node source, final Node destination, final float cost) {
 		if (!containsNodeId(source.getId()) || !containsNodeId(destination.getId())) {
 			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
 		}
@@ -93,6 +93,8 @@ public class PathNetwork implements IPathNetwork {
 		mNodeToIncomingEdges.put(destination, incomingEdges);
 
 		mAmountOfEdges++;
+
+		return edge;
 	}
 
 	/*
@@ -250,6 +252,25 @@ public class PathNetwork implements IPathNetwork {
 		for (Node node : nodesToRemove) {
 			removeNode(node);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.zabuza.pathweaver.network.IPathNetwork#removeEdge(de.zabuza.pathweaver
+	 * .network.DirectedWeightedEdge)
+	 */
+	@Override
+	public void removeEdge(final DirectedWeightedEdge edge) throws NoSuchElementException {
+		if (!mNodeToOutgoingEdges.containsKey(edge.getSource())
+				|| !mNodeToIncomingEdges.containsKey(edge.getDestination())) {
+			throw new NoSuchElementException();
+		}
+
+		mNodeToOutgoingEdges.get(edge.getSource()).remove(edge);
+		mNodeToIncomingEdges.get(edge.getDestination()).remove(edge);
+		mAmountOfEdges--;
 	}
 
 	/*
