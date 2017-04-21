@@ -48,10 +48,10 @@ public final class DirectedWeightedEdge {
 		if (cost <= 0) {
 			throw new IllegalArgumentException(EXCEPTION_COST_ILLEGAL + cost);
 		}
-		mCost = cost;
-		mSource = source;
-		mDestination = destination;
-		mIsReversed = false;
+		this.mCost = cost;
+		this.mSource = source;
+		this.mDestination = destination;
+		this.mIsReversed = false;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class DirectedWeightedEdge {
 	 * @return The cost of this edge
 	 */
 	public float getCost() {
-		return mCost;
+		return this.mCost;
 	}
 
 	/**
@@ -69,11 +69,10 @@ public final class DirectedWeightedEdge {
 	 * @return The destination of this directed edge.
 	 */
 	public Node getDestination() {
-		if (!mIsReversed) {
-			return mDestination;
-		} else {
-			return mSource;
+		if (!this.mIsReversed) {
+			return this.mDestination;
 		}
+		return this.mSource;
 	}
 
 	/**
@@ -82,11 +81,10 @@ public final class DirectedWeightedEdge {
 	 * @return The source of this directed edge.
 	 */
 	public Node getSource() {
-		if (!mIsReversed) {
-			return mSource;
-		} else {
-			return mDestination;
+		if (!this.mIsReversed) {
+			return this.mSource;
 		}
+		return this.mDestination;
 	}
 
 	/**
@@ -94,6 +92,6 @@ public final class DirectedWeightedEdge {
 	 * and vice versa.
 	 */
 	public void reverse() {
-		mIsReversed = !mIsReversed;
+		this.mIsReversed = !this.mIsReversed;
 	}
 }

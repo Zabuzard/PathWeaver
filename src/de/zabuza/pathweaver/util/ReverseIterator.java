@@ -26,7 +26,7 @@ public final class ReverseIterator<E> implements Iterator<E> {
 	 *            The list to traverse
 	 */
 	public ReverseIterator(final List<E> list) {
-		mListIter = list.listIterator(list.size());
+		this.mListIter = list.listIterator(list.size());
 	}
 
 	/*
@@ -36,7 +36,7 @@ public final class ReverseIterator<E> implements Iterator<E> {
 	 */
 	@Override
 	public boolean hasNext() {
-		return mListIter.hasPrevious();
+		return this.mListIter.hasPrevious();
 	}
 
 	/*
@@ -46,7 +46,7 @@ public final class ReverseIterator<E> implements Iterator<E> {
 	 */
 	@Override
 	public E next() {
-		return mListIter.previous();
+		return this.mListIter.previous();
 	}
 
 }

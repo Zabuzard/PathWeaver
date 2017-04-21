@@ -48,11 +48,11 @@ public final class Path {
 	 *            The source node for this path
 	 */
 	public Path(final Node source) {
-		mSource = source;
-		mHeadEdge = null;
-		mEdges = new LinkedList<>();
-		mLength = EMPTY_LENGTH;
-		mTotalCost = EMPTY_TOTAL_COST;
+		this.mSource = source;
+		this.mHeadEdge = null;
+		this.mEdges = new LinkedList<>();
+		this.mLength = EMPTY_LENGTH;
+		this.mTotalCost = EMPTY_TOTAL_COST;
 	}
 
 	/**
@@ -62,10 +62,10 @@ public final class Path {
 	 *            The edge to add
 	 */
 	public void addEdge(final DirectedWeightedEdge edge) {
-		mEdges.add(edge);
-		mTotalCost += edge.getCost();
-		mLength++;
-		mHeadEdge = edge;
+		this.mEdges.add(edge);
+		this.mTotalCost += edge.getCost();
+		this.mLength++;
+		this.mHeadEdge = edge;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public final class Path {
 	 * @return The total cost of this path.
 	 */
 	public float getCost() {
-		return mTotalCost;
+		return this.mTotalCost;
 	}
 
 	/**
@@ -86,10 +86,9 @@ public final class Path {
 	 */
 	public Node getDestination() {
 		if (getLength() == EMPTY_LENGTH) {
-			return mSource;
-		} else {
-			return mHeadEdge.getDestination();
+			return this.mSource;
 		}
+		return this.mHeadEdge.getDestination();
 	}
 
 	/**
@@ -100,7 +99,7 @@ public final class Path {
 	 *         source and the last ends at the destination.
 	 */
 	public List<DirectedWeightedEdge> getEdges() {
-		return mEdges;
+		return this.mEdges;
 	}
 
 	/**
@@ -110,7 +109,7 @@ public final class Path {
 	 * @return The length of this path, i.e. the amount of nodes.
 	 */
 	public int getLength() {
-		return mLength;
+		return this.mLength;
 	}
 
 	/**
@@ -119,6 +118,6 @@ public final class Path {
 	 * @return The source node of this path
 	 */
 	public Node getSource() {
-		return mSource;
+		return this.mSource;
 	}
 }

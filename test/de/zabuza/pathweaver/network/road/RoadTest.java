@@ -16,6 +16,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#addRoadNode(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddRoadNode() {
 		Road road = new Road(0);
@@ -29,6 +30,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#equals(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		Road road = new Road(0);
@@ -46,6 +48,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#getId()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetId() {
 		Road road = new Road(0);
@@ -58,6 +61,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#getRoadNodes()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodes() {
 		Road road = new Road(0);
@@ -79,6 +83,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#getRoadNodesAmount()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodesAmount() {
 		Road road = new Road(0);
@@ -98,6 +103,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#getRoadNodesReversed()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodesReversed() {
 		Road road = new Road(0);
@@ -119,6 +125,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#getRoadType()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadType() {
 		Road road = new Road(0);
@@ -133,6 +140,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		Road road = new Road(0);
@@ -150,6 +158,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#isOneway()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testIsOneway() {
 		Road road = new Road(0);
@@ -157,13 +166,14 @@ public final class RoadTest {
 		Road anotherRoad = new Road(1);
 		anotherRoad.setIsOneway(false);
 
-		Assert.assertEquals(true, road.isOneway());
-		Assert.assertEquals(false, anotherRoad.isOneway());
+		Assert.assertEquals(Boolean.TRUE, Boolean.valueOf(road.isOneway()));
+		Assert.assertEquals(Boolean.FALSE, Boolean.valueOf(anotherRoad.isOneway()));
 	}
 
 	/**
 	 * Test method for {@link Road#Road(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testRoad() {
 		Road road = new Road(0);
@@ -182,6 +192,7 @@ public final class RoadTest {
 	/**
 	 * Test method for {@link Road#setIsOneway(boolean)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testSetIsOneway() {
 		Road road = new Road(0);
@@ -189,13 +200,14 @@ public final class RoadTest {
 		Road anotherRoad = new Road(1);
 		anotherRoad.setIsOneway(false);
 
-		Assert.assertEquals(true, road.isOneway());
-		Assert.assertEquals(false, anotherRoad.isOneway());
+		Assert.assertEquals(Boolean.TRUE, Boolean.valueOf(road.isOneway()));
+		Assert.assertEquals(Boolean.FALSE, Boolean.valueOf(anotherRoad.isOneway()));
 	}
 
 	/**
 	 * Test method for {@link Road#setRoadType(ERoadType)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testSetRoadType() {
 		Road road = new Road(0);

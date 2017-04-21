@@ -57,10 +57,10 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 	public ArcFlagShortestPathComputation(final IPathNetwork network,
 			final INetworkPartitioningProvider partitioningProvider) {
 		super(network);
-		mPartitioningProvider = partitioningProvider;
-		mEdgeAndRegionIdToRelevance = new NestedMap2<>();
-		mNodeToRegionId = new HashMap<>();
-		mIdToRegion = new HashMap<>();
+		this.mPartitioningProvider = partitioningProvider;
+		this.mEdgeAndRegionIdToRelevance = new NestedMap2<>();
+		this.mNodeToRegionId = new HashMap<>();
+		this.mIdToRegion = new HashMap<>();
 
 		initialize();
 	}
@@ -72,7 +72,7 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 	 */
 	private void initialize() {
 		// Compute the arc flags
-		Collection<Set<Node>> regions = mPartitioningProvider.getPartitioning();
+		Collection<Set<Node>> regions = this.mPartitioningProvider.getPartitioning();
 		IPathNetwork network = getPathNetwork();
 		// Computation is done on the reversed graph
 		network.reverse();
@@ -80,10 +80,11 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 		int regionId = 0;
 		// Iterate every node of every region
 		for (Set<Node> region : regions) {
-			mIdToRegion.put(regionId, region);
+			final Integer regionIdAsInteger = Integer.valueOf(regionId);
+			this.mIdToRegion.put(regionIdAsInteger, region);
 
 			for (Node node : region) {
-				mNodeToRegionId.put(node, regionId);
+				this.mNodeToRegionId.put(node, regionIdAsInteger);
 
 				// A boundary node has an incoming edge from another reagion. In
 				// the reversed graph this are outgoing egdes.
@@ -93,7 +94,7 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 					// will be set for the edge
 					boolean isEdgeInside = region.contains(edge.getDestination());
 					if (isEdgeInside) {
-						mEdgeAndRegionIdToRelevance.put(edge, regionId, Boolean.TRUE);
+						this.mEdgeAndRegionIdToRelevance.put(edge, regionIdAsInteger, Boolean.TRUE);
 					}
 
 					// If the edge is not inside, the node is a boundary node
@@ -116,7 +117,7 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 							}
 
 							// Settle the flag for the edge
-							mEdgeAndRegionIdToRelevance.put(parentEdge, regionId, Boolean.TRUE);
+							this.mEdgeAndRegionIdToRelevance.put(parentEdge, regionIdAsInteger, Boolean.TRUE);
 						}
 					}
 				}
@@ -144,15 +145,14 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 			Node destinationNode = destination.get();
 
 			// Get the region of the node
-			Integer regionId = mNodeToRegionId.get(destinationNode);
-			Boolean isEdgeImportant = mEdgeAndRegionIdToRelevance.get(outgoingEdge, regionId);
-			if (isEdgeImportant != null && isEdgeImportant) {
+			Integer regionId = this.mNodeToRegionId.get(destinationNode);
+			Boolean isEdgeImportant = this.mEdgeAndRegionIdToRelevance.get(outgoingEdge, regionId);
+			if (isEdgeImportant != null && isEdgeImportant.booleanValue()) {
 				// Flag is set, consider the edge
 				return true;
-			} else {
-				// Flag is not set, do not consider the edge
-				return false;
 			}
+			// Flag is not set, do not consider the edge
+			return false;
 		}
 
 		return true;

@@ -42,7 +42,7 @@ public final class TarjanTaskElementTest {
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
 
-		exception.expect(IllegalStateException.class);
+		this.exception.expect(IllegalStateException.class);
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
 	}
@@ -50,6 +50,7 @@ public final class TarjanTaskElementTest {
 	/**
 	 * Test method for {@link TarjanTaskElement#getNode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNode() {
 		Node node = new Node(0);
@@ -64,6 +65,7 @@ public final class TarjanTaskElementTest {
 	/**
 	 * Test method for {@link TarjanTaskElement#getPredecessor()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPredecessor() {
 		Node node = new Node(0);
@@ -103,7 +105,7 @@ public final class TarjanTaskElementTest {
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
 
-		exception.expect(IllegalStateException.class);
+		this.exception.expect(IllegalStateException.class);
 		taskElement.reportTaskAccomplished();
 		Assert.assertFalse(taskElement.getCurrentTask().isPresent());
 	}
@@ -111,6 +113,7 @@ public final class TarjanTaskElementTest {
 	/**
 	 * Test method for {@link TarjanTaskElement#TarjanTaskElement(Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanTaskElementNode() {
 		Node node = new Node(0);
@@ -125,6 +128,7 @@ public final class TarjanTaskElementTest {
 	/**
 	 * Test method for {@link TarjanTaskElement#TarjanTaskElement(Node, Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanTaskElementNodeNode() {
 		Node node = new Node(0);

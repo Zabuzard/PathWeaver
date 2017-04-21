@@ -22,6 +22,7 @@ public final class OneAxisRectanglePartitioningProviderTest {
 	 * Test method for
 	 * {@link OneAxisRectanglePartitioningProvider#getPartitioning()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPartitioning() {
 		RoadNetwork network = new RoadNetwork();
@@ -61,6 +62,7 @@ public final class OneAxisRectanglePartitioningProviderTest {
 	 * Test method for
 	 * {@link OneAxisRectanglePartitioningProvider#isInsideRectangle(RoadNode)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testIsInsideRectangle() {
 		RoadNetwork network = new RoadNetwork();
@@ -85,6 +87,7 @@ public final class OneAxisRectanglePartitioningProviderTest {
 	 * {@link OneAxisRectanglePartitioningProvider#OneAxisRectanglePartitioningProvider(RoadNetwork, float, float, float, float)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testOneAxisRectanglePartitioningProvider() {
 		RoadNetwork network = new RoadNetwork();

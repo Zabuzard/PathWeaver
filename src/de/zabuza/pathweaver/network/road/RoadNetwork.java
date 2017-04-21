@@ -87,7 +87,7 @@ public final class RoadNetwork extends PathNetwork {
 	private final static int OSM_NEEDLE_ROAD_TYPE_GROUP_TYPE = 1;
 	/**
 	 * Exception message which is shown when the unsupported operation
-	 * {@link #addEdge(Node, Node, int)} is called.
+	 * {@link #addEdge(Node, Node, float)} is called.
 	 */
 	private final static String UNSUPPORTED_ADD_EDGE = "Road networks only accept RoadNode as nodes. Use addRoad(RoadNode, RoadNode) instead.";
 	/**
@@ -107,6 +107,7 @@ public final class RoadNetwork extends PathNetwork {
 	 * @throws IOException
 	 *             If an I/O-Exception occurred
 	 */
+	@SuppressWarnings("resource")
 	public static RoadNetwork createFromOsmFile(final File osmFile) throws FileNotFoundException, IOException {
 		return createFromOsmReader(new FileReader(osmFile));
 	}
@@ -155,6 +156,9 @@ public final class RoadNetwork extends PathNetwork {
 						if (matcher.find()) {
 							matchedLine = true;
 							int ref = Integer.parseInt(matcher.group(OSM_NEEDLE_ROAD_ENTRY_GROUP_REF));
+							if (currentRoad == null) {
+								throw new AssertionError();
+							}
 							currentRoad.addRoadNode(ref);
 						}
 					}
@@ -167,6 +171,9 @@ public final class RoadNetwork extends PathNetwork {
 							ERoadType type;
 							try {
 								type = RoadUtil.getRoadTypeFromOsm(typeText);
+								if (currentRoad == null) {
+									throw new AssertionError();
+								}
 								currentRoad.setRoadType(type);
 							} catch (IllegalArgumentException e) {
 								rejectTheCurrentRoadConstructionData = true;
@@ -178,6 +185,9 @@ public final class RoadNetwork extends PathNetwork {
 						matcher = roadOnewayPattern.matcher(line);
 						if (matcher.find()) {
 							matchedLine = true;
+							if (currentRoad == null) {
+								throw new AssertionError();
+							}
 							currentRoad.setIsOneway(true);
 						}
 					}
@@ -240,7 +250,7 @@ public final class RoadNetwork extends PathNetwork {
 
 	/**
 	 * This method is not supported by {@link RoadNetwork}. Use
-	 * {@link #addRoad(RoadNode, RoadNode)} instead.
+	 * {@link #addRoad(Road)} instead.
 	 */
 	@Override
 	public DirectedWeightedEdge addEdge(final Node source, final Node destination, final float cost)
@@ -275,10 +285,10 @@ public final class RoadNetwork extends PathNetwork {
 
 		// Forward direction
 		Iterator<Integer> nodesIter = road.getRoadNodes();
-		RoadNode lastNode = (RoadNode) getNodeById(nodesIter.next());
+		RoadNode lastNode = (RoadNode) getNodeById(nodesIter.next().intValue());
 		while (nodesIter.hasNext()) {
 			Integer nodeId = nodesIter.next();
-			RoadNode nextNode = (RoadNode) getNodeById(nodeId);
+			RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
 
 			// Combine lastNode with nextNode
 			addRoad(lastNode, nextNode, type);
@@ -289,10 +299,10 @@ public final class RoadNetwork extends PathNetwork {
 		if (!isOneWay) {
 			// Backward direction
 			Iterator<Integer> nodesIterReversed = road.getRoadNodesReversed();
-			lastNode = (RoadNode) getNodeById(nodesIterReversed.next());
+			lastNode = (RoadNode) getNodeById(nodesIterReversed.next().intValue());
 			while (nodesIterReversed.hasNext()) {
 				Integer nodeId = nodesIterReversed.next();
-				RoadNode nextNode = (RoadNode) getNodeById(nodeId);
+				RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
 
 				// Combine lastNode with nextNode
 				addRoad(lastNode, nextNode, type);

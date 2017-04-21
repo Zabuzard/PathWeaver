@@ -75,8 +75,8 @@ public class RoadNode extends Node {
 		if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
 			throw new IllegalArgumentException(EXCEPTION_LONGITUDE_ILLEGAL + longitude);
 		}
-		mLatitude = latitude;
-		mLongitude = longitude;
+		this.mLatitude = latitude;
+		this.mLongitude = longitude;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class RoadNode extends Node {
 	 * @return The latitude position of this node.
 	 */
 	public float getLatitude() {
-		return mLatitude;
+		return this.mLatitude;
 	}
 
 	/**
@@ -94,6 +94,6 @@ public class RoadNode extends Node {
 	 * @return The longitude position of this node.
 	 */
 	public float getLongitude() {
-		return mLongitude;
+		return this.mLongitude;
 	}
 }

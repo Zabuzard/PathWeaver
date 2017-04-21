@@ -53,9 +53,9 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 	 *            The network to select landmarks from
 	 */
 	public GreedyFarthestLandmarkProvider(final IPathNetwork network) {
-		mNetwork = network;
-		mRandom = new Random();
-		mComputation = new DijkstraShortestPathComputation(mNetwork);
+		this.mNetwork = network;
+		this.mRandom = new Random();
+		this.mComputation = new DijkstraShortestPathComputation(this.mNetwork);
 	}
 
 	/*
@@ -69,13 +69,13 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 		if (amount <= 0) {
 			throw new IllegalArgumentException(LANDMARK_AMOUNT_NEGATIVE);
 		}
-		if (amount > mNetwork.getSize()) {
+		if (amount > this.mNetwork.getSize()) {
 			throw new IllegalArgumentException(LANDMARK_AMOUNT_UNAVAILABLE);
 		}
 
 		// Choose the first element randomly
-		Collection<Node> nodes = mNetwork.getNodes();
-		int firstIndex = mRandom.nextInt(nodes.size());
+		Collection<Node> nodes = this.mNetwork.getNodes();
+		int firstIndex = this.mRandom.nextInt(nodes.size());
 		Node firstNode;
 		if (nodes instanceof List<?>) {
 			// Let the list choose the most efficient method for get(index)
@@ -98,7 +98,7 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 		// Iteratively select the node which is farthest away
 		// from the current set
 		while (landmarks.size() < amount) {
-			Map<Node, Float> nodeToCost = mComputation.computeShortestPathCostsReachable(landmarks);
+			Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmarks);
 			// Search the entry with the highest cost
 			float startingCost = -1;
 			float highestKnownCost = startingCost;
@@ -107,7 +107,7 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 				Node node = entry.getKey();
 				assert !landmarks.contains(node);
 
-				float cost = entry.getValue();
+				float cost = entry.getValue().floatValue();
 				if (cost > highestKnownCost) {
 					highestKnownCost = cost;
 					farthestKnownNode = node;

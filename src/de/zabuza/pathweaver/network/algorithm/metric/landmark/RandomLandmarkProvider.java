@@ -44,8 +44,8 @@ public final class RandomLandmarkProvider implements ILandmarkProvider<Node> {
 	 *            The network to select landmarks from
 	 */
 	public RandomLandmarkProvider(final IPathNetwork network) {
-		mNetwork = network;
-		mRandom = new Random();
+		this.mNetwork = network;
+		this.mRandom = new Random();
 	}
 
 	/*
@@ -59,16 +59,16 @@ public final class RandomLandmarkProvider implements ILandmarkProvider<Node> {
 		if (amount <= 0) {
 			throw new IllegalArgumentException(LANDMARK_AMOUNT_NEGATIVE);
 		}
-		if (amount > mNetwork.getSize()) {
+		if (amount > this.mNetwork.getSize()) {
 			throw new IllegalArgumentException(LANDMARK_AMOUNT_UNAVAILABLE);
 		}
 
 		HashSet<Node> landmarks = new HashSet<>();
-		Object[] nodes = mNetwork.getNodes().toArray();
+		Object[] nodes = this.mNetwork.getNodes().toArray();
 		int amountOfNodes = nodes.length;
 
 		while (landmarks.size() < amount) {
-			int candidateIndex = mRandom.nextInt(amountOfNodes);
+			int candidateIndex = this.mRandom.nextInt(amountOfNodes);
 			Node candidate = (Node) nodes[candidateIndex];
 			landmarks.add(candidate);
 		}

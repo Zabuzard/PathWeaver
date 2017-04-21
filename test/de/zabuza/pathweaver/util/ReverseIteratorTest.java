@@ -17,12 +17,13 @@ public final class ReverseIteratorTest {
 	/**
 	 * Test method for {@link ReverseIterator#hasNext()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHasNext() {
-		List<Integer> list = new LinkedList<Integer>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
+		List<Integer> list = new LinkedList<>();
+		list.add(Integer.valueOf(1));
+		list.add(Integer.valueOf(2));
+		list.add(Integer.valueOf(3));
 		ReverseIterator<Integer> iter = new ReverseIterator<>(list);
 
 		Assert.assertTrue(iter.hasNext());
@@ -37,12 +38,13 @@ public final class ReverseIteratorTest {
 	/**
 	 * Test method for {@link ReverseIterator#next()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testNext() {
-		List<Integer> list = new LinkedList<Integer>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
+		List<Integer> list = new LinkedList<>();
+		list.add(Integer.valueOf(1));
+		list.add(Integer.valueOf(2));
+		list.add(Integer.valueOf(3));
 		ReverseIterator<Integer> iter = new ReverseIterator<>(list);
 
 		Assert.assertTrue(iter.hasNext());
@@ -57,12 +59,13 @@ public final class ReverseIteratorTest {
 	/**
 	 * Test method for {@link ReverseIterator#ReverseIterator(List)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testReverseIterator() {
-		List<Integer> list = new LinkedList<Integer>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
+		List<Integer> list = new LinkedList<>();
+		list.add(Integer.valueOf(1));
+		list.add(Integer.valueOf(2));
+		list.add(Integer.valueOf(3));
 		ReverseIterator<Integer> iter = new ReverseIterator<>(list);
 
 		Assert.assertTrue(iter.hasNext());

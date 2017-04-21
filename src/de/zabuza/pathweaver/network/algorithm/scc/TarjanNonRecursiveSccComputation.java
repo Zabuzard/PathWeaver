@@ -43,17 +43,17 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	 *            The node to process its successors
 	 */
 	private void doGetSuccessorsTask(final Node node) {
-		Set<DirectedWeightedEdge> outgoingEdges = mNetwork.getOutgoingEdges(node);
+		Set<DirectedWeightedEdge> outgoingEdges = this.mNetwork.getOutgoingEdges(node);
 		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 			Node successor = outgoingEdge.getDestination();
-			if (mNodeToIndex.containsKey(successor)) {
+			if (this.mNodeToIndex.containsKey(successor)) {
 				// Update the low link value if not visited the first time
-				if (mInDeque.contains(successor)) {
-					updateLowLink(node, mNodeToIndex.get(successor));
+				if (this.mInDeque.contains(successor)) {
+					updateLowLink(node, this.mNodeToIndex.get(successor).intValue());
 				}
 			} else {
 				// Register successor if visited the first time
-				mTaskDeque.push(new TarjanTaskElement(successor, node));
+				this.mTaskDeque.push(new TarjanTaskElement(successor, node));
 			}
 		}
 	}
@@ -65,13 +65,13 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	 *            Node to register
 	 */
 	private void doIndexTask(final Node node) {
-		assert (!mNodeToIndex.containsKey(node) && !mNodeToLowLink.containsKey(node));
-		mNodeToIndex.put(node, mCurrentIndex);
-		mNodeToLowLink.put(node, mCurrentIndex);
-		mCurrentIndex++;
+		assert (!this.mNodeToIndex.containsKey(node) && !this.mNodeToLowLink.containsKey(node));
+		this.mNodeToIndex.put(node, Integer.valueOf(this.mCurrentIndex));
+		this.mNodeToLowLink.put(node, Integer.valueOf(this.mCurrentIndex));
+		this.mCurrentIndex++;
 
-		mDeque.push(node);
-		mInDeque.add(node);
+		this.mDeque.push(node);
+		this.mInDeque.add(node);
 	}
 
 	/**
@@ -86,12 +86,12 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	private void doSetLowLinkTask(final Node node, final Optional<Node> predecessor) {
 		// If this values low link value is equals to its index, then it is the
 		// root of this SCC.
-		if (mNodeToIndex.get(node).equals(mNodeToLowLink.get(node))) {
+		if (this.mNodeToIndex.get(node).equals(this.mNodeToLowLink.get(node))) {
 			establishScc(node);
 		}
 		// If node is not the root, update its predecessors low link value
 		if (predecessor.isPresent()) {
-			updateLowLink(predecessor.get(), mNodeToLowLink.get(node));
+			updateLowLink(predecessor.get(), this.mNodeToLowLink.get(node).intValue());
 		}
 	}
 
@@ -104,7 +104,7 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	@Override
 	protected void clear() {
 		super.clear();
-		mTaskDeque = new LinkedList<>();
+		this.mTaskDeque = new LinkedList<>();
 	}
 
 	/*
@@ -116,27 +116,27 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	@Override
 	protected void strongConnect(final Node node) {
 		// Push the starting task element
-		mTaskDeque.push(new TarjanTaskElement(node));
+		this.mTaskDeque.push(new TarjanTaskElement(node));
 
 		// Process all task elements
-		while (!mTaskDeque.isEmpty()) {
-			TarjanTaskElement taskElement = mTaskDeque.pop();
+		while (!this.mTaskDeque.isEmpty()) {
+			TarjanTaskElement taskElement = this.mTaskDeque.pop();
 			Node elementNode = taskElement.getNode();
 			ETarjanTask currentTask = taskElement.getCurrentTask().get();
 
 			if (currentTask == ETarjanTask.INDEX) {
 				// Only register node if it is visited the first time
-				if (!mNodeToIndex.containsKey(elementNode)) {
+				if (!this.mNodeToIndex.containsKey(elementNode)) {
 					doIndexTask(elementNode);
 
 					// Push the element with the next task to the deque
 					taskElement.reportTaskAccomplished();
-					mTaskDeque.push(taskElement);
+					this.mTaskDeque.push(taskElement);
 				}
 			} else if (currentTask == ETarjanTask.GET_SUCCESSORS) {
 				// Push the element with the next task to the deque
 				taskElement.reportTaskAccomplished();
-				mTaskDeque.push(taskElement);
+				this.mTaskDeque.push(taskElement);
 
 				doGetSuccessorsTask(elementNode);
 			} else if (currentTask == ETarjanTask.SET_LOWLINK) {

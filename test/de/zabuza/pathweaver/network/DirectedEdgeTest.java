@@ -19,8 +19,10 @@ public final class DirectedEdgeTest {
 	public final ExpectedException exception = ExpectedException.none();
 
 	/**
-	 * Test method for {@link DirectedWeightedEdge#DirectedEdge(Node, int)} .
+	 * Test method for
+	 * {@link DirectedWeightedEdge#DirectedWeightedEdge(Node, Node, float)} .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testDirectedEdge() {
 		Node src = new Node(0);
@@ -42,6 +44,7 @@ public final class DirectedEdgeTest {
 	/**
 	 * Test method for {@link DirectedWeightedEdge#equals(Object)} .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		Node src = new Node(0);
@@ -67,6 +70,7 @@ public final class DirectedEdgeTest {
 	/**
 	 * Test method for {@link DirectedWeightedEdge#getCost()}.
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void testGetCost() {
 		Node src = new Node(0);
@@ -82,7 +86,7 @@ public final class DirectedEdgeTest {
 		// Test cost which are out of the bounds, i.e. not greater than zero
 		int zeroCost = 0;
 		int negativeCost = -5;
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		new DirectedWeightedEdge(src, dest, zeroCost);
 		new DirectedWeightedEdge(src, dest, negativeCost);
 	}
@@ -90,6 +94,7 @@ public final class DirectedEdgeTest {
 	/**
 	 * Test method for {@link DirectedWeightedEdge#getDestination()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetDestination() {
 		Node src = new Node(0);
@@ -106,6 +111,7 @@ public final class DirectedEdgeTest {
 	/**
 	 * Test method for {@link DirectedWeightedEdge#getSource()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSource() {
 		Node src = new Node(0);
@@ -122,6 +128,7 @@ public final class DirectedEdgeTest {
 	/**
 	 * Test method for {@link DirectedWeightedEdge#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		Node src = new Node(0);

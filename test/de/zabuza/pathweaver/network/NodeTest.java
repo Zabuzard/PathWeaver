@@ -14,6 +14,7 @@ public final class NodeTest {
 	/**
 	 * Test method for {@link Node#equals(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		int id = 0;
@@ -28,6 +29,7 @@ public final class NodeTest {
 	/**
 	 * Test method for {@link Node#getId()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetId() {
 		int id = 0;
@@ -42,6 +44,7 @@ public final class NodeTest {
 	/**
 	 * Test method for {@link Node#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		int id = 0;
@@ -56,6 +59,7 @@ public final class NodeTest {
 	/**
 	 * Test method for {@link Node#Node(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testNode() {
 		int id = 0;
@@ -70,6 +74,7 @@ public final class NodeTest {
 	/**
 	 * Test method for {@link Node#toString()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testToString() {
 		int id = 0;

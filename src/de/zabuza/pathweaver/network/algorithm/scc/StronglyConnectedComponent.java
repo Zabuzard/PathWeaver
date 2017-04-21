@@ -31,22 +31,23 @@ public final class StronglyConnectedComponent {
 	 * Creates a new empty strongly connected component.
 	 */
 	public StronglyConnectedComponent() {
-		mNodes = new HashSet<Node>();
+		this.mNodes = new HashSet<>();
 	}
 
 	/**
 	 * Adds a given node to the SCC.
 	 * 
-	 * @param node The node to add
+	 * @param node
+	 *            The node to add
 	 * @throws UnsupportedOperationException
 	 *             If the root node was already set, since the SCC may not be
 	 *             modified after this
 	 */
 	public void addNode(final Node node) throws UnsupportedOperationException {
-		if (mRootNode != null) {
+		if (this.mRootNode != null) {
 			throw new UnsupportedOperationException(ROOT_SET_METHOD_UNSUPPORTED);
 		}
-		boolean wasAlreadyContained = mNodes.add(node);
+		boolean wasAlreadyContained = this.mNodes.add(node);
 		assert wasAlreadyContained;
 	}
 
@@ -56,7 +57,7 @@ public final class StronglyConnectedComponent {
 	 * @return An unmodifiable set of all nodes that belong to this SCC
 	 */
 	public Set<Node> getNodes() {
-		return Collections.unmodifiableSet(mNodes);
+		return Collections.unmodifiableSet(this.mNodes);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public final class StronglyConnectedComponent {
 	 * @return The root node of this SCC
 	 */
 	public Node getRootNode() {
-		return mRootNode;
+		return this.mRootNode;
 	}
 
 	/**
@@ -75,7 +76,7 @@ public final class StronglyConnectedComponent {
 	 * @return The size of the SCC which is the amount of nodes
 	 */
 	public int getSize() {
-		return mNodes.size();
+		return this.mNodes.size();
 	}
 
 	/**
@@ -88,10 +89,10 @@ public final class StronglyConnectedComponent {
 	 *             modified after this
 	 */
 	public void setRootNode(final Node rootNode) throws UnsupportedOperationException {
-		if (mRootNode != null) {
+		if (this.mRootNode != null) {
 			throw new UnsupportedOperationException(ROOT_SET_METHOD_UNSUPPORTED);
 		}
-		mRootNode = rootNode;
+		this.mRootNode = rootNode;
 	}
 
 	/*
@@ -101,7 +102,7 @@ public final class StronglyConnectedComponent {
 	 */
 	@Override
 	public String toString() {
-		return mNodes.toString();
+		return this.mNodes.toString();
 	}
 
 }

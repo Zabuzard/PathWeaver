@@ -58,11 +58,11 @@ public class PathNetwork implements IPathNetwork {
 	 * Creates a new empty path network.
 	 */
 	public PathNetwork() {
-		mAmountOfNodes = 0;
-		mAmountOfEdges = 0;
-		mIdToNodes = new HashMap<>();
-		mNodeToOutgoingEdges = new HashMap<>();
-		mNodeToIncomingEdges = new HashMap<>();
+		this.mAmountOfNodes = 0;
+		this.mAmountOfEdges = 0;
+		this.mIdToNodes = new HashMap<>();
+		this.mNodeToOutgoingEdges = new HashMap<>();
+		this.mNodeToIncomingEdges = new HashMap<>();
 	}
 
 	/*
@@ -78,21 +78,21 @@ public class PathNetwork implements IPathNetwork {
 			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
 		}
 		DirectedWeightedEdge edge = new DirectedWeightedEdge(source, destination, cost);
-		HashSet<DirectedWeightedEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			outgoingEdges = new LinkedHashSet<>();
 		}
 		outgoingEdges.add(edge);
-		mNodeToOutgoingEdges.put(source, outgoingEdges);
+		this.mNodeToOutgoingEdges.put(source, outgoingEdges);
 
-		HashSet<DirectedWeightedEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
 			incomingEdges = new LinkedHashSet<>();
 		}
 		incomingEdges.add(edge);
-		mNodeToIncomingEdges.put(destination, incomingEdges);
+		this.mNodeToIncomingEdges.put(destination, incomingEdges);
 
-		mAmountOfEdges++;
+		this.mAmountOfEdges++;
 
 		return edge;
 	}
@@ -106,12 +106,12 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean addNode(final Node node) {
-		Node previousElement = mIdToNodes.get(node.getId());
+		Node previousElement = this.mIdToNodes.get(Integer.valueOf(node.getId()));
 		boolean getsAdded = previousElement == null;
 		if (getsAdded) {
-			mIdToNodes.put(node.getId(), node);
-			mAmountOfNodes++;
-			assert mAmountOfNodes == mIdToNodes.size();
+			this.mIdToNodes.put(Integer.valueOf(node.getId()), node);
+			this.mAmountOfNodes++;
+			assert this.mAmountOfNodes == this.mIdToNodes.size();
 		}
 		return getsAdded;
 	}
@@ -123,7 +123,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean containsNodeId(final int nodeId) {
-		return mIdToNodes.containsKey(nodeId);
+		return this.mIdToNodes.containsKey(Integer.valueOf(nodeId));
 	}
 
 	/*
@@ -133,7 +133,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public int getAmountOfEdges() {
-		return mAmountOfEdges;
+		return this.mAmountOfEdges;
 	}
 
 	/*
@@ -145,12 +145,11 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Set<DirectedWeightedEdge> getIncomingEdges(final Node destination) {
-		HashSet<DirectedWeightedEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
 			return Collections.emptySet();
-		} else {
-			return Collections.unmodifiableSet(incomingEdges);
 		}
+		return Collections.unmodifiableSet(incomingEdges);
 	}
 
 	/*
@@ -160,7 +159,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Node getNodeById(final int id) {
-		return mIdToNodes.get(id);
+		return this.mIdToNodes.get(Integer.valueOf(id));
 	}
 
 	/*
@@ -170,7 +169,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Collection<Node> getNodes() {
-		return mIdToNodes.values();
+		return this.mIdToNodes.values();
 	}
 
 	/*
@@ -182,12 +181,11 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Set<DirectedWeightedEdge> getOutgoingEdges(final Node source) {
-		HashSet<DirectedWeightedEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			return Collections.emptySet();
-		} else {
-			return Collections.unmodifiableSet(outgoingEdges);
 		}
+		return Collections.unmodifiableSet(outgoingEdges);
 	}
 
 	/*
@@ -197,7 +195,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public int getSize() {
-		return mAmountOfNodes;
+		return this.mAmountOfNodes;
 	}
 
 	/*
@@ -208,12 +206,11 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean hasIncomingEdge(final Node destination, final DirectedWeightedEdge incomingEdge) {
-		HashSet<DirectedWeightedEdge> incomingEdges = mNodeToIncomingEdges.get(destination);
+		HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
 			return false;
-		} else {
-			return incomingEdges.contains(incomingEdge);
 		}
+		return incomingEdges.contains(incomingEdge);
 	}
 
 	/*
@@ -224,12 +221,11 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean hasOutgoingEdge(final Node source, final DirectedWeightedEdge outgoingEdge) {
-		HashSet<DirectedWeightedEdge> outgoingEdges = mNodeToOutgoingEdges.get(source);
+		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			return false;
-		} else {
-			return outgoingEdges.contains(outgoingEdge);
 		}
+		return outgoingEdges.contains(outgoingEdge);
 	}
 
 	/*
@@ -263,14 +259,14 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public void removeEdge(final DirectedWeightedEdge edge) throws NoSuchElementException {
-		if (!mNodeToOutgoingEdges.containsKey(edge.getSource())
-				|| !mNodeToIncomingEdges.containsKey(edge.getDestination())) {
+		if (!this.mNodeToOutgoingEdges.containsKey(edge.getSource())
+				|| !this.mNodeToIncomingEdges.containsKey(edge.getDestination())) {
 			throw new NoSuchElementException();
 		}
 
-		mNodeToOutgoingEdges.get(edge.getSource()).remove(edge);
-		mNodeToIncomingEdges.get(edge.getDestination()).remove(edge);
-		mAmountOfEdges--;
+		this.mNodeToOutgoingEdges.get(edge.getSource()).remove(edge);
+		this.mNodeToIncomingEdges.get(edge.getDestination()).remove(edge);
+		this.mAmountOfEdges--;
 	}
 
 	/*
@@ -282,7 +278,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public void removeNode(final Node node) throws NoSuchElementException {
-		if (!mIdToNodes.containsKey(node.getId())) {
+		if (!this.mIdToNodes.containsKey(Integer.valueOf(node.getId()))) {
 			throw new NoSuchElementException();
 		}
 
@@ -291,23 +287,23 @@ public class PathNetwork implements IPathNetwork {
 		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 			// Remove this edge from destinations incoming edges
 			Node destination = outgoingEdge.getDestination();
-			mNodeToIncomingEdges.get(destination).remove(outgoingEdge);
-			mAmountOfEdges--;
+			this.mNodeToIncomingEdges.get(destination).remove(outgoingEdge);
+			this.mAmountOfEdges--;
 		}
 		Set<DirectedWeightedEdge> incomingEdges = getIncomingEdges(node);
 		for (DirectedWeightedEdge incomingEdge : incomingEdges) {
 			// Remove this edge from sources outgoing edges
 			Node source = incomingEdge.getSource();
-			mNodeToOutgoingEdges.get(source).remove(incomingEdge);
-			mAmountOfEdges--;
+			this.mNodeToOutgoingEdges.get(source).remove(incomingEdge);
+			this.mAmountOfEdges--;
 		}
 
 		// At this point no other node has a link to the node to delete
 		// Now delete the node and its links
-		mNodeToIncomingEdges.remove(node);
-		mNodeToOutgoingEdges.remove(node);
-		mIdToNodes.remove(node.getId());
-		mAmountOfNodes--;
+		this.mNodeToIncomingEdges.remove(node);
+		this.mNodeToOutgoingEdges.remove(node);
+		this.mIdToNodes.remove(Integer.valueOf(node.getId()));
+		this.mAmountOfNodes--;
 	}
 
 	/*
@@ -318,16 +314,16 @@ public class PathNetwork implements IPathNetwork {
 	@Override
 	public void reverse() {
 		// Iterate every edge exactly one time and reverse it
-		for (HashSet<DirectedWeightedEdge> edges : mNodeToOutgoingEdges.values()) {
+		for (HashSet<DirectedWeightedEdge> edges : this.mNodeToOutgoingEdges.values()) {
 			for (DirectedWeightedEdge edge : edges) {
 				edge.reverse();
 			}
 		}
 
 		// Exchange the internal edge maps
-		HashMap<Node, HashSet<DirectedWeightedEdge>> tmpNodeToIncomingEdges = mNodeToIncomingEdges;
-		mNodeToIncomingEdges = mNodeToOutgoingEdges;
-		mNodeToOutgoingEdges = tmpNodeToIncomingEdges;
+		HashMap<Node, HashSet<DirectedWeightedEdge>> tmpNodeToIncomingEdges = this.mNodeToIncomingEdges;
+		this.mNodeToIncomingEdges = this.mNodeToOutgoingEdges;
+		this.mNodeToOutgoingEdges = tmpNodeToIncomingEdges;
 	}
 
 	/*
@@ -339,10 +335,10 @@ public class PathNetwork implements IPathNetwork {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Network[");
-		builder.append("#nodes=" + mAmountOfNodes);
-		builder.append(",#edges=" + mAmountOfEdges);
+		builder.append("#nodes=" + this.mAmountOfNodes);
+		builder.append(",#edges=" + this.mAmountOfEdges);
 		builder.append(",edges={");
-		for (Entry<Node, HashSet<DirectedWeightedEdge>> entry : mNodeToOutgoingEdges.entrySet()) {
+		for (Entry<Node, HashSet<DirectedWeightedEdge>> entry : this.mNodeToOutgoingEdges.entrySet()) {
 			Node source = entry.getKey();
 			for (DirectedWeightedEdge outgoingEdge : entry.getValue()) {
 				Node destination = outgoingEdge.getDestination();
@@ -350,7 +346,7 @@ public class PathNetwork implements IPathNetwork {
 				builder.append("(" + source + "-" + cost + "->" + destination + "),");
 			}
 		}
-		if (!mNodeToOutgoingEdges.isEmpty()) {
+		if (!this.mNodeToOutgoingEdges.isEmpty()) {
 			builder.deleteCharAt(builder.length() - 1);
 		}
 		builder.append("}");

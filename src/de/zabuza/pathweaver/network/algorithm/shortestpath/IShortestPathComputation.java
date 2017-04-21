@@ -99,10 +99,10 @@ public interface IShortestPathComputation {
 
 	/**
 	 * Computes the shortest path in the network specified by
-	 * {@link #getPathNetwork()} between the given source and
-	 * destination and returns the search space. The search space consists of
-	 * all nodes that where visited by the implementing algorithm. Therefore the
-	 * main use of this method is for debugging and algorithm comparison.
+	 * {@link #getPathNetwork()} between the given source and destination and
+	 * returns the search space. The search space consists of all nodes that
+	 * where visited by the implementing algorithm. Therefore the main use of
+	 * this method is for debugging and algorithm comparison.
 	 * 
 	 * @param source
 	 *            Source node to compute the shortest path from

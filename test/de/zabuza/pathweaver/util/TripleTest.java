@@ -14,12 +14,13 @@ public final class TripleTest {
 	/**
 	 * Test method for {@link Triple#equals(java.lang.Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		String firstEntry = "a";
-		Float secondEntry = 2.3f;
-		Integer thirdEntry = 2;
-		Integer differentThirdEntry = 3;
+		Float secondEntry = Float.valueOf(2.3f);
+		Integer thirdEntry = Integer.valueOf(2);
+		Integer differentThirdEntry = Integer.valueOf(3);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
@@ -31,12 +32,13 @@ public final class TripleTest {
 	/**
 	 * Test method for {@link Triple#getFirst()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetFirst() {
 		String firstEntry = "a";
 		String anotherFirstEntry = "b";
-		Float secondEntry = 2.3f;
-		Integer thirdEntry = 2;
+		Float secondEntry = Float.valueOf(2.3f);
+		Integer thirdEntry = Integer.valueOf(2);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> anotherTriple = new Triple<>(anotherFirstEntry, secondEntry, thirdEntry);
 
@@ -47,12 +49,13 @@ public final class TripleTest {
 	/**
 	 * Test method for {@link Triple#getSecond()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSecond() {
 		String firstEntry = "a";
-		Float secondEntry = 2.3f;
-		Float anotherSecondEntry = 4.3f;
-		Integer thirdEntry = 2;
+		Float secondEntry = Float.valueOf(2.3f);
+		Float anotherSecondEntry = Float.valueOf(4.3f);
+		Integer thirdEntry = Integer.valueOf(2);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, anotherSecondEntry, thirdEntry);
 
@@ -63,12 +66,13 @@ public final class TripleTest {
 	/**
 	 * Test method for {@link Triple#getThird()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetThird() {
 		String firstEntry = "a";
-		Float secondEntry = 2.3f;
-		Integer thirdEntry = 2;
-		Integer anotherThirdEntry = 4;
+		Float secondEntry = Float.valueOf(2.3f);
+		Integer thirdEntry = Integer.valueOf(2);
+		Integer anotherThirdEntry = Integer.valueOf(4);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, secondEntry, anotherThirdEntry);
 
@@ -79,12 +83,13 @@ public final class TripleTest {
 	/**
 	 * Test method for {@link Triple#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		String firstEntry = "a";
-		Float secondEntry = 2.3f;
-		Integer thirdEntry = 2;
-		Integer differentThirdEntry = 3;
+		Float secondEntry = Float.valueOf(2.3f);
+		Integer thirdEntry = Integer.valueOf(2);
+		Integer differentThirdEntry = Integer.valueOf(3);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
@@ -98,11 +103,12 @@ public final class TripleTest {
 	 * {@link Triple#Triple(java.lang.Object, java.lang.Object, java.lang.Object)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTriple() {
 		String firstEntry = "a";
-		Float secondEntry = 2.3f;
-		Integer thirdEntry = 2;
+		Float secondEntry = Float.valueOf(2.3f);
+		Integer thirdEntry = Integer.valueOf(2);
 		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 
 		Assert.assertEquals(firstEntry, triple.getFirst());

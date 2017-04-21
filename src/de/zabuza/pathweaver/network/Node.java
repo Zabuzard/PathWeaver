@@ -20,7 +20,7 @@ public class Node {
 	 *            The id of the node
 	 */
 	public Node(final int id) {
-		mId = id;
+		this.mId = id;
 	}
 
 	/*
@@ -40,14 +40,19 @@ public class Node {
 			return false;
 		}
 		Node other = (Node) obj;
-		if (mId != other.mId) {
+		if (this.mId != other.mId) {
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Gets the id of this node.
+	 * 
+	 * @return The id of this node
+	 */
 	public int getId() {
-		return mId;
+		return this.mId;
 	}
 
 	/*
@@ -59,7 +64,7 @@ public class Node {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + mId;
+		result = prime * result + this.mId;
 		return result;
 	}
 
@@ -70,6 +75,6 @@ public class Node {
 	 */
 	@Override
 	public String toString() {
-		return mId + "";
+		return this.mId + "";
 	}
 }

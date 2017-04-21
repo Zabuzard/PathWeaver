@@ -34,7 +34,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	/**
 	 * Creates a new container for a node which stores tentative data. The
 	 * estimated cost for reaching the destination from this node is set to
-	 * {@link DEFAULT_EST_COST_TO_DEST}.
+	 * {@link #DEFAULT_EST_COST_TO_DEST}.
 	 * 
 	 * @param node
 	 *            The node this container belongs to
@@ -61,10 +61,10 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 */
 	public TentativeNodeContainer(final Node node, final DirectedWeightedEdge parentEdge, final float tentativeCost,
 			final float estCostToDest) {
-		mNode = node;
-		mTentativeCost = tentativeCost;
-		mEstCostToDest = estCostToDest;
-		mParentEdge = parentEdge;
+		this.mNode = node;
+		this.mTentativeCost = tentativeCost;
+		this.mEstCostToDest = estCostToDest;
+		this.mParentEdge = parentEdge;
 	}
 
 	/*
@@ -84,7 +84,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @return The estimated remaining cost to reach the destination
 	 */
 	public float getEstCostToDest() {
-		return mEstCostToDest;
+		return this.mEstCostToDest;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @return The node to this container
 	 */
 	public Node getNode() {
-		return mNode;
+		return this.mNode;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @return The edge pointing to the node which this container belongs to
 	 */
 	public DirectedWeightedEdge getParentEdge() {
-		return mParentEdge;
+		return this.mParentEdge;
 	}
 
 	/**
@@ -111,6 +111,6 @@ public final class TentativeNodeContainer implements Comparable<TentativeNodeCon
 	 * @return The tentative cost of this container
 	 */
 	public float getTentativeCost() {
-		return mTentativeCost;
+		return this.mTentativeCost;
 	}
 }

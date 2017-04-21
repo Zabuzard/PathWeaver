@@ -19,6 +19,7 @@ public final class LandmarkMetricTest {
 	/**
 	 * Test method for {@link LandmarkMetric#distance(Node, Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testDistance() {
 		IPathNetwork network = new PathNetwork();
@@ -49,6 +50,7 @@ public final class LandmarkMetricTest {
 	 * {@link LandmarkMetric#LandmarkMetric(int, IPathNetwork, ILandmarkProvider)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testLandmarkMetricIntIPathNetworkILandmarkProviderOfNode() {
 		IPathNetwork network = new PathNetwork();

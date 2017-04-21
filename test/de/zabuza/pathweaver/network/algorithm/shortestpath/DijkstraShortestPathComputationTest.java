@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.zabuza.pathweaver.network.DirectedWeightedEdge;
+import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.Path;
 import de.zabuza.pathweaver.network.PathNetwork;
@@ -27,6 +28,7 @@ public final class DijkstraShortestPathComputationTest {
 	 * Test method for
 	 * {@link DijkstraShortestPathComputation#computeShortestPath(Node, Node)} .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPath() {
 		PathNetwork network = new PathNetwork();
@@ -99,6 +101,7 @@ public final class DijkstraShortestPathComputationTest {
 	 * {@link DijkstraShortestPathComputation#computeShortestPathCost(Node, Node)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostNodeNode() {
 		PathNetwork network = new PathNetwork();
@@ -138,7 +141,7 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Assert.assertEquals(3, computation.computeShortestPathCost(firstNode, fourthNode).get(), 0);
+		Assert.assertEquals(3, computation.computeShortestPathCost(firstNode, fourthNode).get().floatValue(), 0);
 	}
 
 	/**
@@ -146,6 +149,7 @@ public final class DijkstraShortestPathComputationTest {
 	 * {@link DijkstraShortestPathComputation#computeShortestPathCost(java.util.Set, Node)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostSetNode() {
 		PathNetwork network = new PathNetwork();
@@ -169,8 +173,8 @@ public final class DijkstraShortestPathComputationTest {
 		Set<Node> sources = new HashSet<>();
 		sources.add(secondNode);
 		sources.add(thirdNode);
-		Assert.assertEquals(1, computation.computeShortestPathCost(sources, firstNode).get(), 0);
-		Assert.assertEquals(2, computation.computeShortestPathCost(sources, fourthNode).get(), 0);
+		Assert.assertEquals(1, computation.computeShortestPathCost(sources, firstNode).get().floatValue(), 0);
+		Assert.assertEquals(2, computation.computeShortestPathCost(sources, fourthNode).get().floatValue(), 0);
 	}
 
 	/**
@@ -178,6 +182,7 @@ public final class DijkstraShortestPathComputationTest {
 	 * {@link DijkstraShortestPathComputation#computeShortestPathCostsReachable(Node)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostsReachable() {
 		PathNetwork network = new PathNetwork();
@@ -220,12 +225,12 @@ public final class DijkstraShortestPathComputationTest {
 		Map<Node, Float> costMapping = computation.computeShortestPathCostsReachable(firstNode);
 
 		Assert.assertEquals(6, costMapping.size());
-		Assert.assertEquals(0, costMapping.get(firstNode), 0);
-		Assert.assertEquals(1, costMapping.get(secondNode), 0);
-		Assert.assertEquals(2, costMapping.get(thirdNode), 0);
-		Assert.assertEquals(3, costMapping.get(fourthNode), 0);
-		Assert.assertEquals(4, costMapping.get(fifthNode), 0);
-		Assert.assertEquals(4, costMapping.get(sixthNode), 0);
+		Assert.assertEquals(0, costMapping.get(firstNode).floatValue(), 0);
+		Assert.assertEquals(1, costMapping.get(secondNode).floatValue(), 0);
+		Assert.assertEquals(2, costMapping.get(thirdNode).floatValue(), 0);
+		Assert.assertEquals(3, costMapping.get(fourthNode).floatValue(), 0);
+		Assert.assertEquals(4, costMapping.get(fifthNode).floatValue(), 0);
+		Assert.assertEquals(4, costMapping.get(sixthNode).floatValue(), 0);
 	}
 
 	/**
@@ -233,6 +238,7 @@ public final class DijkstraShortestPathComputationTest {
 	 * {@link DijkstraShortestPathComputation#DijkstraShortestPathComputation(IPathNetwork)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testDijkstraShortestPathComputation() {
 		PathNetwork network = new PathNetwork();
@@ -247,6 +253,7 @@ public final class DijkstraShortestPathComputationTest {
 	/**
 	 * Test method for {@link DijkstraShortestPathComputation#getPathNetwork()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPathNetwork() {
 		PathNetwork network = new PathNetwork();

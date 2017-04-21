@@ -6,6 +6,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
 
@@ -20,6 +21,7 @@ public final class TarjanNonRecursiveSccComputationTest {
 	/**
 	 * Test method for {@link TarjanNonRecursiveSccComputation#getLargestScc()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetLargestScc() {
 		PathNetwork network = new PathNetwork();
@@ -95,6 +97,7 @@ public final class TarjanNonRecursiveSccComputationTest {
 	 * Test method for
 	 * {@link TarjanNonRecursiveSccComputation#getPathNetwork()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPathNetwork() {
 		PathNetwork network = new PathNetwork();
@@ -109,6 +112,7 @@ public final class TarjanNonRecursiveSccComputationTest {
 	/**
 	 * Test method for {@link TarjanNonRecursiveSccComputation#getSccs()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSccs() {
 		PathNetwork network = new PathNetwork();
@@ -206,6 +210,7 @@ public final class TarjanNonRecursiveSccComputationTest {
 	 * {@link TarjanNonRecursiveSccComputation#TarjanNonRecursiveSccComputation(IPathNetwork)}
 	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanNonRecursiveSccComputation() {
 		PathNetwork network = new PathNetwork();

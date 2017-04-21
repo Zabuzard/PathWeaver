@@ -19,6 +19,7 @@ public final class TentativeCostNodeContainerTest {
 	 * Test method for
 	 * {@link TentativeNodeContainer#compareTo(TentativeNodeContainer)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testCompareTo() {
 		Node node = new Node(0);
@@ -53,6 +54,7 @@ public final class TentativeCostNodeContainerTest {
 	/**
 	 * Test method for {@link TentativeNodeContainer#getEstCostToDest()} .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetEstCostToDest() {
 		Node src = new Node(0);
@@ -71,6 +73,7 @@ public final class TentativeCostNodeContainerTest {
 	/**
 	 * Test method for {@link TentativeNodeContainer#getNode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNode() {
 		Node node = new Node(0);
@@ -85,6 +88,7 @@ public final class TentativeCostNodeContainerTest {
 	/**
 	 * Test method for {@link TentativeNodeContainer#getParentEdge()} .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetParentEdge() {
 		Node src = new Node(0);
@@ -103,6 +107,7 @@ public final class TentativeCostNodeContainerTest {
 	/**
 	 * Test method for {@link TentativeNodeContainer#getTentativeCost()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetTentativeCost() {
 		Node node = new Node(0);
@@ -116,8 +121,10 @@ public final class TentativeCostNodeContainerTest {
 
 	/**
 	 * Test method for
-	 * {@link TentativeNodeContainer#TentativeCostNodeContainer(Node, float)} .
+	 * {@link TentativeNodeContainer#TentativeNodeContainer(Node, DirectedWeightedEdge, float, float)}
+	 * .
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTentativeCostNodeContainer() {
 		Node src = new Node(0);

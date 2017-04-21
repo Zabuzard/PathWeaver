@@ -38,9 +38,9 @@ public class Triple<E1, E2, E3> {
 	 *            Third object of the triple
 	 */
 	public Triple(E1 first, E2 second, E3 third) {
-		mFirstElement = first;
-		mSecondElement = second;
-		mThirdElement = third;
+		this.mFirstElement = first;
+		this.mSecondElement = second;
+		this.mThirdElement = third;
 	}
 
 	/*
@@ -60,25 +60,25 @@ public class Triple<E1, E2, E3> {
 			return false;
 		}
 		final Triple<?, ?, ?> other = (Triple<?, ?, ?>) obj;
-		if (mFirstElement == null) {
+		if (this.mFirstElement == null) {
 			if (other.mFirstElement != null) {
 				return false;
 			}
-		} else if (!mFirstElement.equals(other.mFirstElement)) {
+		} else if (!this.mFirstElement.equals(other.mFirstElement)) {
 			return false;
 		}
-		if (mSecondElement == null) {
+		if (this.mSecondElement == null) {
 			if (other.mSecondElement != null) {
 				return false;
 			}
-		} else if (!mSecondElement.equals(other.mSecondElement)) {
+		} else if (!this.mSecondElement.equals(other.mSecondElement)) {
 			return false;
 		}
-		if (mThirdElement == null) {
+		if (this.mThirdElement == null) {
 			if (other.mThirdElement != null) {
 				return false;
 			}
-		} else if (!mThirdElement.equals(other.mThirdElement)) {
+		} else if (!this.mThirdElement.equals(other.mThirdElement)) {
 			return false;
 		}
 		return true;
@@ -90,7 +90,7 @@ public class Triple<E1, E2, E3> {
 	 * @return The first element of the triple
 	 */
 	public E1 getFirst() {
-		return mFirstElement;
+		return this.mFirstElement;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Triple<E1, E2, E3> {
 	 * @return The second element of the triple
 	 */
 	public E2 getSecond() {
-		return mSecondElement;
+		return this.mSecondElement;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class Triple<E1, E2, E3> {
 	 * @return The third element of the triple
 	 */
 	public E3 getThird() {
-		return mThirdElement;
+		return this.mThirdElement;
 	}
 
 	/*
@@ -120,9 +120,9 @@ public class Triple<E1, E2, E3> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + mFirstElement.hashCode();
-		result = prime * result + mSecondElement.hashCode();
-		result = prime * result + mThirdElement.hashCode();
+		result = prime * result + this.mFirstElement.hashCode();
+		result = prime * result + this.mSecondElement.hashCode();
+		result = prime * result + this.mThirdElement.hashCode();
 		return result;
 	}
 
@@ -133,7 +133,7 @@ public class Triple<E1, E2, E3> {
 	 */
 	@Override
 	public String toString() {
-		return "[" + mFirstElement + ", " + mSecondElement + ", " + mThirdElement + "]";
+		return "[" + this.mFirstElement + ", " + this.mSecondElement + ", " + this.mThirdElement + "]";
 	}
 
 }

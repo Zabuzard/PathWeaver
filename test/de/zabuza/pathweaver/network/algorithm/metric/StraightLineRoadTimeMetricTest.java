@@ -24,8 +24,7 @@ public final class StraightLineRoadTimeMetricTest {
 	public final ExpectedException exception = ExpectedException.none();
 
 	/**
-	 * Test method for
-	 * {@link StraightLineRoadTimeMetric#distance(RoadNode, RoadNode)}.
+	 * Test method for {@link StraightLineRoadTimeMetric#distance(Node, Node)}.
 	 */
 	@Test
 	public void testDistance() {
@@ -39,7 +38,7 @@ public final class StraightLineRoadTimeMetricTest {
 
 		Node thirdNode = new Node(2);
 		Node fourthNode = new Node(3);
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		metric.distance(thirdNode, fourthNode);
 	}
 }

@@ -26,7 +26,7 @@ public final class NestedMap2<K1, K2, V> {
 	 * Internal map which stores maps of second keys and values for the first
 	 * keys.
 	 */
-	private final Map<K1, Map<K2, V>> mK1ToK2ToV = new HashMap<K1, Map<K2, V>>();
+	private final Map<K1, Map<K2, V>> mK1ToK2ToV = new HashMap<>();
 
 	/**
 	 * Adds all entries from the given map to this map.
@@ -45,7 +45,7 @@ public final class NestedMap2<K1, K2, V> {
 	 * this call returns.
 	 */
 	public void clear() {
-		mK1ToK2ToV.clear();
+		this.mK1ToK2ToV.clear();
 	}
 
 	/**
@@ -54,8 +54,8 @@ public final class NestedMap2<K1, K2, V> {
 	 * @return An iterable object which contains all entries of this map
 	 */
 	public Iterable<Triple<K1, K2, V>> entrySet() {
-		final ArrayList<Triple<K1, K2, V>> result = new ArrayList<Triple<K1, K2, V>>();
-		for (final Entry<K1, Map<K2, V>> entryOuter : mK1ToK2ToV.entrySet()) {
+		final ArrayList<Triple<K1, K2, V>> result = new ArrayList<>();
+		for (final Entry<K1, Map<K2, V>> entryOuter : this.mK1ToK2ToV.entrySet()) {
 			for (final Entry<K2, V> entryInner : entryOuter.getValue().entrySet()) {
 				result.add(new Triple<>(entryOuter.getKey(), entryInner.getKey(), entryInner.getValue()));
 			}
@@ -77,10 +77,10 @@ public final class NestedMap2<K1, K2, V> {
 		if (getClass() != obj.getClass())
 			return false;
 		final NestedMap2<?, ?, ?> other = (NestedMap2<?, ?, ?>) obj;
-		if (mK1ToK2ToV == null) {
+		if (this.mK1ToK2ToV == null) {
 			if (other.mK1ToK2ToV != null)
 				return false;
-		} else if (!mK1ToK2ToV.equals(other.mK1ToK2ToV))
+		} else if (!this.mK1ToK2ToV.equals(other.mK1ToK2ToV))
 			return false;
 		return true;
 	}
@@ -95,7 +95,7 @@ public final class NestedMap2<K1, K2, V> {
 	 *         <tt>null</tt> if this map contains no mapping for the first key.
 	 */
 	public Map<K2, V> get(final K1 key1) {
-		return mK1ToK2ToV.get(key1);
+		return this.mK1ToK2ToV.get(key1);
 	}
 
 	/**
@@ -110,12 +110,11 @@ public final class NestedMap2<K1, K2, V> {
 	 *         <tt>null</tt> if this map contains no mapping for the keys.
 	 */
 	public V get(final K1 key1, final K2 key2) {
-		final Map<K2, V> k2toV = mK1ToK2ToV.get(key1);
+		final Map<K2, V> k2toV = this.mK1ToK2ToV.get(key1);
 		if (k2toV == null) {
 			return null;
-		} else {
-			return k2toV.get(key2);
 		}
+		return k2toV.get(key2);
 	}
 
 	/*
@@ -127,7 +126,7 @@ public final class NestedMap2<K1, K2, V> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((mK1ToK2ToV == null) ? 0 : mK1ToK2ToV.hashCode());
+		result = prime * result + ((this.mK1ToK2ToV == null) ? 0 : this.mK1ToK2ToV.hashCode());
 		return result;
 	}
 
@@ -143,6 +142,7 @@ public final class NestedMap2<K1, K2, V> {
 			 * 
 			 * @see java.lang.Iterable#iterator()
 			 */
+			@SuppressWarnings("synthetic-access")
 			@Override
 			public Iterator<Pair<K1, K2>> iterator() {
 				return new Iterator<Pair<K1, K2>>() {
@@ -151,10 +151,10 @@ public final class NestedMap2<K1, K2, V> {
 					private Iterator<K2> mIterator2;
 
 					{
-						mIterator1 = mK1ToK2ToV.entrySet().iterator();
-						if (mIterator1.hasNext()) {
-							mIterator1Object = mIterator1.next();
-							mIterator2 = mIterator1Object.getValue().keySet().iterator();
+						this.mIterator1 = NestedMap2.this.mK1ToK2ToV.entrySet().iterator();
+						if (this.mIterator1.hasNext()) {
+							this.mIterator1Object = this.mIterator1.next();
+							this.mIterator2 = this.mIterator1Object.getValue().keySet().iterator();
 						}
 					}
 
@@ -165,11 +165,10 @@ public final class NestedMap2<K1, K2, V> {
 					 */
 					@Override
 					public boolean hasNext() {
-						if (mIterator1Object == null) {
+						if (this.mIterator1Object == null) {
 							return false;
-						} else {
-							return mIterator2.hasNext();
 						}
+						return this.mIterator2.hasNext();
 					}
 
 					/*
@@ -179,20 +178,18 @@ public final class NestedMap2<K1, K2, V> {
 					 */
 					@Override
 					public Pair<K1, K2> next() {
-						if (mIterator1Object == null) {
+						if (this.mIterator1Object == null) {
 							throw new NoSuchElementException();
-						} else {
-							if (!mIterator2.hasNext()) {
-								if (!mIterator1.hasNext()) {
-									throw new NoSuchElementException();
-								} else {
-									mIterator1Object = mIterator1.next();
-									assert mIterator1Object.getValue().size() > 0 : "must contain at least one value";
-									mIterator2 = mIterator1Object.getValue().keySet().iterator();
-								}
-							}
-							return new Pair<K1, K2>(mIterator1Object.getKey(), mIterator2.next());
 						}
+						if (!this.mIterator2.hasNext()) {
+							if (!this.mIterator1.hasNext()) {
+								throw new NoSuchElementException();
+							}
+							this.mIterator1Object = this.mIterator1.next();
+							assert this.mIterator1Object.getValue().size() > 0 : "must contain at least one value";
+							this.mIterator2 = this.mIterator1Object.getValue().keySet().iterator();
+						}
+						return new Pair<>(this.mIterator1Object.getKey(), this.mIterator2.next());
 					}
 
 					/*
@@ -216,7 +213,7 @@ public final class NestedMap2<K1, K2, V> {
 	 * @return A set view of the first keys contained in this map.
 	 */
 	public Set<K1> keySet() {
-		return mK1ToK2ToV.keySet();
+		return this.mK1ToK2ToV.keySet();
 	}
 
 	/**
@@ -232,10 +229,10 @@ public final class NestedMap2<K1, K2, V> {
 	 *         if there was no mapping for the keys.
 	 */
 	public V put(final K1 key1, final K2 key2, final V value) {
-		Map<K2, V> k2toV = mK1ToK2ToV.get(key1);
+		Map<K2, V> k2toV = this.mK1ToK2ToV.get(key1);
 		if (k2toV == null) {
 			k2toV = new HashMap<>();
-			mK1ToK2ToV.put(key1, k2toV);
+			this.mK1ToK2ToV.put(key1, k2toV);
 		}
 		return k2toV.put(key2, value);
 	}
@@ -249,7 +246,7 @@ public final class NestedMap2<K1, K2, V> {
 	 *         <tt>null</tt> if there was no mapping for it.
 	 */
 	public Map<K2, V> remove(final K1 k1) {
-		return mK1ToK2ToV.remove(k1);
+		return this.mK1ToK2ToV.remove(k1);
 	}
 
 	/**
@@ -263,12 +260,11 @@ public final class NestedMap2<K1, K2, V> {
 	 *         if there was no mapping for it.
 	 */
 	public V remove(final K1 k1, final K2 k2) {
-		final Map<K2, V> k2ToV = mK1ToK2ToV.get(k1);
+		final Map<K2, V> k2ToV = this.mK1ToK2ToV.get(k1);
 		if (k2ToV == null) {
 			return null;
-		} else {
-			return k2ToV.remove(k2);
 		}
+		return k2ToV.remove(k2);
 	}
 
 	/**
@@ -278,7 +274,7 @@ public final class NestedMap2<K1, K2, V> {
 	 */
 	public int size() {
 		int result = 0;
-		for (final Entry<K1, Map<K2, V>> entry : mK1ToK2ToV.entrySet()) {
+		for (final Entry<K1, Map<K2, V>> entry : this.mK1ToK2ToV.entrySet()) {
 			result += entry.getValue().size();
 		}
 		return result;
@@ -291,6 +287,6 @@ public final class NestedMap2<K1, K2, V> {
 	 */
 	@Override
 	public String toString() {
-		return mK1ToK2ToV.toString();
+		return this.mK1ToK2ToV.toString();
 	}
 }

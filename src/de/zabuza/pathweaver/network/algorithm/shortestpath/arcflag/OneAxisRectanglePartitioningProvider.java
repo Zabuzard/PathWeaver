@@ -58,11 +58,11 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 	 */
 	public OneAxisRectanglePartitioningProvider(final RoadNetwork network, final float latitudeMin,
 			final float latitudeMax, final float longitudeMin, final float longitudeMax) {
-		mNetwork = network;
-		mLatitudeMin = latitudeMin;
-		mLatitudeMax = latitudeMax;
-		mLongitudeMin = longitudeMin;
-		mLongitudeMax = longitudeMax;
+		this.mNetwork = network;
+		this.mLatitudeMin = latitudeMin;
+		this.mLatitudeMax = latitudeMax;
+		this.mLongitudeMin = longitudeMin;
+		this.mLongitudeMax = longitudeMax;
 	}
 
 	/*
@@ -73,10 +73,10 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 	 */
 	@Override
 	public Collection<Set<Node>> getPartitioning() throws IllegalArgumentException {
-		Set<Node> insideRectangle = new HashSet<Node>();
-		Set<Node> outsideRectangle = new HashSet<Node>();
+		Set<Node> insideRectangle = new HashSet<>();
+		Set<Node> outsideRectangle = new HashSet<>();
 
-		for (Node node : mNetwork.getNodes()) {
+		for (Node node : this.mNetwork.getNodes()) {
 			if (isInsideRectangle((RoadNode) node)) {
 				insideRectangle.add(node);
 			} else {
@@ -103,8 +103,8 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 		float nodeLatitude = node.getLatitude();
 		float nodeLongitude = node.getLongitude();
 
-		boolean isInside = (nodeLatitude >= mLatitudeMin && nodeLatitude <= mLatitudeMax)
-				&& (nodeLongitude >= mLongitudeMin && nodeLongitude <= mLongitudeMax);
+		boolean isInside = (nodeLatitude >= this.mLatitudeMin && nodeLatitude <= this.mLatitudeMax)
+				&& (nodeLongitude >= this.mLongitudeMin && nodeLongitude <= this.mLongitudeMax);
 		return isInside;
 	}
 }

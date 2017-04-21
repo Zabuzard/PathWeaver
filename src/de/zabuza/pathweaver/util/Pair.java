@@ -30,8 +30,8 @@ public class Pair<E1, E2> {
 	 *            Second object of the pair
 	 */
 	public Pair(final E1 first, final E2 second) {
-		mFirstElement = first;
-		mSecondElement = second;
+		this.mFirstElement = first;
+		this.mSecondElement = second;
 	}
 
 	/*
@@ -51,18 +51,18 @@ public class Pair<E1, E2> {
 			return false;
 		}
 		final Pair<?, ?> other = (Pair<?, ?>) obj;
-		if (mFirstElement == null) {
+		if (this.mFirstElement == null) {
 			if (other.mFirstElement != null) {
 				return false;
 			}
-		} else if (!mFirstElement.equals(other.mFirstElement)) {
+		} else if (!this.mFirstElement.equals(other.mFirstElement)) {
 			return false;
 		}
-		if (mSecondElement == null) {
+		if (this.mSecondElement == null) {
 			if (other.mSecondElement != null) {
 				return false;
 			}
-		} else if (!mSecondElement.equals(other.mSecondElement)) {
+		} else if (!this.mSecondElement.equals(other.mSecondElement)) {
 			return false;
 		}
 		return true;
@@ -74,7 +74,7 @@ public class Pair<E1, E2> {
 	 * @return The first element of the pair
 	 */
 	public E1 getFirst() {
-		return mFirstElement;
+		return this.mFirstElement;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Pair<E1, E2> {
 	 * @return The second element of the pair
 	 */
 	public E2 getSecond() {
-		return mSecondElement;
+		return this.mSecondElement;
 	}
 
 	/*
@@ -95,8 +95,8 @@ public class Pair<E1, E2> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((mFirstElement == null) ? 0 : mFirstElement.hashCode());
-		result = prime * result + ((mSecondElement == null) ? 0 : mSecondElement.hashCode());
+		result = prime * result + ((this.mFirstElement == null) ? 0 : this.mFirstElement.hashCode());
+		result = prime * result + ((this.mSecondElement == null) ? 0 : this.mSecondElement.hashCode());
 		return result;
 	}
 
@@ -107,6 +107,6 @@ public class Pair<E1, E2> {
 	 */
 	@Override
 	public String toString() {
-		return "[" + mFirstElement + ", " + mSecondElement + "]";
+		return "[" + this.mFirstElement + ", " + this.mSecondElement + "]";
 	}
 }

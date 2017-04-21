@@ -101,7 +101,7 @@ public final class ArcFlagExample {
 				i--;
 				continue;
 			}
-			totalCost += result.get();
+			totalCost += result.get().doubleValue();
 			endTimestamp = System.currentTimeMillis();
 			totalRunningTime += (endTimestamp - startTimestamp);
 
@@ -132,8 +132,8 @@ public final class ArcFlagExample {
 		File desktop = new File(System.getProperty("user.home"), "Desktop");
 		File searchSpaceFile = new File(desktop, "searchSpace.tsv");
 		System.out.println("\tSaving to: " + searchSpaceFile);
-		BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile));
-		bw.write(tsvData);
-		bw.close();
+		try (final BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile))) {
+			bw.write(tsvData);
+		}
 	}
 }

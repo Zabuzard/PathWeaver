@@ -24,8 +24,9 @@ public final class PathNetworkTest {
 	public final ExpectedException exception = ExpectedException.none();
 
 	/**
-	 * Test method for {@link PathNetwork#addEdge(Node, Node, int)}.
+	 * Test method for {@link PathNetwork#addEdge(Node, Node, float)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddEdge() {
 		PathNetwork network = new PathNetwork();
@@ -48,6 +49,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#addNode(Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddNode() {
 		PathNetwork network = new PathNetwork();
@@ -65,8 +67,9 @@ public final class PathNetworkTest {
 	}
 
 	/**
-	 * Test method for {@link PathNetwork#containsNodeId(Node)}.
+	 * Test method for {@link PathNetwork#containsNodeId(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testContainsNode() {
 		PathNetwork network = new PathNetwork();
@@ -83,6 +86,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#containsNodeId(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testContainsNodeId() {
 		PathNetwork network = new PathNetwork();
@@ -103,6 +107,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#getAmountOfEdges()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetAmountOfEdges() {
 		PathNetwork network = new PathNetwork();
@@ -126,6 +131,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#getIncomingEdges(Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetIncomingEdges() {
 		PathNetwork network = new PathNetwork();
@@ -169,6 +175,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#getNodeById(int)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNodeById() {
 		PathNetwork network = new PathNetwork();
@@ -189,6 +196,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#getOutgoingEdges(Node)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetOutgoingEdges() {
 		PathNetwork network = new PathNetwork();
@@ -232,6 +240,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#getSize()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSize() {
 		PathNetwork network = new PathNetwork();
@@ -248,8 +257,10 @@ public final class PathNetworkTest {
 	}
 
 	/**
-	 * Test method for {@link PathNetwork#hasIncomingEdge(Node, IncomingEdge)}.
+	 * Test method for
+	 * {@link PathNetwork#hasIncomingEdge(Node, DirectedWeightedEdge)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHasIncomingEdge() {
 		PathNetwork network = new PathNetwork();
@@ -275,8 +286,10 @@ public final class PathNetworkTest {
 	}
 
 	/**
-	 * Test method for {@link PathNetwork#hasOutgoingEdge(Node, OutgoingEdge)}.
+	 * Test method for
+	 * {@link PathNetwork#hasOutgoingEdge(Node, DirectedWeightedEdge)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHasOutgoingEdge() {
 		PathNetwork network = new PathNetwork();
@@ -304,6 +317,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#PathNetwork()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testPathNetwork() {
 		PathNetwork network = new PathNetwork();
@@ -314,6 +328,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#reduceToLargestScc()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testReduceToLargestScc() {
 		PathNetwork network = new PathNetwork();
@@ -452,13 +467,14 @@ public final class PathNetworkTest {
 		Assert.assertEquals(0, network.getSize());
 		Assert.assertEquals(0, network.getAmountOfEdges());
 
-		exception.expect(NoSuchElementException.class);
+		this.exception.expect(NoSuchElementException.class);
 		network.removeNode(fifthNode);
 	}
 
 	/**
 	 * Test method for {@link PathNetwork#reverse()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testReverse() {
 		PathNetwork network = new PathNetwork();
@@ -485,6 +501,7 @@ public final class PathNetworkTest {
 	/**
 	 * Test method for {@link PathNetwork#toString()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testToString() {
 		PathNetwork network = new PathNetwork();

@@ -28,7 +28,7 @@ public final class AStarShortestPathComputation extends DijkstraShortestPathComp
 	 */
 	public AStarShortestPathComputation(final IPathNetwork network, final IMetric<Node> metric) {
 		super(network);
-		mMetric = metric;
+		this.mMetric = metric;
 	}
 
 	/*
@@ -40,7 +40,7 @@ public final class AStarShortestPathComputation extends DijkstraShortestPathComp
 	 */
 	@Override
 	protected float getEstCostToDest(final Node node, final Node dest) {
-		return mMetric.distance(node, dest);
+		return this.mMetric.distance(node, dest);
 	}
 
 }

@@ -65,9 +65,9 @@ public final class TarjanTaskElement {
 	 *            The predecessor of this elements node if present
 	 */
 	private TarjanTaskElement(final Node node, final Optional<Node> predecessor) {
-		mNode = node;
-		mPredecessor = predecessor;
-		mCurrentTask = Optional.of(ETarjanTask.INDEX);
+		this.mNode = node;
+		this.mPredecessor = predecessor;
+		this.mCurrentTask = Optional.of(ETarjanTask.INDEX);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public final class TarjanTaskElement {
 	 * @return The current task if present
 	 */
 	public Optional<ETarjanTask> getCurrentTask() {
-		return mCurrentTask;
+		return this.mCurrentTask;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class TarjanTaskElement {
 	 * @return The node this element belongs to
 	 */
 	public Node getNode() {
-		return mNode;
+		return this.mNode;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public final class TarjanTaskElement {
 	 * @return The predecessor of this elements node if present
 	 */
 	public Optional<Node> getPredecessor() {
-		return mPredecessor;
+		return this.mPredecessor;
 	}
 
 	/**
@@ -104,14 +104,14 @@ public final class TarjanTaskElement {
 	 *             If all tasks where already accomplished
 	 */
 	public void reportTaskAccomplished() throws IllegalStateException {
-		if (mCurrentTask.isPresent()) {
-			ETarjanTask task = mCurrentTask.get();
+		if (this.mCurrentTask.isPresent()) {
+			ETarjanTask task = this.mCurrentTask.get();
 			if (task == ETarjanTask.INDEX) {
-				mCurrentTask = Optional.of(ETarjanTask.GET_SUCCESSORS);
+				this.mCurrentTask = Optional.of(ETarjanTask.GET_SUCCESSORS);
 			} else if (task == ETarjanTask.GET_SUCCESSORS) {
-				mCurrentTask = Optional.of(ETarjanTask.SET_LOWLINK);
+				this.mCurrentTask = Optional.of(ETarjanTask.SET_LOWLINK);
 			} else if (task == ETarjanTask.SET_LOWLINK) {
-				mCurrentTask = Optional.empty();
+				this.mCurrentTask = Optional.empty();
 			} else {
 				throw new AssertionError();
 			}

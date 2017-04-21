@@ -38,10 +38,10 @@ public final class Road {
 	 *            The id of the road to construct
 	 */
 	public Road(final int id) {
-		mId = id;
-		mIsOneway = false;
-		mRoadType = ERoadType.UNCLASSIFIED;
-		mNodes = new LinkedList<Integer>();
+		this.mId = id;
+		this.mIsOneway = false;
+		this.mRoadType = ERoadType.UNCLASSIFIED;
+		this.mNodes = new LinkedList<>();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public final class Road {
 	 *            The id of the road node to add
 	 */
 	public void addRoadNode(final int roadNodeId) {
-		mNodes.add(roadNodeId);
+		this.mNodes.add(Integer.valueOf(roadNodeId));
 	}
 
 	/*
@@ -72,7 +72,7 @@ public final class Road {
 			return false;
 		}
 		Road other = (Road) obj;
-		if (mId != other.mId) {
+		if (this.mId != other.mId) {
 			return false;
 		}
 		return true;
@@ -84,7 +84,7 @@ public final class Road {
 	 * @return The id of the road to construct
 	 */
 	public int getId() {
-		return mId;
+		return this.mId;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public final class Road {
 	 * @return An iterator over the IDs of the road nodes belonging to this road
 	 */
 	public Iterator<Integer> getRoadNodes() {
-		return mNodes.iterator();
+		return this.mNodes.iterator();
 	}
 
 	/**
@@ -102,7 +102,7 @@ public final class Road {
 	 * @return The amount of road nodes that belong to this road
 	 */
 	public int getRoadNodesAmount() {
-		return mNodes.size();
+		return this.mNodes.size();
 	}
 
 	/**
@@ -113,7 +113,7 @@ public final class Road {
 	 *         which traverses the elements in reversed order.
 	 */
 	public Iterator<Integer> getRoadNodesReversed() {
-		return new ReverseIterator<>(mNodes);
+		return new ReverseIterator<>(this.mNodes);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public final class Road {
 	 * @return The type of the road to construct
 	 */
 	public ERoadType getRoadType() {
-		return mRoadType;
+		return this.mRoadType;
 	}
 
 	/*
@@ -134,7 +134,7 @@ public final class Road {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + mId;
+		result = prime * result + this.mId;
 		return result;
 	}
 
@@ -144,7 +144,7 @@ public final class Road {
 	 * @return Whether the road to construct is only one-way or no
 	 */
 	public boolean isOneway() {
-		return mIsOneway;
+		return this.mIsOneway;
 	}
 
 	/**
@@ -154,7 +154,7 @@ public final class Road {
 	 *            If the road is only one-way or not
 	 */
 	public void setIsOneway(final boolean isOneway) {
-		mIsOneway = isOneway;
+		this.mIsOneway = isOneway;
 	}
 
 	/**
@@ -164,6 +164,6 @@ public final class Road {
 	 *            The type of the road to set
 	 */
 	public void setRoadType(final ERoadType roadType) {
-		mRoadType = roadType;
+		this.mRoadType = roadType;
 	}
 }

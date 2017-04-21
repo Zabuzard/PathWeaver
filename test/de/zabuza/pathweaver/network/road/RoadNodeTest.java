@@ -21,6 +21,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#equals(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		int id = 0;
@@ -49,6 +50,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#getId()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetId() {
 		int id = 0;
@@ -65,6 +67,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#getLatitude()}.
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void testGetLatitude() {
 		int id = 0;
@@ -80,7 +83,7 @@ public final class RoadNodeTest {
 		// Test latitude which are out of the bounds
 		int exceedingMinLatitude = -100;
 		int exceedingMaxLatitude = 100;
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		new RoadNode(id, exceedingMinLatitude, longitude);
 		new RoadNode(id, exceedingMaxLatitude, longitude);
 	}
@@ -88,6 +91,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#getLongitude()}.
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void testGetLongitude() {
 		int id = 0;
@@ -103,7 +107,7 @@ public final class RoadNodeTest {
 		// Test longitude which are out of the bounds
 		int exceedingMinLongitude = -190;
 		int exceedingMaxLongitude = 190;
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		new RoadNode(id, latitude, exceedingMinLongitude);
 		new RoadNode(id, latitude, exceedingMaxLongitude);
 	}
@@ -111,6 +115,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		int id = 0;
@@ -137,8 +142,9 @@ public final class RoadNodeTest {
 	}
 
 	/**
-	 * Test method for {@link RoadNode#RoadNode(float, float)}.
+	 * Test method for {@link RoadNode#RoadNode(int, float, float)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testRoadNode() {
 		int id = 0;
@@ -159,6 +165,7 @@ public final class RoadNodeTest {
 	/**
 	 * Test method for {@link RoadNode#toString()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testToString() {
 		RoadNode node = new RoadNode(1, 10, 20);

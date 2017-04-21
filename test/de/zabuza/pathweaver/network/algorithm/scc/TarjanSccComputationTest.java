@@ -6,6 +6,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.zabuza.pathweaver.network.IPathNetwork;
 import de.zabuza.pathweaver.network.Node;
 import de.zabuza.pathweaver.network.PathNetwork;
 
@@ -20,6 +21,7 @@ public final class TarjanSccComputationTest {
 	/**
 	 * Test method for {@link TarjanSccComputation#getLargestScc()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetLargestScc() {
 		PathNetwork network = new PathNetwork();
@@ -94,6 +96,7 @@ public final class TarjanSccComputationTest {
 	/**
 	 * Test method for {@link TarjanSccComputation#getPathNetwork()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPathNetwork() {
 		PathNetwork network = new PathNetwork();
@@ -108,6 +111,7 @@ public final class TarjanSccComputationTest {
 	/**
 	 * Test method for {@link TarjanSccComputation#getSccs()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSccs() {
 		PathNetwork network = new PathNetwork();
@@ -204,6 +208,7 @@ public final class TarjanSccComputationTest {
 	 * Test method for
 	 * {@link TarjanSccComputation#TarjanSccComputation(IPathNetwork)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanSccComputation() {
 		PathNetwork network = new PathNetwork();

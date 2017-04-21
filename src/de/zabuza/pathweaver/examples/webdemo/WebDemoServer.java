@@ -124,9 +124,9 @@ public final class WebDemoServer {
 	 *             If an I/O-exception occurred
 	 */
 	public WebDemoServer(final int port) throws IOException {
-		mPort = port;
-		mRequestId = 0;
-		mServerSocket = new ServerSocket(mPort);
+		this.mPort = port;
+		this.mRequestId = 0;
+		this.mServerSocket = new ServerSocket(this.mPort);
 
 		System.out.println("Initializing service...");
 		// Loading road network from file
@@ -134,15 +134,15 @@ public final class WebDemoServer {
 		File osmFile = new File("res/examples/saarland.osm");
 		// Creating road network
 		System.out.println("\tCreating road network...");
-		mNetwork = RoadNetwork.createFromOsmFile(osmFile);
+		this.mNetwork = RoadNetwork.createFromOsmFile(osmFile);
 		// Reducing to largest SCC
 		System.out.println("\tReducing to largest SCC...");
-		mNetwork.reduceToLargestScc();
+		this.mNetwork.reduceToLargestScc();
 
 		// Preparing algorithms
 		System.out.println("\tPreparing A-Star (Landmark, random)...");
-		mComputation = new AStarShortestPathComputation(mNetwork,
-				new LandmarkMetric(42, mNetwork, new RandomLandmarkProvider(mNetwork)));
+		this.mComputation = new AStarShortestPathComputation(this.mNetwork,
+				new LandmarkMetric(42, this.mNetwork, new RandomLandmarkProvider(this.mNetwork)));
 	}
 
 	/**
@@ -154,106 +154,104 @@ public final class WebDemoServer {
 	public void runService() throws IOException {
 		boolean continueService = true;
 		while (continueService) {
-			mRequestId++;
+			this.mRequestId++;
 
-			System.out.println("Waiting for request on port " + mPort + " ...");
-			Socket clientSocket = mServerSocket.accept();
-			BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			System.out.println("Waiting for request on port " + this.mPort + " ...");
+			try (final Socket clientSocket = this.mServerSocket.accept();
+					final BufferedReader br = new BufferedReader(
+							new InputStreamReader(clientSocket.getInputStream()))) {
+				String request = br.readLine();
 
-			String request = br.readLine();
+				// Reject the request if invalid
+				if (request == null) {
+					System.err.println("\tCan not find request data, rejecting the request.");
+					continue;
+				}
+				// Search the request data
+				int requestDataBeginIndex = request.indexOf(GET_REQUEST) + GET_REQUEST.length();
+				int requestDataEndIndex = request.indexOf(GET_SEPARATOR, requestDataBeginIndex);
+				if (requestDataBeginIndex < 0 || requestDataEndIndex < 0) {
+					System.err.println("\tCan not find request data, request rejected.");
+					continue;
+				}
+				String requestData = request.substring(requestDataBeginIndex, requestDataEndIndex);
 
-			// Reject the request if invalid
-			if (request == null) {
-				System.err.println("\tCan not find request data, rejecting the request.");
-				continue;
-			}
-			// Search the request data
-			int requestDataBeginIndex = request.indexOf(GET_REQUEST) + GET_REQUEST.length();
-			int requestDataEndIndex = request.indexOf(GET_SEPARATOR, requestDataBeginIndex);
-			if (requestDataBeginIndex < 0 || requestDataEndIndex < 0) {
-				System.err.println("\tCan not find request data, request rejected.");
-				continue;
-			}
-			String requestData = request.substring(requestDataBeginIndex, requestDataEndIndex);
+				System.out.println("\t#" + this.mRequestId + " Request is: " + requestData);
 
-			System.out.println("\t#" + mRequestId + " Request is: " + requestData);
+				// Parse request data
+				float sourceLatitude = 0f;
+				float sourceLongitude = 0f;
+				float destinationLatitude = 0f;
+				float destinationLongitude = 0f;
+				for (String entry : requestData.split(KEY_SEPARATOR)) {
+					String[] keyValue = entry.split(KEY_VALUE_SEPARATOR);
+					String key = keyValue[0];
+					String value = keyValue[1];
 
-			// Parse request data
-			float sourceLatitude = 0f;
-			float sourceLongitude = 0f;
-			float destinationLatitude = 0f;
-			float destinationLongitude = 0f;
-			for (String entry : requestData.split(KEY_SEPARATOR)) {
-				String[] keyValue = entry.split(KEY_VALUE_SEPARATOR);
-				String key = keyValue[0];
-				String value = keyValue[1];
+					if (key.equals(KEY_SOURCE_LATITUDE)) {
+						sourceLatitude = Float.parseFloat(value);
+					} else if (key.equals(KEY_SORUCE_LONGITUDE)) {
+						sourceLongitude = Float.parseFloat(value);
+					} else if (key.equals(KEY_DESTINATION_LATITUDE)) {
+						destinationLatitude = Float.parseFloat(value);
+					} else if (key.equals(KEY_DESTINATION_LONGITUDE)) {
+						destinationLongitude = Float.parseFloat(value);
+					} else {
+						System.err.println("\tUnknown key, key ignored.");
+					}
+				}
 
-				if (key.equals(KEY_SOURCE_LATITUDE)) {
-					sourceLatitude = Float.parseFloat(value);
-				} else if (key.equals(KEY_SORUCE_LONGITUDE)) {
-					sourceLongitude = Float.parseFloat(value);
-				} else if (key.equals(KEY_DESTINATION_LATITUDE)) {
-					destinationLatitude = Float.parseFloat(value);
-				} else if (key.equals(KEY_DESTINATION_LONGITUDE)) {
-					destinationLongitude = Float.parseFloat(value);
+				if (sourceLatitude == 0f || sourceLongitude == 0f || destinationLatitude == 0f
+						|| destinationLongitude == 0f) {
+					System.err.println("\tMissing data, request rejected.");
+					continue;
+				}
+
+				// Transform request data to nodes
+				RoadNode source = this.mNetwork.getNearestRoadNode(sourceLatitude, sourceLongitude);
+				RoadNode destination = this.mNetwork.getNearestRoadNode(destinationLatitude, destinationLongitude);
+
+				// Compute the shortest path
+				Optional<Path> path = this.mComputation.computeShortestPath(source, destination);
+
+				// Send an answer
+				if (path.isPresent()) {
+					// Build the answer
+					Path actualPath = path.get();
+					StringJoiner pathArray = new StringJoiner(JS_ARRAY_DELIMITER);
+
+					// Append the data of the source
+					RoadNode pathSource = (RoadNode) actualPath.getSource();
+					String sourcePosArray = JS_ARRAY_BEGIN + pathSource.getLatitude() + JS_ARRAY_DELIMITER
+							+ pathSource.getLongitude() + JS_ARRAY_END;
+					pathArray.add(sourcePosArray);
+
+					// Append the data of all following nodes
+					for (DirectedWeightedEdge edge : actualPath.getEdges()) {
+						RoadNode edgeDestination = (RoadNode) edge.getDestination();
+						String nodePosArray = JS_ARRAY_BEGIN + edgeDestination.getLatitude() + JS_ARRAY_DELIMITER
+								+ edgeDestination.getLongitude() + JS_ARRAY_END;
+						pathArray.add(nodePosArray);
+					}
+
+					// Build the answer text as jsonp which calls
+					// a callback function
+					String jsonp = "redrawLineServerCallback({\n" + "  path: " + JS_ARRAY_BEGIN + pathArray.toString()
+							+ JS_ARRAY_END + "\n" + "})\n";
+					String answer = "HTTP/1.0 200 OK\r\n" + "Content-Length: " + jsonp.length() + "\r\n"
+							+ "Content-Type: application/javascript" + "\r\n" + "Connection: close\r\n" + "\r\n"
+							+ jsonp;
+
+					// Send the answer
+					System.out.println("\t\tSending answer");
+					try (final PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true)) {
+						pw.println(answer);
+					}
 				} else {
-					System.err.println("\tUnknown key, key ignored.");
+					System.err.println("\tThere is no path, request rejected.");
+					continue;
 				}
 			}
-
-			if (sourceLatitude == 0f || sourceLongitude == 0f || destinationLatitude == 0f
-					|| destinationLongitude == 0f) {
-				System.err.println("\tMissing data, request rejected.");
-				continue;
-			}
-
-			// Transform request data to nodes
-			RoadNode source = mNetwork.getNearestRoadNode(sourceLatitude, sourceLongitude);
-			RoadNode destination = mNetwork.getNearestRoadNode(destinationLatitude, destinationLongitude);
-
-			// Compute the shortest path
-			Optional<Path> path = mComputation.computeShortestPath(source, destination);
-
-			// Send an answer
-			if (path.isPresent()) {
-				// Build the answer
-				Path actualPath = path.get();
-				StringJoiner pathArray = new StringJoiner(JS_ARRAY_DELIMITER);
-
-				// Append the data of the source
-				RoadNode pathSource = (RoadNode) actualPath.getSource();
-				String sourcePosArray = JS_ARRAY_BEGIN + pathSource.getLatitude() + JS_ARRAY_DELIMITER
-						+ pathSource.getLongitude() + JS_ARRAY_END;
-				pathArray.add(sourcePosArray);
-
-				// Append the data of all following nodes
-				for (DirectedWeightedEdge edge : actualPath.getEdges()) {
-					RoadNode edgeDestination = (RoadNode) edge.getDestination();
-					String nodePosArray = JS_ARRAY_BEGIN + edgeDestination.getLatitude() + JS_ARRAY_DELIMITER
-							+ edgeDestination.getLongitude() + JS_ARRAY_END;
-					pathArray.add(nodePosArray);
-				}
-
-				// Build the answer text as jsonp which calls
-				// a callback function
-				String jsonp = "redrawLineServerCallback({\n" + "  path: " + JS_ARRAY_BEGIN + pathArray.toString()
-						+ JS_ARRAY_END + "\n" + "})\n";
-				String answer = "HTTP/1.0 200 OK\r\n" + "Content-Length: " + jsonp.length() + "\r\n"
-						+ "Content-Type: application/javascript" + "\r\n" + "Connection: close\r\n" + "\r\n" + jsonp;
-
-				// Send the answer
-				System.out.println("\t\tSending answer");
-				PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
-				pw.println(answer);
-
-				pw.close();
-			} else {
-				System.err.println("\tThere is no path, request rejected.");
-				continue;
-			}
-
-			br.close();
-			clientSocket.close();
 		}
 	}
 }

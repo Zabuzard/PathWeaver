@@ -24,8 +24,9 @@ public interface IPathNetwork {
 	 *            The destination of the directed edge
 	 * @param cost
 	 *            The cost of the edge which must be inside the limit specified
-	 *            by {@link DirectedWeightedEdge#ADirectedEdge(Node, int)
-	 *            ADirectedEdge(Node, int)}.
+	 *            by
+	 *            {@link DirectedWeightedEdge#DirectedWeightedEdge(Node, Node, float)}
+	 *            .
 	 * @return The edge that was created and added
 	 */
 	public DirectedWeightedEdge addEdge(final Node source, final Node destination, final float cost);

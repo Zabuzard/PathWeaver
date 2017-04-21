@@ -16,38 +16,40 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#addAll(NestedMap2)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddAll() {
 		NestedMap2<Integer, String, Boolean> dataMap = new NestedMap2<>();
-		dataMap.put(1, "a", true);
-		dataMap.put(1, "b", false);
+		dataMap.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		dataMap.put(Integer.valueOf(1), "b", Boolean.FALSE);
 
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(2, "a", true);
-		map.put(1, "a", false);
+		map.put(Integer.valueOf(2), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(1), "a", Boolean.FALSE);
 
 		map.addAll(dataMap);
 
 		Assert.assertEquals(3, map.size());
-		Assert.assertEquals(Boolean.FALSE, map.get(1, "b"));
-		Assert.assertEquals(Boolean.TRUE, map.get(1, "a"));
-		Assert.assertEquals(Boolean.TRUE, map.get(2, "a"));
+		Assert.assertEquals(Boolean.FALSE, map.get(Integer.valueOf(1), "b"));
+		Assert.assertEquals(Boolean.TRUE, map.get(Integer.valueOf(1), "a"));
+		Assert.assertEquals(Boolean.TRUE, map.get(Integer.valueOf(2), "a"));
 	}
 
 	/**
 	 * Test method for {@link NestedMap2#clear()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testClear() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		Assert.assertEquals(2, map.size());
 		map.clear();
 		Assert.assertEquals(0, map.size());
 
-		map.put(1, "c", true);
+		map.put(Integer.valueOf(1), "c", Boolean.TRUE);
 		Assert.assertEquals(1, map.size());
 		map.clear();
 		Assert.assertEquals(0, map.size());
@@ -56,11 +58,12 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#entrySet()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEntrySet() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		for (Triple<Integer, String, Boolean> entry : map.entrySet()) {
 			if (entry.getFirst().equals(new Integer(1))) {
@@ -78,19 +81,20 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#equals(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		NestedMap2<Integer, String, Boolean> similarMap = new NestedMap2<>();
-		similarMap.put(1, "a", true);
-		similarMap.put(2, "b", false);
+		similarMap.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		similarMap.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		NestedMap2<Integer, String, Boolean> differentMap = new NestedMap2<>();
-		differentMap.put(1, "a", true);
-		differentMap.put(2, "c", false);
+		differentMap.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		differentMap.put(Integer.valueOf(2), "c", Boolean.FALSE);
 
 		Assert.assertEquals(map, similarMap);
 		Assert.assertNotEquals(map, differentMap);
@@ -99,54 +103,57 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#get(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetK1() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(1, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(1), "b", Boolean.FALSE);
 
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.TRUE, map.get(1).get("a"));
-		Assert.assertEquals(Boolean.FALSE, map.get(1).get("b"));
+		Assert.assertEquals(Boolean.TRUE, map.get(Integer.valueOf(1)).get("a"));
+		Assert.assertEquals(Boolean.FALSE, map.get(Integer.valueOf(1)).get("b"));
 
-		map.put(1, "a", false);
+		map.put(Integer.valueOf(1), "a", Boolean.FALSE);
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.FALSE, map.get(1).get("a"));
+		Assert.assertEquals(Boolean.FALSE, map.get(Integer.valueOf(1)).get("a"));
 	}
 
 	/**
 	 * Test method for {@link NestedMap2#get(Object, Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetK1K2() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(1), "b", Boolean.FALSE);
 
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.TRUE, map.get(1, "a"));
+		Assert.assertEquals(Boolean.TRUE, map.get(Integer.valueOf(1), "a"));
 
-		map.put(1, "a", false);
+		map.put(Integer.valueOf(1), "a", Boolean.FALSE);
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.FALSE, map.get(1, "a"));
+		Assert.assertEquals(Boolean.FALSE, map.get(Integer.valueOf(1), "a"));
 	}
 
 	/**
 	 * Test method for {@link NestedMap2#hashCode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		NestedMap2<Integer, String, Boolean> similarMap = new NestedMap2<>();
-		similarMap.put(1, "a", true);
-		similarMap.put(2, "b", false);
+		similarMap.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		similarMap.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		NestedMap2<Integer, String, Boolean> differentMap = new NestedMap2<>();
-		differentMap.put(1, "a", true);
-		differentMap.put(2, "c", false);
+		differentMap.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		differentMap.put(Integer.valueOf(2), "c", Boolean.FALSE);
 
 		Assert.assertEquals(map.hashCode(), similarMap.hashCode());
 		Assert.assertNotEquals(map.hashCode(), differentMap.hashCode());
@@ -155,12 +162,13 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#keys2()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testKeys2() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
-		map.put(1, "c", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
+		map.put(Integer.valueOf(1), "c", Boolean.FALSE);
 
 		for (Pair<Integer, String> key : map.keys2()) {
 			Boolean value = map.get(key.getFirst(), key.getSecond());
@@ -177,12 +185,13 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#keySet()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testKeySet() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
-		map.put(1, "c", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
+		map.put(Integer.valueOf(1), "c", Boolean.FALSE);
 
 		for (Integer key : map.keySet()) {
 			Map<String, Boolean> entry = map.get(key);
@@ -200,29 +209,31 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#put(Object, Object, Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testPut() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.TRUE, map.get(1, "a"));
+		Assert.assertEquals(Boolean.TRUE, map.get(Integer.valueOf(1), "a"));
 
-		map.put(1, "a", false);
+		map.put(Integer.valueOf(1), "a", Boolean.FALSE);
 		Assert.assertEquals(2, map.size());
-		Assert.assertEquals(Boolean.FALSE, map.get(1, "a"));
+		Assert.assertEquals(Boolean.FALSE, map.get(Integer.valueOf(1), "a"));
 	}
 
 	/**
 	 * Test method for {@link NestedMap2#remove(Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testRemoveK1() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
-		map.put(1, "c", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
+		map.put(Integer.valueOf(1), "c", Boolean.FALSE);
 
 		Assert.assertEquals(3, map.size());
 		map.remove(new Integer(1));
@@ -234,12 +245,13 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#remove(Object, Object)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testRemoveK1K2() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
-		map.put(1, "c", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
+		map.put(Integer.valueOf(1), "c", Boolean.FALSE);
 
 		Assert.assertEquals(3, map.size());
 		map.remove(new Integer(1), "a");
@@ -255,17 +267,18 @@ public class NestedMap2Test {
 	/**
 	 * Test method for {@link NestedMap2#size()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testSize() {
 		NestedMap2<Integer, String, Boolean> map = new NestedMap2<>();
-		map.put(1, "a", true);
-		map.put(2, "b", false);
+		map.put(Integer.valueOf(1), "a", Boolean.TRUE);
+		map.put(Integer.valueOf(2), "b", Boolean.FALSE);
 
 		Assert.assertEquals(2, map.size());
 		map.clear();
 		Assert.assertEquals(0, map.size());
 
-		map.put(1, "c", true);
+		map.put(Integer.valueOf(1), "c", Boolean.TRUE);
 		Assert.assertEquals(1, map.size());
 		map.clear();
 		Assert.assertEquals(0, map.size());

@@ -64,7 +64,7 @@ public final class RandomLandmarkProviderTest {
 		Assert.assertEquals(4, fourthSet.size());
 		Assert.assertTrue(allNodes.containsAll(fourthSet));
 
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		provider.getLandmarks(5);
 		provider.getLandmarks(6);
 		provider.getLandmarks(-1);

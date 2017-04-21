@@ -69,7 +69,7 @@ public final class GreedyFarthestLandmarkProviderTest {
 		Set<Node> fifthSet = provider.getLandmarks(2);
 		Assert.assertTrue(fifthSet.contains(fourthNode));
 
-		exception.expect(IllegalArgumentException.class);
+		this.exception.expect(IllegalArgumentException.class);
 		provider.getLandmarks(5);
 		provider.getLandmarks(6);
 		provider.getLandmarks(-1);

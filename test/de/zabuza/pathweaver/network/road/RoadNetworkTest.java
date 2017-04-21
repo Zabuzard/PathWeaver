@@ -26,7 +26,7 @@ public final class RoadNetworkTest {
 	public final ExpectedException exception = ExpectedException.none();
 
 	/**
-	 * Test method for {@link RoadNetwork#addEdge(Node, Node, int)}.
+	 * Test method for {@link RoadNetwork#addEdge(Node, Node, float)}.
 	 */
 	@Test
 	public void testAddEdge() {
@@ -35,7 +35,7 @@ public final class RoadNetworkTest {
 		RoadNode destination = new RoadNode(1, 2, 2);
 		int cost = 1;
 
-		exception.expect(UnsupportedOperationException.class);
+		this.exception.expect(UnsupportedOperationException.class);
 		network.addEdge(source, destination, cost);
 	}
 
@@ -47,13 +47,14 @@ public final class RoadNetworkTest {
 		RoadNetwork network = new RoadNetwork();
 		RoadNode source = new RoadNode(0, 1, 1);
 
-		exception.expect(UnsupportedOperationException.class);
+		this.exception.expect(UnsupportedOperationException.class);
 		network.addNode(source);
 	}
 
 	/**
 	 * Test method for {@link RoadNetwork#addRoadNode(RoadNode)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddRoadNode() {
 		RoadNetwork network = new RoadNetwork();
@@ -74,6 +75,7 @@ public final class RoadNetworkTest {
 	/**
 	 * Test method for {@link RoadNetwork#addRoad(Road)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddRoadRoad() {
 		RoadNetwork network = new RoadNetwork();
@@ -110,6 +112,7 @@ public final class RoadNetworkTest {
 	 * Test method for
 	 * {@link RoadNetwork#addRoad(RoadNode, RoadNode, ERoadType)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testAddRoadRoadNodeRoadNodeERoadType() {
 		RoadNetwork network = new RoadNetwork();
@@ -141,6 +144,7 @@ public final class RoadNetworkTest {
 	 * @throws IOException
 	 *             If an I/O-Exception occurred
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testCreateFromOsmFile() throws IOException {
 		StringReader reader = new StringReader(
@@ -170,6 +174,7 @@ public final class RoadNetworkTest {
 	/**
 	 * Test method for {@link RoadNetwork#getNearestRoadNode(float, float)}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNearestRoadNode() {
 		RoadNetwork network = new RoadNetwork();
@@ -185,6 +190,7 @@ public final class RoadNetworkTest {
 	/**
 	 * Test method for {@link RoadNetwork#RoadNetwork()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testRoadNetwork() {
 		RoadNetwork network = new RoadNetwork();

@@ -121,9 +121,9 @@ public final class SearchSpaceComparisonExample {
 		File desktop = new File(System.getProperty("user.home"), "Desktop");
 		File searchSpaceFile = new File(desktop, fileName);
 		System.out.println("\tSaving to: " + searchSpaceFile);
-		BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile));
-		String header = "Lat\tLng" + System.lineSeparator();
-		bw.write(header + tsvData);
-		bw.close();
+		try (final BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile))) {
+			String header = "Lat\tLng" + System.lineSeparator();
+			bw.write(header + tsvData);
+		}
 	}
 }

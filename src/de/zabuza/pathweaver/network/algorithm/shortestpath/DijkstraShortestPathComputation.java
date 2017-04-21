@@ -35,7 +35,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 *            The network to work on
 	 */
 	public DijkstraShortestPathComputation(final IPathNetwork network) {
-		mNetwork = network;
+		this.mNetwork = network;
 	}
 
 	/*
@@ -107,10 +107,9 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	public Optional<Float> computeShortestPathCost(final Set<Node> sources, final Node destination) {
 		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		if (nodeToData.containsKey(destination)) {
-			return Optional.of(nodeToData.get(destination).getTentativeCost());
-		} else {
-			return Optional.empty();
+			return Optional.of(Float.valueOf(nodeToData.get(destination).getTentativeCost()));
 		}
+		return Optional.empty();
 	}
 
 	/*
@@ -134,9 +133,9 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	@Override
 	public Map<Node, Float> computeShortestPathCostsReachable(final Set<Node> sources) {
 		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
-		Map<Node, Float> nodeToCost = new HashMap<Node, Float>();
+		Map<Node, Float> nodeToCost = new HashMap<>();
 		for (Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
-			nodeToCost.put(entry.getKey(), entry.getValue().getTentativeCost());
+			nodeToCost.put(entry.getKey(), Float.valueOf(entry.getValue().getTentativeCost()));
 		}
 		return nodeToCost;
 	}
@@ -174,7 +173,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public IPathNetwork getPathNetwork() {
-		return mNetwork;
+		return this.mNetwork;
 	}
 
 	/**
@@ -198,7 +197,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	protected Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Set<Node> sources,
 			final Optional<Node> destination) {
 		HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
-		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<TentativeNodeContainer>();
+		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<>();
 		HashMap<Node, TentativeNodeContainer> nodeToSettledContainer = new HashMap<>();
 
 		// Start with the set of sources as initial node
@@ -307,8 +306,10 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * @return <tt>True</tt> if the outgoing edge should be considered for
 	 *         relaxation, <tt>false</tt> if not.
 	 */
-	protected boolean considerOutgoingEdgeForRelaxation(final DirectedWeightedEdge outgoingEdge,
-			final Optional<Node> destination) {
+	@SuppressWarnings("static-method")
+	protected boolean considerOutgoingEdgeForRelaxation(
+			@SuppressWarnings("unused") final DirectedWeightedEdge outgoingEdge,
+			@SuppressWarnings("unused") final Optional<Node> destination) {
 		// Dijkstras algorithm does consider every outgoing edge.
 		return true;
 	}
@@ -324,7 +325,9 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 * @return The estimated cost needed to reach the given destination from the
 	 *         given node
 	 */
-	protected float getEstCostToDest(final Node node, final Node dest) {
+	@SuppressWarnings("static-method")
+	protected float getEstCostToDest(@SuppressWarnings("unused") final Node node,
+			@SuppressWarnings("unused") final Node dest) {
 		// Dijkstras algorithm does not use such estimations. Thus it is
 		// extremely optimistic and guesses zero costs in any case.
 		return 0;

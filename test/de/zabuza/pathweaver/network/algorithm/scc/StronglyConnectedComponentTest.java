@@ -57,7 +57,7 @@ public final class StronglyConnectedComponentTest {
 
 		scc.setRootNode(firstNode);
 		Node fifthNode = new Node(4);
-		exception.expect(UnsupportedOperationException.class);
+		this.exception.expect(UnsupportedOperationException.class);
 		scc.addNode(fifthNode);
 
 	}
@@ -65,6 +65,7 @@ public final class StronglyConnectedComponentTest {
 	/**
 	 * Test method for {@link StronglyConnectedComponent#getNodes()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNodes() {
 		Node firstNode = new Node(0);
@@ -97,6 +98,7 @@ public final class StronglyConnectedComponentTest {
 	/**
 	 * Test method for {@link StronglyConnectedComponent#getRootNode()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRootNode() {
 		Node firstNode = new Node(0);
@@ -113,6 +115,7 @@ public final class StronglyConnectedComponentTest {
 	/**
 	 * Test method for {@link StronglyConnectedComponent#getSize()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSize() {
 		Node firstNode = new Node(0);
@@ -147,7 +150,7 @@ public final class StronglyConnectedComponentTest {
 		scc.addNode(secondNode);
 
 		scc.setRootNode(firstNode);
-		exception.expect(UnsupportedOperationException.class);
+		this.exception.expect(UnsupportedOperationException.class);
 		scc.setRootNode(secondNode);
 	}
 
@@ -155,6 +158,7 @@ public final class StronglyConnectedComponentTest {
 	 * Test method for
 	 * {@link StronglyConnectedComponent#StronglyConnectedComponent()}.
 	 */
+	@SuppressWarnings("static-method")
 	@Test
 	public void testStronglyConnectedComponent() {
 		Node firstNode = new Node(0);
