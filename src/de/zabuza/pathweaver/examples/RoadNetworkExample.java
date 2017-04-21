@@ -127,8 +127,7 @@ public final class RoadNetworkExample {
 		final Node source = (Node) nodes[sourceIndex];
 		final Node destination = (Node) nodes[destinationIndex];
 		@SuppressWarnings("unchecked")
-		final
-		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
+		final Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
 				destination);
 		// Save the search space to a file on the desktop
 		final String tsvData = RoadUtil.getPositionsTsv(searchSpace);

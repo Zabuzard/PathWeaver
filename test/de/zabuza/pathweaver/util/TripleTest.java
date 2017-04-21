@@ -23,7 +23,8 @@ public final class TripleTest {
 		final Integer differentThirdEntry = Integer.valueOf(3);
 		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		final Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
+		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry,
+				differentThirdEntry);
 
 		Assert.assertEquals(triple, similarTriple);
 		Assert.assertNotEquals(triple, differentTriple);
@@ -92,7 +93,8 @@ public final class TripleTest {
 		final Integer differentThirdEntry = Integer.valueOf(3);
 		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 		final Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
+		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry,
+				differentThirdEntry);
 
 		Assert.assertEquals(triple.hashCode(), similarTriple.hashCode());
 		Assert.assertNotEquals(triple.hashCode(), differentTriple.hashCode());

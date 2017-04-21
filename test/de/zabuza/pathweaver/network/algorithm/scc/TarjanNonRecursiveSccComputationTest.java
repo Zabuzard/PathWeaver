@@ -103,7 +103,8 @@ public final class TarjanNonRecursiveSccComputationTest {
 		final PathNetwork network = new PathNetwork();
 		final TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		final PathNetwork anotherNetwork = new PathNetwork();
-		final TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(anotherNetwork);
+		final TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(
+				anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
@@ -216,7 +217,8 @@ public final class TarjanNonRecursiveSccComputationTest {
 		final PathNetwork network = new PathNetwork();
 		final TarjanNonRecursiveSccComputation computation = new TarjanNonRecursiveSccComputation(network);
 		final PathNetwork anotherNetwork = new PathNetwork();
-		final TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(anotherNetwork);
+		final TarjanNonRecursiveSccComputation anotherComputation = new TarjanNonRecursiveSccComputation(
+				anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());

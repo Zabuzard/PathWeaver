@@ -38,8 +38,8 @@ public final class OneAxisRectanglePartitioningProviderTest {
 		final float latitudeMax = 49.25f;
 		final float longitudeMin = 6.95f;
 		final float longitudeMax = 7.05f;
-		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network, latitudeMin,
-				latitudeMax, longitudeMin, longitudeMax);
+		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network,
+				latitudeMin, latitudeMax, longitudeMin, longitudeMax);
 
 		final Collection<Set<Node>> partitions = provider.getPartitioning();
 		Assert.assertEquals(2, partitions.size());
@@ -70,8 +70,8 @@ public final class OneAxisRectanglePartitioningProviderTest {
 		final float latitudeMax = 49.25f;
 		final float longitudeMin = 6.95f;
 		final float longitudeMax = 7.05f;
-		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network, latitudeMin,
-				latitudeMax, longitudeMin, longitudeMax);
+		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network,
+				latitudeMin, latitudeMax, longitudeMin, longitudeMax);
 
 		final RoadNode insideNode = new RoadNode(0, 49.22f, 6.98f);
 		final RoadNode outsideNode = new RoadNode(1, 49.22f, 7.06f);
@@ -95,8 +95,8 @@ public final class OneAxisRectanglePartitioningProviderTest {
 		final float latitudeMax = 49.25f;
 		final float longitudeMin = 6.95f;
 		final float longitudeMax = 7.05f;
-		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network, latitudeMin,
-				latitudeMax, longitudeMin, longitudeMax);
+		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network,
+				latitudeMin, latitudeMax, longitudeMin, longitudeMax);
 
 		final RoadNode insideNode = new RoadNode(0, 49.22f, 6.98f);
 		final RoadNode outsideNode = new RoadNode(1, 49.22f, 7.06f);

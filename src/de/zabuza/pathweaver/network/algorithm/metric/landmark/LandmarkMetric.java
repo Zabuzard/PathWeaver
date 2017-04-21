@@ -114,8 +114,8 @@ public final class LandmarkMetric implements IMetric<Node> {
 
 			final float landmarkBehindDestinationCost = this.mNodeIdAndToLandmarkIdToCost.get(firstId, landmarkId)
 					.floatValue() - this.mNodeIdAndToLandmarkIdToCost.get(secondId, landmarkId).floatValue();
-			final float landmarkBeforeSourceCost = this.mLandmarkIdAndNodeIdToCost.get(landmarkId, secondId).floatValue()
-					- this.mLandmarkIdAndNodeIdToCost.get(landmarkId, firstId).floatValue();
+			final float landmarkBeforeSourceCost = this.mLandmarkIdAndNodeIdToCost.get(landmarkId, secondId)
+					.floatValue() - this.mLandmarkIdAndNodeIdToCost.get(landmarkId, firstId).floatValue();
 			final float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
 
 			if (distanceWithLandmark > greatestDistanceWithLandmark) {

@@ -128,7 +128,8 @@ public final class RoadUtil {
 		final double secondLatitudeRad = degToRad(secondLatitudeDeg);
 		final double secondLongitudeRad = degToRad(secondLongitudeDeg);
 
-		final double x = ((secondLongitudeRad - firstLongitudeRad) * Math.cos((firstLatitudeRad + secondLatitudeRad) / 2));
+		final double x = ((secondLongitudeRad - firstLongitudeRad)
+				* Math.cos((firstLatitudeRad + secondLatitudeRad) / 2));
 		final double y = (secondLatitudeRad - firstLatitudeRad);
 		final float distance = (float) (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * EARTH_RADIUS_MEAN);
 

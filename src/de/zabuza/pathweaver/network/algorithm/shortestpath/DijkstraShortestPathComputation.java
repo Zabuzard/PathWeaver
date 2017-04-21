@@ -59,7 +59,8 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Optional<Path> computeShortestPath(final Set<Node> sources, final Node destination) {
-		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources,
+				Optional.of(destination));
 		if (!nodeToData.containsKey(destination)) {
 			return Optional.empty();
 		}
@@ -105,7 +106,8 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Optional<Float> computeShortestPathCost(final Set<Node> sources, final Node destination) {
-		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources,
+				Optional.of(destination));
 		if (nodeToData.containsKey(destination)) {
 			return Optional.of(Float.valueOf(nodeToData.get(destination).getTentativeCost()));
 		}
@@ -161,7 +163,8 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Set<Node> computeShortestPathSearchSpace(final Set<Node> sources, final Node destination) {
-		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources,
+				Optional.of(destination));
 		return nodeToData.keySet();
 	}
 

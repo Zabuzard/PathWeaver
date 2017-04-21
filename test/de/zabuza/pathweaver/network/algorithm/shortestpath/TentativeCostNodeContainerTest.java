@@ -64,7 +64,8 @@ public final class TentativeCostNodeContainerTest {
 		final float anotherEstCostToDest = 2;
 		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
 		final TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
-		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, edge, cost, anotherEstCostToDest);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, edge, cost,
+				anotherEstCostToDest);
 
 		Assert.assertEquals(estCostToDest, container.getEstCostToDest(), 0);
 		Assert.assertEquals(anotherEstCostToDest, anotherContainer.getEstCostToDest(), 0);
@@ -98,7 +99,8 @@ public final class TentativeCostNodeContainerTest {
 		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
 		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, dest, cost);
 		final TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
-		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, anotherEdge, cost, estCostToDest);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, anotherEdge, cost,
+				estCostToDest);
 
 		Assert.assertEquals(edge, container.getParentEdge());
 		Assert.assertEquals(anotherEdge, anotherContainer.getParentEdge());

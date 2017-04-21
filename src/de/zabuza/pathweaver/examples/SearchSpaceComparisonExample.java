@@ -114,8 +114,7 @@ public final class SearchSpaceComparisonExample {
 	private final static void computeSearchSpaceAndSaveToFile(final IShortestPathComputation computation,
 			final RoadNode source, final RoadNode destination, final String fileName) throws IOException {
 		@SuppressWarnings("unchecked")
-		final
-		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
+		final Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
 				destination);
 		// Save the search space to a file on the desktop
 		final String tsvData = RoadUtil.getPositionsTsv(searchSpace);

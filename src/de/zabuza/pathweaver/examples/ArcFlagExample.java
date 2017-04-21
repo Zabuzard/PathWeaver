@@ -66,8 +66,8 @@ public final class ArcFlagExample {
 		final float latitudeMax = 49.25f;
 		final float longitudeMin = 6.95f;
 		final float longitudeMax = 7.05f;
-		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network, latitudeMin,
-				latitudeMax, longitudeMin, longitudeMax);
+		final OneAxisRectanglePartitioningProvider provider = new OneAxisRectanglePartitioningProvider(network,
+				latitudeMin, latitudeMax, longitudeMin, longitudeMax);
 		final IShortestPathComputation computation = new ArcFlagShortestPathComputation(network, provider);
 		final Object[] nodes = network.getNodes().toArray();
 		final int amountOfNodes = nodes.length;
@@ -125,8 +125,7 @@ public final class ArcFlagExample {
 			destination = (Node) nodes[destinationIndex];
 		} while (!provider.isInsideRectangle((RoadNode) destination));
 		@SuppressWarnings("unchecked")
-		final
-		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
+		final Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
 				destination);
 		// Save the search space to a file on the desktop
 		final String tsvData = RoadUtil.getPositionsTsv(searchSpace);

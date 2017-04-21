@@ -209,7 +209,8 @@ public final class WebDemoServer {
 
 				// Transform request data to nodes
 				final RoadNode source = this.mNetwork.getNearestRoadNode(sourceLatitude, sourceLongitude);
-				final RoadNode destination = this.mNetwork.getNearestRoadNode(destinationLatitude, destinationLongitude);
+				final RoadNode destination = this.mNetwork.getNearestRoadNode(destinationLatitude,
+						destinationLongitude);
 
 				// Compute the shortest path
 				final Optional<Path> path = this.mComputation.computeShortestPath(source, destination);
@@ -236,8 +237,8 @@ public final class WebDemoServer {
 
 					// Build the answer text as jsonp which calls
 					// a callback function
-					final String jsonp = "redrawLineServerCallback({\n" + "  path: " + JS_ARRAY_BEGIN + pathArray.toString()
-							+ JS_ARRAY_END + "\n" + "})\n";
+					final String jsonp = "redrawLineServerCallback({\n" + "  path: " + JS_ARRAY_BEGIN
+							+ pathArray.toString() + JS_ARRAY_END + "\n" + "})\n";
 					final String answer = "HTTP/1.0 200 OK\r\n" + "Content-Length: " + jsonp.length() + "\r\n"
 							+ "Content-Type: application/javascript" + "\r\n" + "Connection: close\r\n" + "\r\n"
 							+ jsonp;
