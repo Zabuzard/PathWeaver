@@ -28,8 +28,8 @@ public final class StraightLineRoadTimeMetric implements IMetric<Node> {
 			throw new IllegalArgumentException(ILLEGAL_NODE_MESSAGE);
 		}
 
-		float distance = RoadUtil.distanceEquiRect((RoadNode) first, (RoadNode) second);
-		float maximalSpeed = RoadUtil.getAverageSpeedOfRoadType(RoadUtil.getFastestRoadType());
+		final float distance = RoadUtil.distanceEquiRect((RoadNode) first, (RoadNode) second);
+		final float maximalSpeed = RoadUtil.getAverageSpeedOfRoadType(RoadUtil.getFastestRoadType());
 		return RoadUtil.getTravelTime(distance, maximalSpeed);
 	}
 

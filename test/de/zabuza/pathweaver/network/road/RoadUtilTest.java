@@ -28,8 +28,8 @@ public final class RoadUtilTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testDistanceEquiRect() {
-		RoadNode firstNode = new RoadNode(0, 49.3413853f, 7.3014897f);
-		RoadNode secondNode = new RoadNode(1, 49.3080623f, 7.2517281f);
+		final RoadNode firstNode = new RoadNode(0, 49.3413853f, 7.3014897f);
+		final RoadNode secondNode = new RoadNode(1, 49.3080623f, 7.2517281f);
 		Assert.assertEquals(5170.5f, RoadUtil.distanceEquiRect(firstNode, secondNode), 1);
 	}
 
@@ -39,10 +39,10 @@ public final class RoadUtilTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetFastestRoadType() {
-		float speedAccordingToMethod = RoadUtil.getAverageSpeedOfRoadType(RoadUtil.getFastestRoadType());
+		final float speedAccordingToMethod = RoadUtil.getAverageSpeedOfRoadType(RoadUtil.getFastestRoadType());
 		float fastestKnownSpeed = -1;
-		for (ERoadType type : ERoadType.values()) {
-			float speedOfType = RoadUtil.getAverageSpeedOfRoadType(type);
+		for (final ERoadType type : ERoadType.values()) {
+			final float speedOfType = RoadUtil.getAverageSpeedOfRoadType(type);
 			if (speedOfType > fastestKnownSpeed) {
 				fastestKnownSpeed = speedOfType;
 			}
@@ -57,9 +57,9 @@ public final class RoadUtilTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPositionsTsv() {
-		RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
-		RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
-		LinkedList<RoadNode> nodes = new LinkedList<>();
+		final RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
+		final RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
+		final LinkedList<RoadNode> nodes = new LinkedList<>();
 		nodes.add(firstNode);
 		nodes.add(secondNode);
 
@@ -72,8 +72,8 @@ public final class RoadUtilTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPositionTsv() {
-		RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
-		RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
+		final RoadNode firstNode = new RoadNode(0, 47.4f, 31.23f);
+		final RoadNode secondNode = new RoadNode(1, 11f, -5.4f);
 
 		Assert.assertEquals("47.4\t31.23", RoadUtil.getPositionTsv(firstNode));
 		Assert.assertEquals("11.0\t-5.4", RoadUtil.getPositionTsv(secondNode));

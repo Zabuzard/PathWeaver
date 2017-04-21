@@ -105,18 +105,18 @@ public final class LandmarkMetric implements IMetric<Node> {
 	 */
 	@Override
 	public float distance(final Node first, final Node second) {
-		float startingDistance = 0;
+		final float startingDistance = 0;
 		float greatestDistanceWithLandmark = startingDistance;
-		for (Node landmark : this.mLandmarks) {
+		for (final Node landmark : this.mLandmarks) {
 			final Integer firstId = Integer.valueOf(first.getId());
 			final Integer secondId = Integer.valueOf(second.getId());
 			final Integer landmarkId = Integer.valueOf(landmark.getId());
 
-			float landmarkBehindDestinationCost = this.mNodeIdAndToLandmarkIdToCost.get(firstId, landmarkId)
+			final float landmarkBehindDestinationCost = this.mNodeIdAndToLandmarkIdToCost.get(firstId, landmarkId)
 					.floatValue() - this.mNodeIdAndToLandmarkIdToCost.get(secondId, landmarkId).floatValue();
-			float landmarkBeforeSourceCost = this.mLandmarkIdAndNodeIdToCost.get(landmarkId, secondId).floatValue()
+			final float landmarkBeforeSourceCost = this.mLandmarkIdAndNodeIdToCost.get(landmarkId, secondId).floatValue()
 					- this.mLandmarkIdAndNodeIdToCost.get(landmarkId, firstId).floatValue();
-			float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
+			final float distanceWithLandmark = Math.max(landmarkBehindDestinationCost, landmarkBeforeSourceCost);
 
 			if (distanceWithLandmark > greatestDistanceWithLandmark) {
 				greatestDistanceWithLandmark = distanceWithLandmark;
@@ -137,9 +137,9 @@ public final class LandmarkMetric implements IMetric<Node> {
 		this.mLandmarks = this.mLandmarkProvider.getLandmarks(this.mAmount);
 
 		// Computation of costs from landmarks to all other nodes
-		for (Node landmark : this.mLandmarks) {
-			Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmark);
-			for (Entry<Node, Float> entry : nodeToCost.entrySet()) {
+		for (final Node landmark : this.mLandmarks) {
+			final Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmark);
+			for (final Entry<Node, Float> entry : nodeToCost.entrySet()) {
 				this.mLandmarkIdAndNodeIdToCost.put(Integer.valueOf(landmark.getId()),
 						Integer.valueOf(entry.getKey().getId()), entry.getValue());
 			}
@@ -147,9 +147,9 @@ public final class LandmarkMetric implements IMetric<Node> {
 
 		// Computation of costs from all other nodes to landmarks
 		this.mNetwork.reverse();
-		for (Node landmark : this.mLandmarks) {
-			Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmark);
-			for (Entry<Node, Float> entry : nodeToCost.entrySet()) {
+		for (final Node landmark : this.mLandmarks) {
+			final Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmark);
+			for (final Entry<Node, Float> entry : nodeToCost.entrySet()) {
 				this.mNodeIdAndToLandmarkIdToCost.put(Integer.valueOf(entry.getKey().getId()),
 						Integer.valueOf(landmark.getId()), entry.getValue());
 			}

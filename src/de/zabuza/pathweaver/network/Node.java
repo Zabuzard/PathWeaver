@@ -29,7 +29,7 @@ public class Node {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -39,7 +39,7 @@ public class Node {
 		if (!(obj instanceof Node)) {
 			return false;
 		}
-		Node other = (Node) obj;
+		final Node other = (Node) obj;
 		if (this.mId != other.mId) {
 			return false;
 		}

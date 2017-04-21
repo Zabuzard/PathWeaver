@@ -17,10 +17,10 @@ public final class NodeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
-		int id = 0;
-		int anotherId = 1;
-		Node node = new Node(id);
-		Node anotherNode = new Node(anotherId);
+		final int id = 0;
+		final int anotherId = 1;
+		final Node node = new Node(id);
+		final Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node, node);
 		Assert.assertNotEquals(anotherNode, node);
@@ -32,10 +32,10 @@ public final class NodeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetId() {
-		int id = 0;
-		int anotherId = 1;
-		Node node = new Node(id);
-		Node anotherNode = new Node(anotherId);
+		final int id = 0;
+		final int anotherId = 1;
+		final Node node = new Node(id);
+		final Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(id, node.getId());
 		Assert.assertEquals(anotherId, anotherNode.getId());
@@ -47,10 +47,10 @@ public final class NodeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
-		int id = 0;
-		int anotherId = 1;
-		Node node = new Node(id);
-		Node anotherNode = new Node(anotherId);
+		final int id = 0;
+		final int anotherId = 1;
+		final Node node = new Node(id);
+		final Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node.hashCode(), node.hashCode());
 		Assert.assertNotEquals(anotherNode.hashCode(), node.hashCode());
@@ -62,10 +62,10 @@ public final class NodeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testNode() {
-		int id = 0;
-		int anotherId = 1;
-		Node node = new Node(id);
-		Node anotherNode = new Node(anotherId);
+		final int id = 0;
+		final int anotherId = 1;
+		final Node node = new Node(id);
+		final Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(node, node);
 		Assert.assertNotEquals(anotherNode, node);
@@ -77,10 +77,10 @@ public final class NodeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testToString() {
-		int id = 0;
-		int anotherId = 1;
-		Node node = new Node(id);
-		Node anotherNode = new Node(anotherId);
+		final int id = 0;
+		final int anotherId = 1;
+		final Node node = new Node(id);
+		final Node anotherNode = new Node(anotherId);
 
 		Assert.assertEquals(id + "", node.toString());
 		Assert.assertEquals(anotherId + "", anotherNode.toString());

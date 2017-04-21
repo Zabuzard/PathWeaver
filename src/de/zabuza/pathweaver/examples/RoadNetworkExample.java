@@ -38,12 +38,12 @@ public final class RoadNetworkExample {
 	public static void main(final String[] args) throws FileNotFoundException, IOException {
 		// Loading file
 		System.out.println("Loading file...");
-		File osmFile = new File("res/examples/saarland.osm");
+		final File osmFile = new File("res/examples/saarland.osm");
 
 		// Creating road network
 		System.out.println("Creating road network...");
 		long startTimestamp = System.currentTimeMillis();
-		RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
+		final RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
 		long endTimestamp = System.currentTimeMillis();
 		float durationSeconds = (endTimestamp - startTimestamp + 0.0f) / 1000;
 		System.out.println("\tNodes: " + network.getSize() + ", Edges: " + network.getAmountOfEdges());
@@ -78,13 +78,13 @@ public final class RoadNetworkExample {
 		// Preparing random queries
 		System.out.println("Preparing random queries...");
 		startTimestamp = System.currentTimeMillis();
-		IShortestPathComputation computation = new AStarShortestPathComputation(network,
+		final IShortestPathComputation computation = new AStarShortestPathComputation(network,
 				new LandmarkMetric(42, network));
-		Object[] nodes = network.getNodes().toArray();
-		int amountOfNodes = nodes.length;
-		Random rnd = new Random();
-		int queryAmount = 100;
-		int logEvery = 10;
+		final Object[] nodes = network.getNodes().toArray();
+		final int amountOfNodes = nodes.length;
+		final Random rnd = new Random();
+		final int queryAmount = 100;
+		final int logEvery = 10;
 		long totalRunningTime = 0;
 		double totalCost = 0.0;
 		endTimestamp = System.currentTimeMillis();
@@ -95,13 +95,13 @@ public final class RoadNetworkExample {
 		// Starting random queries
 		System.out.println("Starting random queries...");
 		for (int i = 1; i <= queryAmount; i++) {
-			int sourceIndex = rnd.nextInt(amountOfNodes);
-			int destinationIndex = rnd.nextInt(amountOfNodes);
-			Node source = (Node) nodes[sourceIndex];
-			Node destination = (Node) nodes[destinationIndex];
+			final int sourceIndex = rnd.nextInt(amountOfNodes);
+			final int destinationIndex = rnd.nextInt(amountOfNodes);
+			final Node source = (Node) nodes[sourceIndex];
+			final Node destination = (Node) nodes[destinationIndex];
 
 			startTimestamp = System.currentTimeMillis();
-			Optional<Float> result = computation.computeShortestPathCost(source, destination);
+			final Optional<Float> result = computation.computeShortestPathCost(source, destination);
 			// Ignore queries where source can not reach destination
 			if (!result.isPresent()) {
 				i--;
@@ -115,24 +115,25 @@ public final class RoadNetworkExample {
 				System.out.println("\t\tProcessed " + i + " queries.");
 			}
 		}
-		double averageCost = totalCost / queryAmount;
-		float averageTimeInSeconds = (totalRunningTime / queryAmount + 0.0f) / 1000;
+		final double averageCost = totalCost / queryAmount;
+		final float averageTimeInSeconds = (totalRunningTime / queryAmount + 0.0f) / 1000;
 		System.out.println("\tAverage cost: " + averageCost);
 		System.out.println("\tAverage time: " + averageTimeInSeconds);
 
 		// Starting search space query
 		System.out.println("Starting search space query...");
-		int sourceIndex = rnd.nextInt(amountOfNodes);
-		int destinationIndex = rnd.nextInt(amountOfNodes);
-		Node source = (Node) nodes[sourceIndex];
-		Node destination = (Node) nodes[destinationIndex];
+		final int sourceIndex = rnd.nextInt(amountOfNodes);
+		final int destinationIndex = rnd.nextInt(amountOfNodes);
+		final Node source = (Node) nodes[sourceIndex];
+		final Node destination = (Node) nodes[destinationIndex];
 		@SuppressWarnings("unchecked")
+		final
 		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
 				destination);
 		// Save the search space to a file on the desktop
-		String tsvData = RoadUtil.getPositionsTsv(searchSpace);
-		File desktop = new File(System.getProperty("user.home"), "Desktop");
-		File searchSpaceFile = new File(desktop, "searchSpace.tsv");
+		final String tsvData = RoadUtil.getPositionsTsv(searchSpace);
+		final File desktop = new File(System.getProperty("user.home"), "Desktop");
+		final File searchSpaceFile = new File(desktop, "searchSpace.tsv");
 		System.out.println("\tSaving to: " + searchSpaceFile);
 		try (final BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile))) {
 			bw.write(tsvData);

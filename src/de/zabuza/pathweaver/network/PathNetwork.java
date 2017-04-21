@@ -77,7 +77,7 @@ public class PathNetwork implements IPathNetwork {
 		if (!containsNodeId(source.getId()) || !containsNodeId(destination.getId())) {
 			throw new IllegalArgumentException(EXCEPTION_NODE_NOT_ADDED);
 		}
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(source, destination, cost);
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(source, destination, cost);
 		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			outgoingEdges = new LinkedHashSet<>();
@@ -106,8 +106,8 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean addNode(final Node node) {
-		Node previousElement = this.mIdToNodes.get(Integer.valueOf(node.getId()));
-		boolean getsAdded = previousElement == null;
+		final Node previousElement = this.mIdToNodes.get(Integer.valueOf(node.getId()));
+		final boolean getsAdded = previousElement == null;
 		if (getsAdded) {
 			this.mIdToNodes.put(Integer.valueOf(node.getId()), node);
 			this.mAmountOfNodes++;
@@ -145,7 +145,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Set<DirectedWeightedEdge> getIncomingEdges(final Node destination) {
-		HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
+		final HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
 			return Collections.emptySet();
 		}
@@ -181,7 +181,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public Set<DirectedWeightedEdge> getOutgoingEdges(final Node source) {
-		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
+		final HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			return Collections.emptySet();
 		}
@@ -206,7 +206,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean hasIncomingEdge(final Node destination, final DirectedWeightedEdge incomingEdge) {
-		HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
+		final HashSet<DirectedWeightedEdge> incomingEdges = this.mNodeToIncomingEdges.get(destination);
 		if (incomingEdges == null) {
 			return false;
 		}
@@ -221,7 +221,7 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public boolean hasOutgoingEdge(final Node source, final DirectedWeightedEdge outgoingEdge) {
-		HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
+		final HashSet<DirectedWeightedEdge> outgoingEdges = this.mNodeToOutgoingEdges.get(source);
 		if (outgoingEdges == null) {
 			return false;
 		}
@@ -235,17 +235,17 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public void reduceToLargestScc() {
-		ISccComputation sccComputation = new TarjanNonRecursiveSccComputation(this);
-		StronglyConnectedComponent largestScc = sccComputation.getLargestScc();
-		Set<Node> largestSccNodes = largestScc.getNodes();
-		LinkedList<Node> nodesToRemove = new LinkedList<>();
-		for (Node node : getNodes()) {
+		final ISccComputation sccComputation = new TarjanNonRecursiveSccComputation(this);
+		final StronglyConnectedComponent largestScc = sccComputation.getLargestScc();
+		final Set<Node> largestSccNodes = largestScc.getNodes();
+		final LinkedList<Node> nodesToRemove = new LinkedList<>();
+		for (final Node node : getNodes()) {
 			if (largestSccNodes.contains(node)) {
 				continue;
 			}
 			nodesToRemove.add(node);
 		}
-		for (Node node : nodesToRemove) {
+		for (final Node node : nodesToRemove) {
 			removeNode(node);
 		}
 	}
@@ -283,17 +283,17 @@ public class PathNetwork implements IPathNetwork {
 		}
 
 		// First remove all in- and outgoing edges
-		Set<DirectedWeightedEdge> outgoingEdges = getOutgoingEdges(node);
-		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+		final Set<DirectedWeightedEdge> outgoingEdges = getOutgoingEdges(node);
+		for (final DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 			// Remove this edge from destinations incoming edges
-			Node destination = outgoingEdge.getDestination();
+			final Node destination = outgoingEdge.getDestination();
 			this.mNodeToIncomingEdges.get(destination).remove(outgoingEdge);
 			this.mAmountOfEdges--;
 		}
-		Set<DirectedWeightedEdge> incomingEdges = getIncomingEdges(node);
-		for (DirectedWeightedEdge incomingEdge : incomingEdges) {
+		final Set<DirectedWeightedEdge> incomingEdges = getIncomingEdges(node);
+		for (final DirectedWeightedEdge incomingEdge : incomingEdges) {
 			// Remove this edge from sources outgoing edges
-			Node source = incomingEdge.getSource();
+			final Node source = incomingEdge.getSource();
 			this.mNodeToOutgoingEdges.get(source).remove(incomingEdge);
 			this.mAmountOfEdges--;
 		}
@@ -314,14 +314,14 @@ public class PathNetwork implements IPathNetwork {
 	@Override
 	public void reverse() {
 		// Iterate every edge exactly one time and reverse it
-		for (HashSet<DirectedWeightedEdge> edges : this.mNodeToOutgoingEdges.values()) {
-			for (DirectedWeightedEdge edge : edges) {
+		for (final HashSet<DirectedWeightedEdge> edges : this.mNodeToOutgoingEdges.values()) {
+			for (final DirectedWeightedEdge edge : edges) {
 				edge.reverse();
 			}
 		}
 
 		// Exchange the internal edge maps
-		HashMap<Node, HashSet<DirectedWeightedEdge>> tmpNodeToIncomingEdges = this.mNodeToIncomingEdges;
+		final HashMap<Node, HashSet<DirectedWeightedEdge>> tmpNodeToIncomingEdges = this.mNodeToIncomingEdges;
 		this.mNodeToIncomingEdges = this.mNodeToOutgoingEdges;
 		this.mNodeToOutgoingEdges = tmpNodeToIncomingEdges;
 	}
@@ -333,16 +333,16 @@ public class PathNetwork implements IPathNetwork {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("Network[");
 		builder.append("#nodes=" + this.mAmountOfNodes);
 		builder.append(",#edges=" + this.mAmountOfEdges);
 		builder.append(",edges={");
-		for (Entry<Node, HashSet<DirectedWeightedEdge>> entry : this.mNodeToOutgoingEdges.entrySet()) {
-			Node source = entry.getKey();
-			for (DirectedWeightedEdge outgoingEdge : entry.getValue()) {
-				Node destination = outgoingEdge.getDestination();
-				float cost = outgoingEdge.getCost();
+		for (final Entry<Node, HashSet<DirectedWeightedEdge>> entry : this.mNodeToOutgoingEdges.entrySet()) {
+			final Node source = entry.getKey();
+			for (final DirectedWeightedEdge outgoingEdge : entry.getValue()) {
+				final Node destination = outgoingEdge.getDestination();
+				final float cost = outgoingEdge.getCost();
 				builder.append("(" + source + "-" + cost + "->" + destination + "),");
 			}
 		}

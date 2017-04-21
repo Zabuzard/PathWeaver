@@ -31,11 +31,11 @@ public final class GreedyFarthestLandmarkProviderTest {
 	 */
 	@Test
 	public void testGetLandmarks() {
-		IPathNetwork network = new PathNetwork();
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final IPathNetwork network = new PathNetwork();
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 		network.addNode(firstNode);
 		network.addNode(secondNode);
 		network.addNode(thirdNode);
@@ -46,27 +46,27 @@ public final class GreedyFarthestLandmarkProviderTest {
 		network.addEdge(thirdNode, fourthNode, 10);
 		network.addEdge(fourthNode, thirdNode, 10);
 		network.addEdge(thirdNode, secondNode, 1);
-		Collection<Node> allNodes = network.getNodes();
+		final Collection<Node> allNodes = network.getNodes();
 
-		GreedyFarthestLandmarkProvider provider = new GreedyFarthestLandmarkProvider(network);
+		final GreedyFarthestLandmarkProvider provider = new GreedyFarthestLandmarkProvider(network);
 
-		Set<Node> firstSet = provider.getLandmarks(1);
+		final Set<Node> firstSet = provider.getLandmarks(1);
 		Assert.assertEquals(1, firstSet.size());
 		Assert.assertTrue(allNodes.containsAll(firstSet));
 
-		Set<Node> secondSet = provider.getLandmarks(2);
+		final Set<Node> secondSet = provider.getLandmarks(2);
 		Assert.assertEquals(2, secondSet.size());
 		Assert.assertTrue(allNodes.containsAll(secondSet));
 
-		Set<Node> thirdSet = provider.getLandmarks(3);
+		final Set<Node> thirdSet = provider.getLandmarks(3);
 		Assert.assertEquals(3, thirdSet.size());
 		Assert.assertTrue(allNodes.containsAll(thirdSet));
 
-		Set<Node> fourthSet = provider.getLandmarks(4);
+		final Set<Node> fourthSet = provider.getLandmarks(4);
 		Assert.assertEquals(4, fourthSet.size());
 		Assert.assertTrue(allNodes.containsAll(fourthSet));
 
-		Set<Node> fifthSet = provider.getLandmarks(2);
+		final Set<Node> fifthSet = provider.getLandmarks(2);
 		Assert.assertTrue(fifthSet.contains(fourthNode));
 
 		this.exception.expect(IllegalArgumentException.class);

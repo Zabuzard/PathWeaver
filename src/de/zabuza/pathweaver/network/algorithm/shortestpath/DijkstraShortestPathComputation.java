@@ -59,22 +59,22 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Optional<Path> computeShortestPath(final Set<Node> sources, final Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		if (!nodeToData.containsKey(destination)) {
 			return Optional.empty();
 		}
 
-		LinkedList<DirectedWeightedEdge> edgesBackwards = new LinkedList<>();
+		final LinkedList<DirectedWeightedEdge> edgesBackwards = new LinkedList<>();
 		Node currentNode = destination;
 		while (!sources.contains(currentNode)) {
-			TentativeNodeContainer container = nodeToData.get(currentNode);
-			DirectedWeightedEdge parentEdge = container.getParentEdge();
+			final TentativeNodeContainer container = nodeToData.get(currentNode);
+			final DirectedWeightedEdge parentEdge = container.getParentEdge();
 			edgesBackwards.add(parentEdge);
 
 			currentNode = parentEdge.getSource();
 		}
 
-		Path path = new Path(currentNode);
+		final Path path = new Path(currentNode);
 		Collections.reverse(edgesBackwards);
 		while (!edgesBackwards.isEmpty()) {
 			path.addEdge(edgesBackwards.poll());
@@ -105,7 +105,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Optional<Float> computeShortestPathCost(final Set<Node> sources, final Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		if (nodeToData.containsKey(destination)) {
 			return Optional.of(Float.valueOf(nodeToData.get(destination).getTentativeCost()));
 		}
@@ -132,9 +132,9 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Map<Node, Float> computeShortestPathCostsReachable(final Set<Node> sources) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
-		Map<Node, Float> nodeToCost = new HashMap<>();
-		for (Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.empty());
+		final Map<Node, Float> nodeToCost = new HashMap<>();
+		for (final Entry<Node, TentativeNodeContainer> entry : nodeToData.entrySet()) {
 			nodeToCost.put(entry.getKey(), Float.valueOf(entry.getValue().getTentativeCost()));
 		}
 		return nodeToCost;
@@ -161,7 +161,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	@Override
 	public Set<Node> computeShortestPathSearchSpace(final Set<Node> sources, final Node destination) {
-		Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
+		final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(sources, Optional.of(destination));
 		return nodeToData.keySet();
 	}
 
@@ -196,12 +196,12 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 	 */
 	protected Map<Node, TentativeNodeContainer> computeShortestPathCostHelper(final Set<Node> sources,
 			final Optional<Node> destination) {
-		HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
-		PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<>();
-		HashMap<Node, TentativeNodeContainer> nodeToSettledContainer = new HashMap<>();
+		final HashMap<Node, TentativeNodeContainer> nodeToContainer = new HashMap<>();
+		final PriorityQueue<TentativeNodeContainer> activeNodes = new PriorityQueue<>();
+		final HashMap<Node, TentativeNodeContainer> nodeToSettledContainer = new HashMap<>();
 
 		// Start with the set of sources as initial node
-		for (Node source : sources) {
+		for (final Node source : sources) {
 			TentativeNodeContainer sourceContainer;
 			if (destination.isPresent()) {
 				sourceContainer = new TentativeNodeContainer(source, null, 0,
@@ -215,10 +215,10 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 
 		while (!activeNodes.isEmpty()) {
 			// Poll the node with the lowest cost
-			TentativeNodeContainer currentNodeContainer = activeNodes.poll();
+			final TentativeNodeContainer currentNodeContainer = activeNodes.poll();
 			assert (currentNodeContainer != null);
-			float currentTentativeCost = currentNodeContainer.getTentativeCost();
-			Node currentNode = currentNodeContainer.getNode();
+			final float currentTentativeCost = currentNodeContainer.getTentativeCost();
+			final Node currentNode = currentNodeContainer.getNode();
 
 			// If the node was already settled before, this container was
 			// previously abandoned while updating the tentative costs for this
@@ -228,7 +228,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			}
 
 			// Settle the current node
-			TentativeNodeContainer previousValue = nodeToSettledContainer.put(currentNode, currentNodeContainer);
+			final TentativeNodeContainer previousValue = nodeToSettledContainer.put(currentNode, currentNodeContainer);
 			assert (previousValue == null);
 
 			// End if destination was settled
@@ -237,18 +237,18 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 			}
 
 			// Relax all outgoing edges
-			Set<DirectedWeightedEdge> outgoingEdges = getPathNetwork().getOutgoingEdges(currentNode);
+			final Set<DirectedWeightedEdge> outgoingEdges = getPathNetwork().getOutgoingEdges(currentNode);
 			if (outgoingEdges == null || outgoingEdges.isEmpty()) {
 				continue;
 			}
-			for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+			for (final DirectedWeightedEdge outgoingEdge : outgoingEdges) {
 				// Ignore the edge if it should not be considered
 				if (!considerOutgoingEdgeForRelaxation(outgoingEdge, destination)) {
 					continue;
 				}
 
-				Node edgeDestination = outgoingEdge.getDestination();
-				float tentativeEdgeCost = currentTentativeCost + outgoingEdge.getCost();
+				final Node edgeDestination = outgoingEdge.getDestination();
+				final float tentativeEdgeCost = currentTentativeCost + outgoingEdge.getCost();
 
 				// Check if there is already a container, if not create one
 				TentativeNodeContainer edgeDestinationContainer = nodeToContainer.get(edgeDestination);
@@ -270,7 +270,7 @@ public class DijkstraShortestPathComputation implements IShortestPathComputation
 					}
 					// Check if this edge improves the tentative costs of the
 					// edge destination
-					float currentTentativeEdgeDestinationCost = edgeDestinationContainer.getTentativeCost();
+					final float currentTentativeEdgeDestinationCost = edgeDestinationContainer.getTentativeCost();
 					if (tentativeEdgeCost < currentTentativeEdgeDestinationCost) {
 						// Improve the edge destination cost by abandoning the
 						// old container, it holds an non optimal value, then

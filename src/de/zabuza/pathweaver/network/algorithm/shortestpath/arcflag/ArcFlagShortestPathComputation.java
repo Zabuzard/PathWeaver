@@ -72,27 +72,27 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 	 */
 	private void initialize() {
 		// Compute the arc flags
-		Collection<Set<Node>> regions = this.mPartitioningProvider.getPartitioning();
-		IPathNetwork network = getPathNetwork();
+		final Collection<Set<Node>> regions = this.mPartitioningProvider.getPartitioning();
+		final IPathNetwork network = getPathNetwork();
 		// Computation is done on the reversed graph
 		network.reverse();
 
 		int regionId = 0;
 		// Iterate every node of every region
-		for (Set<Node> region : regions) {
+		for (final Set<Node> region : regions) {
 			final Integer regionIdAsInteger = Integer.valueOf(regionId);
 			this.mIdToRegion.put(regionIdAsInteger, region);
 
-			for (Node node : region) {
+			for (final Node node : region) {
 				this.mNodeToRegionId.put(node, regionIdAsInteger);
 
 				// A boundary node has an incoming edge from another reagion. In
 				// the reversed graph this are outgoing egdes.
 				boolean isBoundaryNode = false;
-				for (DirectedWeightedEdge edge : network.getOutgoingEdges(node)) {
+				for (final DirectedWeightedEdge edge : network.getOutgoingEdges(node)) {
 					// If source and destination are inside the region, the flag
 					// will be set for the edge
-					boolean isEdgeInside = region.contains(edge.getDestination());
+					final boolean isEdgeInside = region.contains(edge.getDestination());
 					if (isEdgeInside) {
 						this.mEdgeAndRegionIdToRelevance.put(edge, regionIdAsInteger, Boolean.TRUE);
 					}
@@ -103,13 +103,13 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 
 						// Perform a Dijkstra search to compute all shortest
 						// paths to this node
-						Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(
+						final Map<Node, TentativeNodeContainer> nodeToData = computeShortestPathCostHelper(
 								Collections.singleton(node), Optional.empty());
 						// Set the flag for every parent edge of a settled node,
 						// as they are part of a shortest path from
 						// the boundary node
-						for (TentativeNodeContainer settledNodeContainer : nodeToData.values()) {
-							DirectedWeightedEdge parentEdge = settledNodeContainer.getParentEdge();
+						for (final TentativeNodeContainer settledNodeContainer : nodeToData.values()) {
+							final DirectedWeightedEdge parentEdge = settledNodeContainer.getParentEdge();
 
 							// Ignore the edge if the settled node is the source
 							if (parentEdge == null) {
@@ -142,11 +142,11 @@ public final class ArcFlagShortestPathComputation extends DijkstraShortestPathCo
 		// If there is a specific destination and the flag of the edge for this
 		// region is not set, then do not consider it
 		if (destination.isPresent()) {
-			Node destinationNode = destination.get();
+			final Node destinationNode = destination.get();
 
 			// Get the region of the node
-			Integer regionId = this.mNodeToRegionId.get(destinationNode);
-			Boolean isEdgeImportant = this.mEdgeAndRegionIdToRelevance.get(outgoingEdge, regionId);
+			final Integer regionId = this.mNodeToRegionId.get(destinationNode);
+			final Boolean isEdgeImportant = this.mEdgeAndRegionIdToRelevance.get(outgoingEdge, regionId);
 			if (isEdgeImportant != null && isEdgeImportant.booleanValue()) {
 				// Flag is set, consider the edge
 				return true;

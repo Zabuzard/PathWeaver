@@ -19,8 +19,8 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testAddRoadNode() {
-		Road road = new Road(0);
-		RoadNode firstNode = new RoadNode(0, 1, 1);
+		final Road road = new Road(0);
+		final RoadNode firstNode = new RoadNode(0, 1, 1);
 		road.addRoadNode(firstNode.getId());
 
 		Assert.assertEquals(1, road.getRoadNodesAmount());
@@ -33,11 +33,11 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setRoadType(ERoadType.MOTORWAY);
-		Road similarRoad = new Road(0);
+		final Road similarRoad = new Road(0);
 		similarRoad.setRoadType(ERoadType.PRIMARY);
-		Road differentRoad = new Road(1);
+		final Road differentRoad = new Road(1);
 		differentRoad.setRoadType(ERoadType.MOTORWAY);
 
 		Assert.assertEquals(road, road);
@@ -51,8 +51,8 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetId() {
-		Road road = new Road(0);
-		Road anotherRoad = new Road(1);
+		final Road road = new Road(0);
+		final Road anotherRoad = new Road(1);
 
 		Assert.assertEquals(0, road.getId());
 		Assert.assertEquals(1, anotherRoad.getId());
@@ -64,16 +64,16 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodes() {
-		Road road = new Road(0);
-		RoadNode firstNode = new RoadNode(0, 1, 1);
-		RoadNode secondNode = new RoadNode(1, 2, 2);
-		RoadNode thirdNode = new RoadNode(2, 3, 3);
+		final Road road = new Road(0);
+		final RoadNode firstNode = new RoadNode(0, 1, 1);
+		final RoadNode secondNode = new RoadNode(1, 2, 2);
+		final RoadNode thirdNode = new RoadNode(2, 3, 3);
 		road.addRoadNode(firstNode.getId());
 		road.addRoadNode(secondNode.getId());
 		road.addRoadNode(thirdNode.getId());
 
 		Assert.assertEquals(3, road.getRoadNodesAmount());
-		Iterator<Integer> iter = road.getRoadNodes();
+		final Iterator<Integer> iter = road.getRoadNodes();
 
 		Assert.assertEquals(new Integer(firstNode.getId()), iter.next());
 		Assert.assertEquals(new Integer(secondNode.getId()), iter.next());
@@ -86,9 +86,9 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodesAmount() {
-		Road road = new Road(0);
-		RoadNode firstNode = new RoadNode(0, 1, 1);
-		RoadNode secondNode = new RoadNode(1, 2, 2);
+		final Road road = new Road(0);
+		final RoadNode firstNode = new RoadNode(0, 1, 1);
+		final RoadNode secondNode = new RoadNode(1, 2, 2);
 		road.addRoadNode(firstNode.getId());
 
 		Assert.assertEquals(1, road.getRoadNodesAmount());
@@ -106,16 +106,16 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadNodesReversed() {
-		Road road = new Road(0);
-		RoadNode firstNode = new RoadNode(0, 1, 1);
-		RoadNode secondNode = new RoadNode(1, 2, 2);
-		RoadNode thirdNode = new RoadNode(2, 3, 3);
+		final Road road = new Road(0);
+		final RoadNode firstNode = new RoadNode(0, 1, 1);
+		final RoadNode secondNode = new RoadNode(1, 2, 2);
+		final RoadNode thirdNode = new RoadNode(2, 3, 3);
 		road.addRoadNode(firstNode.getId());
 		road.addRoadNode(secondNode.getId());
 		road.addRoadNode(thirdNode.getId());
 
 		Assert.assertEquals(3, road.getRoadNodesAmount());
-		Iterator<Integer> iterReversed = road.getRoadNodesReversed();
+		final Iterator<Integer> iterReversed = road.getRoadNodesReversed();
 
 		Assert.assertEquals(new Integer(thirdNode.getId()), iterReversed.next());
 		Assert.assertEquals(new Integer(secondNode.getId()), iterReversed.next());
@@ -128,9 +128,9 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRoadType() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setRoadType(ERoadType.MOTORWAY);
-		Road anotherRoad = new Road(1);
+		final Road anotherRoad = new Road(1);
 		anotherRoad.setRoadType(ERoadType.PRIMARY);
 
 		Assert.assertEquals(ERoadType.MOTORWAY, road.getRoadType());
@@ -143,11 +143,11 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setRoadType(ERoadType.MOTORWAY);
-		Road similarRoad = new Road(0);
+		final Road similarRoad = new Road(0);
 		similarRoad.setRoadType(ERoadType.PRIMARY);
-		Road differentRoad = new Road(1);
+		final Road differentRoad = new Road(1);
 		differentRoad.setRoadType(ERoadType.MOTORWAY);
 
 		Assert.assertEquals(road.hashCode(), road.hashCode());
@@ -161,9 +161,9 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testIsOneway() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setIsOneway(true);
-		Road anotherRoad = new Road(1);
+		final Road anotherRoad = new Road(1);
 		anotherRoad.setIsOneway(false);
 
 		Assert.assertEquals(Boolean.TRUE, Boolean.valueOf(road.isOneway()));
@@ -176,11 +176,11 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testRoad() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setRoadType(ERoadType.MOTORWAY);
-		Road similarRoad = new Road(0);
+		final Road similarRoad = new Road(0);
 		similarRoad.setRoadType(ERoadType.PRIMARY);
-		Road differentRoad = new Road(1);
+		final Road differentRoad = new Road(1);
 		differentRoad.setRoadType(ERoadType.MOTORWAY);
 
 		Assert.assertEquals(road, road);
@@ -195,9 +195,9 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testSetIsOneway() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setIsOneway(true);
-		Road anotherRoad = new Road(1);
+		final Road anotherRoad = new Road(1);
 		anotherRoad.setIsOneway(false);
 
 		Assert.assertEquals(Boolean.TRUE, Boolean.valueOf(road.isOneway()));
@@ -210,9 +210,9 @@ public final class RoadTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testSetRoadType() {
-		Road road = new Road(0);
+		final Road road = new Road(0);
 		road.setRoadType(ERoadType.MOTORWAY);
-		Road anotherRoad = new Road(1);
+		final Road anotherRoad = new Road(1);
 		anotherRoad.setRoadType(ERoadType.PRIMARY);
 
 		Assert.assertEquals(ERoadType.MOTORWAY, road.getRoadType());

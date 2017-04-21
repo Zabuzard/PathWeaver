@@ -22,11 +22,11 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testCompareTo() {
-		Node node = new Node(0);
-		float cost = 1;
-		float anotherCost = 2;
-		float estCost = 3;
-		float anotherEstCost = 1;
+		final Node node = new Node(0);
+		final float cost = 1;
+		final float anotherCost = 2;
+		final float estCost = 3;
+		final float anotherEstCost = 1;
 
 		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
 		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(node, null, anotherCost);
@@ -57,14 +57,14 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetEstCostToDest() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		float cost = 1;
-		float estCostToDest = 2;
-		float anotherEstCostToDest = 2;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
-		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, edge, cost, anotherEstCostToDest);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final float cost = 1;
+		final float estCostToDest = 2;
+		final float anotherEstCostToDest = 2;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, edge, cost, anotherEstCostToDest);
 
 		Assert.assertEquals(estCostToDest, container.getEstCostToDest(), 0);
 		Assert.assertEquals(anotherEstCostToDest, anotherContainer.getEstCostToDest(), 0);
@@ -76,11 +76,11 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNode() {
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
-		float cost = 1;
-		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
-		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(anotherNode, null, cost);
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
+		final float cost = 1;
+		final TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(anotherNode, null, cost);
 		Assert.assertEquals(node, container.getNode());
 		Assert.assertEquals(anotherNode, anotherContainer.getNode());
 	}
@@ -91,14 +91,14 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetParentEdge() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		float cost = 1;
-		float estCostToDest = 2;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, dest, cost);
-		TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
-		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, anotherEdge, cost, estCostToDest);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final float cost = 1;
+		final float estCostToDest = 2;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, dest, cost);
+		final TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(src, anotherEdge, cost, estCostToDest);
 
 		Assert.assertEquals(edge, container.getParentEdge());
 		Assert.assertEquals(anotherEdge, anotherContainer.getParentEdge());
@@ -110,11 +110,11 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetTentativeCost() {
-		Node node = new Node(0);
-		float cost = 1;
-		float anotherCost = 2;
-		TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
-		TentativeNodeContainer anotherContainer = new TentativeNodeContainer(node, null, anotherCost);
+		final Node node = new Node(0);
+		final float cost = 1;
+		final float anotherCost = 2;
+		final TentativeNodeContainer container = new TentativeNodeContainer(node, null, cost);
+		final TentativeNodeContainer anotherContainer = new TentativeNodeContainer(node, null, anotherCost);
 		Assert.assertEquals(cost, container.getTentativeCost(), 0);
 		Assert.assertEquals(anotherCost, anotherContainer.getTentativeCost(), 0);
 	}
@@ -127,12 +127,12 @@ public final class TentativeCostNodeContainerTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testTentativeCostNodeContainer() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		float cost = 1;
-		float estCostToDest = 2;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final float cost = 1;
+		final float estCostToDest = 2;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final TentativeNodeContainer container = new TentativeNodeContainer(src, edge, cost, estCostToDest);
 		Assert.assertEquals(src, container.getNode());
 		Assert.assertEquals(cost, container.getTentativeCost(), 0);
 		Assert.assertEquals(estCostToDest, container.getEstCostToDest(), 0);

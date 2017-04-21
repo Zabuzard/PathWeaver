@@ -105,7 +105,7 @@ public final class TarjanTaskElement {
 	 */
 	public void reportTaskAccomplished() throws IllegalStateException {
 		if (this.mCurrentTask.isPresent()) {
-			ETarjanTask task = this.mCurrentTask.get();
+			final ETarjanTask task = this.mCurrentTask.get();
 			if (task == ETarjanTask.INDEX) {
 				this.mCurrentTask = Optional.of(ETarjanTask.GET_SUCCESSORS);
 			} else if (task == ETarjanTask.GET_SUCCESSORS) {

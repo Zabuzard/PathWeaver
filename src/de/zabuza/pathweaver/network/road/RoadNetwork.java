@@ -128,12 +128,12 @@ public final class RoadNetwork extends PathNetwork {
 		try {
 			br = new BufferedReader(osmReader);
 			network = new RoadNetwork();
-			Pattern nodePattern = Pattern.compile(OSM_NEEDLE_NODE);
-			Pattern roadStartPattern = Pattern.compile(OSM_NEEDLE_ROAD_START);
-			Pattern roadEntryPattern = Pattern.compile(OSM_NEEDLE_ROAD_ENTRY);
-			Pattern roadTypePattern = Pattern.compile(OSM_NEEDLE_ROAD_TYPE);
-			Pattern roadOnewayPattern = Pattern.compile(OSM_NEEDLE_ROAD_ONEWAY);
-			Pattern roadEndPattern = Pattern.compile(OSM_NEEDLE_ROAD_END);
+			final Pattern nodePattern = Pattern.compile(OSM_NEEDLE_NODE);
+			final Pattern roadStartPattern = Pattern.compile(OSM_NEEDLE_ROAD_START);
+			final Pattern roadEntryPattern = Pattern.compile(OSM_NEEDLE_ROAD_ENTRY);
+			final Pattern roadTypePattern = Pattern.compile(OSM_NEEDLE_ROAD_TYPE);
+			final Pattern roadOnewayPattern = Pattern.compile(OSM_NEEDLE_ROAD_ONEWAY);
+			final Pattern roadEndPattern = Pattern.compile(OSM_NEEDLE_ROAD_END);
 			Matcher matcher;
 
 			boolean insideRoadDefinition = false;
@@ -141,7 +141,7 @@ public final class RoadNetwork extends PathNetwork {
 			boolean rejectTheCurrentRoadConstructionData = false;
 			boolean matchedLine = false;
 			while (br.ready()) {
-				String line = br.readLine();
+				final String line = br.readLine();
 				if (line == null) {
 					break;
 				}
@@ -155,7 +155,7 @@ public final class RoadNetwork extends PathNetwork {
 						matcher = roadEntryPattern.matcher(line);
 						if (matcher.find()) {
 							matchedLine = true;
-							int ref = Integer.parseInt(matcher.group(OSM_NEEDLE_ROAD_ENTRY_GROUP_REF));
+							final int ref = Integer.parseInt(matcher.group(OSM_NEEDLE_ROAD_ENTRY_GROUP_REF));
 							if (currentRoad == null) {
 								throw new AssertionError();
 							}
@@ -167,7 +167,7 @@ public final class RoadNetwork extends PathNetwork {
 						matcher = roadTypePattern.matcher(line);
 						if (matcher.find()) {
 							matchedLine = true;
-							String typeText = matcher.group(OSM_NEEDLE_ROAD_TYPE_GROUP_TYPE);
+							final String typeText = matcher.group(OSM_NEEDLE_ROAD_TYPE_GROUP_TYPE);
 							ERoadType type;
 							try {
 								type = RoadUtil.getRoadTypeFromOsm(typeText);
@@ -175,7 +175,7 @@ public final class RoadNetwork extends PathNetwork {
 									throw new AssertionError();
 								}
 								currentRoad.setRoadType(type);
-							} catch (IllegalArgumentException e) {
+							} catch (final IllegalArgumentException e) {
 								rejectTheCurrentRoadConstructionData = true;
 							}
 						}
@@ -209,11 +209,11 @@ public final class RoadNetwork extends PathNetwork {
 					matcher = nodePattern.matcher(line);
 					if (matcher.find()) {
 						matchedLine = true;
-						int id = Integer.parseInt(matcher.group(OSM_NEEDLE_NODE_GROUP_ID));
-						float latitude = Float.parseFloat(matcher.group(OSM_NEEDLE_NODE_GROUP_LAT));
-						float longitude = Float.parseFloat(matcher.group(OSM_NEEDLE_NODE_GROUP_LON));
+						final int id = Integer.parseInt(matcher.group(OSM_NEEDLE_NODE_GROUP_ID));
+						final float latitude = Float.parseFloat(matcher.group(OSM_NEEDLE_NODE_GROUP_LAT));
+						final float longitude = Float.parseFloat(matcher.group(OSM_NEEDLE_NODE_GROUP_LON));
 
-						RoadNode node = new RoadNode(id, latitude, longitude);
+						final RoadNode node = new RoadNode(id, latitude, longitude);
 						network.addRoadNode(node);
 					}
 				}
@@ -224,7 +224,7 @@ public final class RoadNetwork extends PathNetwork {
 					if (matcher.find()) {
 						insideRoadDefinition = true;
 						rejectTheCurrentRoadConstructionData = false;
-						int id = Integer.parseInt(matcher.group(OSM_NEEDLE_ROAD_START_GROUP_ID));
+						final int id = Integer.parseInt(matcher.group(OSM_NEEDLE_ROAD_START_GROUP_ID));
 						currentRoad = new Road(id);
 					}
 				}
@@ -233,7 +233,7 @@ public final class RoadNetwork extends PathNetwork {
 			if (br != null) {
 				try {
 					br.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -274,21 +274,21 @@ public final class RoadNetwork extends PathNetwork {
 	 *            The road to add
 	 */
 	public void addRoad(final Road road) {
-		ERoadType type = road.getRoadType();
-		boolean isOneWay = road.isOneway();
+		final ERoadType type = road.getRoadType();
+		final boolean isOneWay = road.isOneway();
 
-		int amountOfRoadNodes = road.getRoadNodesAmount();
+		final int amountOfRoadNodes = road.getRoadNodesAmount();
 		if (amountOfRoadNodes < 2) {
 			System.err.println("Warning: " + ILLEGAL_AMOUNT_OF_ROAD_NODES);
 			return;
 		}
 
 		// Forward direction
-		Iterator<Integer> nodesIter = road.getRoadNodes();
+		final Iterator<Integer> nodesIter = road.getRoadNodes();
 		RoadNode lastNode = (RoadNode) getNodeById(nodesIter.next().intValue());
 		while (nodesIter.hasNext()) {
-			Integer nodeId = nodesIter.next();
-			RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
+			final Integer nodeId = nodesIter.next();
+			final RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
 
 			// Combine lastNode with nextNode
 			addRoad(lastNode, nextNode, type);
@@ -298,11 +298,11 @@ public final class RoadNetwork extends PathNetwork {
 
 		if (!isOneWay) {
 			// Backward direction
-			Iterator<Integer> nodesIterReversed = road.getRoadNodesReversed();
+			final Iterator<Integer> nodesIterReversed = road.getRoadNodesReversed();
 			lastNode = (RoadNode) getNodeById(nodesIterReversed.next().intValue());
 			while (nodesIterReversed.hasNext()) {
-				Integer nodeId = nodesIterReversed.next();
-				RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
+				final Integer nodeId = nodesIterReversed.next();
+				final RoadNode nextNode = (RoadNode) getNodeById(nodeId.intValue());
 
 				// Combine lastNode with nextNode
 				addRoad(lastNode, nextNode, type);
@@ -324,13 +324,13 @@ public final class RoadNetwork extends PathNetwork {
 	 *            The type of the road to add
 	 */
 	public void addRoad(final RoadNode source, final RoadNode destination, final ERoadType type) {
-		float distance = RoadUtil.distanceEquiRect(source, destination);
+		final float distance = RoadUtil.distanceEquiRect(source, destination);
 		if (distance == 0.0f) {
 			System.err.println("Warning: The given road was not added because the distance was zero.");
 			return;
 		}
-		float speed = RoadUtil.getAverageSpeedOfRoadType(type);
-		float timeToTravel = RoadUtil.getTravelTime(distance, speed);
+		final float speed = RoadUtil.getAverageSpeedOfRoadType(type);
+		final float timeToTravel = RoadUtil.getTravelTime(distance, speed);
 		super.addEdge(source, destination, timeToTravel);
 	}
 
@@ -343,7 +343,7 @@ public final class RoadNetwork extends PathNetwork {
 	 *         before, <tt>false</tt> otherwise
 	 */
 	public boolean addRoadNode(final RoadNode node) {
-		boolean wasAdded = super.addNode(node);
+		final boolean wasAdded = super.addNode(node);
 		return wasAdded;
 	}
 
@@ -359,14 +359,14 @@ public final class RoadNetwork extends PathNetwork {
 	 */
 	public RoadNode getNearestRoadNode(final float latitude, final float longitude) {
 		RoadNode nearestKnownNode = null;
-		float startingDistance = Integer.MAX_VALUE;
+		final float startingDistance = Integer.MAX_VALUE;
 		float nearestKnownDistance = startingDistance;
-		for (Node node : getNodes()) {
-			RoadNode roadNode = (RoadNode) node;
-			float nodeLatitude = roadNode.getLatitude();
-			float nodeLongitude = roadNode.getLongitude();
+		for (final Node node : getNodes()) {
+			final RoadNode roadNode = (RoadNode) node;
+			final float nodeLatitude = roadNode.getLatitude();
+			final float nodeLongitude = roadNode.getLongitude();
 
-			float distance = RoadUtil.distanceEquiRect(latitude, longitude, nodeLatitude, nodeLongitude);
+			final float distance = RoadUtil.distanceEquiRect(latitude, longitude, nodeLatitude, nodeLongitude);
 			if (distance < nearestKnownDistance) {
 				nearestKnownDistance = distance;
 				nearestKnownNode = roadNode;

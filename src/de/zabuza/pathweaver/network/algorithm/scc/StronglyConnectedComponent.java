@@ -47,7 +47,7 @@ public final class StronglyConnectedComponent {
 		if (this.mRootNode != null) {
 			throw new UnsupportedOperationException(ROOT_SET_METHOD_UNSUPPORTED);
 		}
-		boolean wasAlreadyContained = this.mNodes.add(node);
+		final boolean wasAlreadyContained = this.mNodes.add(node);
 		assert wasAlreadyContained;
 	}
 

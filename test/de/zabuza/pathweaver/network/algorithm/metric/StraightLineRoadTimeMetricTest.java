@@ -28,16 +28,16 @@ public final class StraightLineRoadTimeMetricTest {
 	 */
 	@Test
 	public void testDistance() {
-		StraightLineRoadTimeMetric metric = new StraightLineRoadTimeMetric();
-		RoadNode firstNode = new RoadNode(0, 48.069587f, 7.882732f);
-		RoadNode secondNode = new RoadNode(1, 48.991774f, 8.403815f);
-		float expectedSpeed = 110f;
-		float expectedDistance = 109486.33f;
+		final StraightLineRoadTimeMetric metric = new StraightLineRoadTimeMetric();
+		final RoadNode firstNode = new RoadNode(0, 48.069587f, 7.882732f);
+		final RoadNode secondNode = new RoadNode(1, 48.991774f, 8.403815f);
+		final float expectedSpeed = 110f;
+		final float expectedDistance = 109486.33f;
 		Assert.assertEquals(RoadUtil.getTravelTime(expectedDistance, expectedSpeed),
 				metric.distance(firstNode, secondNode), 0);
 
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 		this.exception.expect(IllegalArgumentException.class);
 		metric.distance(thirdNode, fourthNode);
 	}

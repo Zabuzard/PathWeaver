@@ -25,17 +25,17 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testDirectedEdge() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		int cost = 5;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final int cost = 5;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
 		Assert.assertEquals(src, edge.getSource());
 		Assert.assertEquals(dest, edge.getDestination());
 		Assert.assertEquals(cost, edge.getCost(), 0);
 
-		Node anotherSource = new Node(2);
-		int anotherCost = 2;
-		DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(anotherSource, dest, anotherCost);
+		final Node anotherSource = new Node(2);
+		final int anotherCost = 2;
+		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(anotherSource, dest, anotherCost);
 		Assert.assertEquals(anotherSource, anotherEdge.getSource());
 		Assert.assertEquals(dest, edge.getDestination());
 		Assert.assertEquals(anotherCost, anotherEdge.getCost(), 0);
@@ -47,18 +47,18 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		int cost = 5;
-		Node differentSrc = new Node(2);
-		int differentCost = 2;
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final int cost = 5;
+		final Node differentSrc = new Node(2);
+		final int differentCost = 2;
 
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge differentNodeEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
-		DirectedWeightedEdge differentCostEdge = new DirectedWeightedEdge(src, dest, differentCost);
-		DirectedWeightedEdge totallyDifferentEdge = new DirectedWeightedEdge(differentSrc, dest, differentCost);
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge differentNodeEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
+		final DirectedWeightedEdge differentCostEdge = new DirectedWeightedEdge(src, dest, differentCost);
+		final DirectedWeightedEdge totallyDifferentEdge = new DirectedWeightedEdge(differentSrc, dest, differentCost);
 
-		DirectedWeightedEdge similarEdge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge similarEdge = new DirectedWeightedEdge(src, dest, cost);
 
 		Assert.assertEquals(edge, edge);
 		Assert.assertNotEquals(similarEdge, edge);
@@ -73,19 +73,19 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("unused")
 	@Test
 	public void testGetCost() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		int cost = 5;
-		int differentCost = 2;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, dest, differentCost);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final int cost = 5;
+		final int differentCost = 2;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, dest, differentCost);
 
 		Assert.assertEquals(cost, edge.getCost(), 0);
 		Assert.assertEquals(differentCost, anotherEdge.getCost(), 0);
 
 		// Test cost which are out of the bounds, i.e. not greater than zero
-		int zeroCost = 0;
-		int negativeCost = -5;
+		final int zeroCost = 0;
+		final int negativeCost = -5;
 		this.exception.expect(IllegalArgumentException.class);
 		new DirectedWeightedEdge(src, dest, zeroCost);
 		new DirectedWeightedEdge(src, dest, negativeCost);
@@ -97,12 +97,12 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetDestination() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		Node differentDest = new Node(2);
-		int cost = 5;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, differentDest, cost);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final Node differentDest = new Node(2);
+		final int cost = 5;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(src, differentDest, cost);
 
 		Assert.assertEquals(dest, edge.getDestination());
 		Assert.assertEquals(differentDest, anotherEdge.getDestination());
@@ -114,12 +114,12 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSource() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		Node differentSrc = new Node(2);
-		int cost = 5;
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final Node differentSrc = new Node(2);
+		final int cost = 5;
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge anotherEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
 
 		Assert.assertEquals(src, edge.getSource());
 		Assert.assertEquals(differentSrc, anotherEdge.getSource());
@@ -131,18 +131,18 @@ public final class DirectedEdgeTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		int cost = 5;
-		Node differentSrc = new Node(2);
-		int differentCost = 2;
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final int cost = 5;
+		final Node differentSrc = new Node(2);
+		final int differentCost = 2;
 
-		DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
-		DirectedWeightedEdge differentNodeEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
-		DirectedWeightedEdge differentCostEdge = new DirectedWeightedEdge(src, dest, differentCost);
-		DirectedWeightedEdge totallyDifferentEdge = new DirectedWeightedEdge(differentSrc, dest, differentCost);
+		final DirectedWeightedEdge edge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge differentNodeEdge = new DirectedWeightedEdge(differentSrc, dest, cost);
+		final DirectedWeightedEdge differentCostEdge = new DirectedWeightedEdge(src, dest, differentCost);
+		final DirectedWeightedEdge totallyDifferentEdge = new DirectedWeightedEdge(differentSrc, dest, differentCost);
 
-		DirectedWeightedEdge similarEdge = new DirectedWeightedEdge(src, dest, cost);
+		final DirectedWeightedEdge similarEdge = new DirectedWeightedEdge(src, dest, cost);
 
 		Assert.assertEquals(edge.hashCode(), edge.hashCode());
 		Assert.assertNotEquals(similarEdge.hashCode(), edge.hashCode());

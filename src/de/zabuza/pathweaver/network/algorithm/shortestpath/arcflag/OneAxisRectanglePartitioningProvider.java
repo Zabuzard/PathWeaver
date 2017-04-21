@@ -21,23 +21,23 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 	/**
 	 * The maximal latitude of the rectangle.
 	 */
-	private float mLatitudeMax;
+	private final float mLatitudeMax;
 	/**
 	 * The minimal latitude of the rectangle.
 	 */
-	private float mLatitudeMin;
+	private final float mLatitudeMin;
 	/**
 	 * The maximal longitude of the rectangle.
 	 */
-	private float mLongitudeMax;
+	private final float mLongitudeMax;
 	/**
 	 * The minimal longitude of the rectangle.
 	 */
-	private float mLongitudeMin;
+	private final float mLongitudeMin;
 	/**
 	 * The network to create a partitioning for.
 	 */
-	private RoadNetwork mNetwork;
+	private final RoadNetwork mNetwork;
 
 	/**
 	 * Creates a new network partitioning provider which partitions a given road
@@ -73,10 +73,10 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 	 */
 	@Override
 	public Collection<Set<Node>> getPartitioning() throws IllegalArgumentException {
-		Set<Node> insideRectangle = new HashSet<>();
-		Set<Node> outsideRectangle = new HashSet<>();
+		final Set<Node> insideRectangle = new HashSet<>();
+		final Set<Node> outsideRectangle = new HashSet<>();
 
-		for (Node node : this.mNetwork.getNodes()) {
+		for (final Node node : this.mNetwork.getNodes()) {
 			if (isInsideRectangle((RoadNode) node)) {
 				insideRectangle.add(node);
 			} else {
@@ -84,7 +84,7 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 			}
 		}
 
-		LinkedList<Set<Node>> partitions = new LinkedList<>();
+		final LinkedList<Set<Node>> partitions = new LinkedList<>();
 		partitions.add(insideRectangle);
 		partitions.add(outsideRectangle);
 		return partitions;
@@ -100,10 +100,10 @@ public final class OneAxisRectanglePartitioningProvider implements INetworkParti
 	 *         rectangle, <tt>false</tt> if not.
 	 */
 	public boolean isInsideRectangle(final RoadNode node) {
-		float nodeLatitude = node.getLatitude();
-		float nodeLongitude = node.getLongitude();
+		final float nodeLatitude = node.getLatitude();
+		final float nodeLongitude = node.getLongitude();
 
-		boolean isInside = (nodeLatitude >= this.mLatitudeMin && nodeLatitude <= this.mLatitudeMax)
+		final boolean isInside = (nodeLatitude >= this.mLatitudeMin && nodeLatitude <= this.mLatitudeMax)
 				&& (nodeLongitude >= this.mLongitudeMin && nodeLongitude <= this.mLongitudeMax);
 		return isInside;
 	}

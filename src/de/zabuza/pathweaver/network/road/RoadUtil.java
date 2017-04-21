@@ -123,14 +123,14 @@ public final class RoadUtil {
 	 */
 	public static float distanceEquiRect(final float firstLatitudeDeg, final float firstLongitudeDeg,
 			final float secondLatitudeDeg, final float secondLongitudeDeg) {
-		double firstLatitudeRad = degToRad(firstLatitudeDeg);
-		double firstLongitudeRad = degToRad(firstLongitudeDeg);
-		double secondLatitudeRad = degToRad(secondLatitudeDeg);
-		double secondLongitudeRad = degToRad(secondLongitudeDeg);
+		final double firstLatitudeRad = degToRad(firstLatitudeDeg);
+		final double firstLongitudeRad = degToRad(firstLongitudeDeg);
+		final double secondLatitudeRad = degToRad(secondLatitudeDeg);
+		final double secondLongitudeRad = degToRad(secondLongitudeDeg);
 
-		double x = ((secondLongitudeRad - firstLongitudeRad) * Math.cos((firstLatitudeRad + secondLatitudeRad) / 2));
-		double y = (secondLatitudeRad - firstLatitudeRad);
-		float distance = (float) (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * EARTH_RADIUS_MEAN);
+		final double x = ((secondLongitudeRad - firstLongitudeRad) * Math.cos((firstLatitudeRad + secondLatitudeRad) / 2));
+		final double y = (secondLatitudeRad - firstLatitudeRad);
+		final float distance = (float) (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * EARTH_RADIUS_MEAN);
 
 		return distance;
 	}
@@ -212,8 +212,8 @@ public final class RoadUtil {
 	 * @return The positions of the given road nodes in a TSV-format
 	 */
 	public static String getPositionsTsv(final Iterable<RoadNode> nodes) {
-		StringJoiner joiner = new StringJoiner(System.lineSeparator());
-		for (RoadNode node : nodes) {
+		final StringJoiner joiner = new StringJoiner(System.lineSeparator());
+		for (final RoadNode node : nodes) {
 			joiner.add(RoadUtil.getPositionTsv(node));
 		}
 		return joiner.toString();
@@ -240,8 +240,8 @@ public final class RoadUtil {
 	 *             If the given road type is not supported by this operation.
 	 */
 	public static ERoadType getRoadTypeFromOsm(final String osmRoadType) throws IllegalArgumentException {
-		String upperCase = osmRoadType.toUpperCase();
-		ERoadType type = ERoadType.valueOf(upperCase);
+		final String upperCase = osmRoadType.toUpperCase();
+		final ERoadType type = ERoadType.valueOf(upperCase);
 		return type;
 	}
 
@@ -255,8 +255,8 @@ public final class RoadUtil {
 	 * @return The time needed to travel the given distance with the given speed
 	 */
 	public static float getTravelTime(final float distance, final float speed) {
-		float speedInMs = kmhToMs(speed);
-		float travelTime = distance / speedInMs;
+		final float speedInMs = kmhToMs(speed);
+		final float travelTime = distance / speedInMs;
 		return travelTime;
 	}
 

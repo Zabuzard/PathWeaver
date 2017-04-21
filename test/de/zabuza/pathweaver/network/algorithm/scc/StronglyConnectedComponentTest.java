@@ -27,12 +27,12 @@ public final class StronglyConnectedComponentTest {
 	 */
 	@Test
 	public void testAddNode() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 
 		scc.addNode(firstNode);
 		Set<Node> nodes = scc.getNodes();
@@ -56,7 +56,7 @@ public final class StronglyConnectedComponentTest {
 		Assert.assertTrue(nodes.contains(fourthNode));
 
 		scc.setRootNode(firstNode);
-		Node fifthNode = new Node(4);
+		final Node fifthNode = new Node(4);
 		this.exception.expect(UnsupportedOperationException.class);
 		scc.addNode(fifthNode);
 
@@ -68,12 +68,12 @@ public final class StronglyConnectedComponentTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNodes() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 
 		scc.addNode(firstNode);
 		Set<Node> nodes = scc.getNodes();
@@ -101,10 +101,10 @@ public final class StronglyConnectedComponentTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetRootNode() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 		scc.addNode(firstNode);
 		scc.addNode(secondNode);
 
@@ -118,12 +118,12 @@ public final class StronglyConnectedComponentTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSize() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 
 		scc.addNode(firstNode);
 		Assert.assertEquals(1, scc.getSize());
@@ -141,10 +141,10 @@ public final class StronglyConnectedComponentTest {
 	 */
 	@Test
 	public void testSetRootNode() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 
 		scc.addNode(firstNode);
 		scc.addNode(secondNode);
@@ -161,12 +161,12 @@ public final class StronglyConnectedComponentTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testStronglyConnectedComponent() {
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 		scc.addNode(firstNode);
 		scc.addNode(secondNode);
 		scc.addNode(thirdNode);
@@ -176,7 +176,7 @@ public final class StronglyConnectedComponentTest {
 		scc.setRootNode(firstNode);
 		Assert.assertEquals(firstNode, scc.getRootNode());
 
-		Set<Node> nodes = scc.getNodes();
+		final Set<Node> nodes = scc.getNodes();
 		Assert.assertTrue(nodes.contains(firstNode));
 		Assert.assertTrue(nodes.contains(secondNode));
 		Assert.assertTrue(nodes.contains(thirdNode));

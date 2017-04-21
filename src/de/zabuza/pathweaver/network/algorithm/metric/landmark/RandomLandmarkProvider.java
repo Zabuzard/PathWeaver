@@ -63,13 +63,13 @@ public final class RandomLandmarkProvider implements ILandmarkProvider<Node> {
 			throw new IllegalArgumentException(LANDMARK_AMOUNT_UNAVAILABLE);
 		}
 
-		HashSet<Node> landmarks = new HashSet<>();
-		Object[] nodes = this.mNetwork.getNodes().toArray();
-		int amountOfNodes = nodes.length;
+		final HashSet<Node> landmarks = new HashSet<>();
+		final Object[] nodes = this.mNetwork.getNodes().toArray();
+		final int amountOfNodes = nodes.length;
 
 		while (landmarks.size() < amount) {
-			int candidateIndex = this.mRandom.nextInt(amountOfNodes);
-			Node candidate = (Node) nodes[candidateIndex];
+			final int candidateIndex = this.mRandom.nextInt(amountOfNodes);
+			final Node candidate = (Node) nodes[candidateIndex];
 			landmarks.add(candidate);
 		}
 

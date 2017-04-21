@@ -31,15 +31,15 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPath() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -68,27 +68,27 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Path path = computation.computeShortestPath(firstNode, fourthNode).get();
+		final Path path = computation.computeShortestPath(firstNode, fourthNode).get();
 
 		Assert.assertEquals(3, path.getCost(), 0);
 		Assert.assertEquals(firstNode, path.getSource());
 		Assert.assertEquals(fourthNode, path.getDestination());
 		Assert.assertEquals(4, path.getLength());
 
-		List<DirectedWeightedEdge> edges = path.getEdges();
-		Iterator<DirectedWeightedEdge> edgeIter = edges.iterator();
+		final List<DirectedWeightedEdge> edges = path.getEdges();
+		final Iterator<DirectedWeightedEdge> edgeIter = edges.iterator();
 
-		DirectedWeightedEdge firstEdge = edgeIter.next();
+		final DirectedWeightedEdge firstEdge = edgeIter.next();
 		Assert.assertEquals(1, firstEdge.getCost(), 0);
 		Assert.assertEquals(firstNode, firstEdge.getSource());
 		Assert.assertEquals(secondNode, firstEdge.getDestination());
 
-		DirectedWeightedEdge secondEdge = edgeIter.next();
+		final DirectedWeightedEdge secondEdge = edgeIter.next();
 		Assert.assertEquals(1, secondEdge.getCost(), 0);
 		Assert.assertEquals(secondNode, secondEdge.getSource());
 		Assert.assertEquals(thirdNode, secondEdge.getDestination());
 
-		DirectedWeightedEdge thirdEdge = edgeIter.next();
+		final DirectedWeightedEdge thirdEdge = edgeIter.next();
 		Assert.assertEquals(1, thirdEdge.getCost(), 0);
 		Assert.assertEquals(thirdNode, thirdEdge.getSource());
 		Assert.assertEquals(fourthNode, thirdEdge.getDestination());
@@ -104,15 +104,15 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostNodeNode() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -152,13 +152,13 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostSetNode() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -170,7 +170,7 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(thirdNode, secondNode, 10);
 		network.addEdge(thirdNode, fourthNode, 2);
 
-		Set<Node> sources = new HashSet<>();
+		final Set<Node> sources = new HashSet<>();
 		sources.add(secondNode);
 		sources.add(thirdNode);
 		Assert.assertEquals(1, computation.computeShortestPathCost(sources, firstNode).get().floatValue(), 0);
@@ -185,15 +185,15 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testComputeShortestPathCostsReachable() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -222,7 +222,7 @@ public final class DijkstraShortestPathComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Map<Node, Float> costMapping = computation.computeShortestPathCostsReachable(firstNode);
+		final Map<Node, Float> costMapping = computation.computeShortestPathCostsReachable(firstNode);
 
 		Assert.assertEquals(6, costMapping.size());
 		Assert.assertEquals(0, costMapping.get(firstNode).floatValue(), 0);
@@ -241,10 +241,10 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testDijkstraShortestPathComputation() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
-		PathNetwork anotherNetwork = new PathNetwork();
-		DijkstraShortestPathComputation anotherComputation = new DijkstraShortestPathComputation(anotherNetwork);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork anotherNetwork = new PathNetwork();
+		final DijkstraShortestPathComputation anotherComputation = new DijkstraShortestPathComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
@@ -256,10 +256,10 @@ public final class DijkstraShortestPathComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPathNetwork() {
-		PathNetwork network = new PathNetwork();
-		DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
-		PathNetwork anotherNetwork = new PathNetwork();
-		DijkstraShortestPathComputation anotherComputation = new DijkstraShortestPathComputation(anotherNetwork);
+		final PathNetwork network = new PathNetwork();
+		final DijkstraShortestPathComputation computation = new DijkstraShortestPathComputation(network);
+		final PathNetwork anotherNetwork = new PathNetwork();
+		final DijkstraShortestPathComputation anotherComputation = new DijkstraShortestPathComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());

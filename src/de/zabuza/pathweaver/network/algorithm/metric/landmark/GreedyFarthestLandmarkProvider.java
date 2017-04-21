@@ -74,15 +74,15 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 		}
 
 		// Choose the first element randomly
-		Collection<Node> nodes = this.mNetwork.getNodes();
-		int firstIndex = this.mRandom.nextInt(nodes.size());
+		final Collection<Node> nodes = this.mNetwork.getNodes();
+		final int firstIndex = this.mRandom.nextInt(nodes.size());
 		Node firstNode;
 		if (nodes instanceof List<?>) {
 			// Let the list choose the most efficient method for get(index)
 			firstNode = ((List<Node>) nodes).get(firstIndex);
 		} else {
 			// Iterate until the element is found
-			Iterator<Node> iter = nodes.iterator();
+			final Iterator<Node> iter = nodes.iterator();
 
 			// Skip all elements before the index
 			for (int i = 0; i < firstIndex; i++) {
@@ -92,22 +92,22 @@ public final class GreedyFarthestLandmarkProvider implements ILandmarkProvider<N
 			firstNode = iter.next();
 		}
 
-		HashSet<Node> landmarks = new HashSet<>();
+		final HashSet<Node> landmarks = new HashSet<>();
 		landmarks.add(firstNode);
 
 		// Iteratively select the node which is farthest away
 		// from the current set
 		while (landmarks.size() < amount) {
-			Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmarks);
+			final Map<Node, Float> nodeToCost = this.mComputation.computeShortestPathCostsReachable(landmarks);
 			// Search the entry with the highest cost
-			float startingCost = -1;
+			final float startingCost = -1;
 			float highestKnownCost = startingCost;
 			Node farthestKnownNode = null;
-			for (Entry<Node, Float> entry : nodeToCost.entrySet()) {
-				Node node = entry.getKey();
+			for (final Entry<Node, Float> entry : nodeToCost.entrySet()) {
+				final Node node = entry.getKey();
 				assert !landmarks.contains(node);
 
-				float cost = entry.getValue().floatValue();
+				final float cost = entry.getValue().floatValue();
 				if (cost > highestKnownCost) {
 					highestKnownCost = cost;
 					farthestKnownNode = node;

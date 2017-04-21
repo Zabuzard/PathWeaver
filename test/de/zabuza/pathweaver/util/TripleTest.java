@@ -17,13 +17,13 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testEqualsObject() {
-		String firstEntry = "a";
-		Float secondEntry = Float.valueOf(2.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Integer differentThirdEntry = Integer.valueOf(3);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
+		final String firstEntry = "a";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Integer differentThirdEntry = Integer.valueOf(3);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
 
 		Assert.assertEquals(triple, similarTriple);
 		Assert.assertNotEquals(triple, differentTriple);
@@ -35,12 +35,12 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetFirst() {
-		String firstEntry = "a";
-		String anotherFirstEntry = "b";
-		Float secondEntry = Float.valueOf(2.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> anotherTriple = new Triple<>(anotherFirstEntry, secondEntry, thirdEntry);
+		final String firstEntry = "a";
+		final String anotherFirstEntry = "b";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> anotherTriple = new Triple<>(anotherFirstEntry, secondEntry, thirdEntry);
 
 		Assert.assertEquals(firstEntry, triple.getFirst());
 		Assert.assertEquals(anotherFirstEntry, anotherTriple.getFirst());
@@ -52,12 +52,12 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSecond() {
-		String firstEntry = "a";
-		Float secondEntry = Float.valueOf(2.3f);
-		Float anotherSecondEntry = Float.valueOf(4.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, anotherSecondEntry, thirdEntry);
+		final String firstEntry = "a";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Float anotherSecondEntry = Float.valueOf(4.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, anotherSecondEntry, thirdEntry);
 
 		Assert.assertEquals(secondEntry, triple.getSecond());
 		Assert.assertEquals(anotherSecondEntry, anotherTriple.getSecond());
@@ -69,12 +69,12 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetThird() {
-		String firstEntry = "a";
-		Float secondEntry = Float.valueOf(2.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Integer anotherThirdEntry = Integer.valueOf(4);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, secondEntry, anotherThirdEntry);
+		final String firstEntry = "a";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Integer anotherThirdEntry = Integer.valueOf(4);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> anotherTriple = new Triple<>(firstEntry, secondEntry, anotherThirdEntry);
 
 		Assert.assertEquals(thirdEntry, triple.getThird());
 		Assert.assertEquals(anotherThirdEntry, anotherTriple.getThird());
@@ -86,13 +86,13 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHashCode() {
-		String firstEntry = "a";
-		Float secondEntry = Float.valueOf(2.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Integer differentThirdEntry = Integer.valueOf(3);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
-		Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
+		final String firstEntry = "a";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Integer differentThirdEntry = Integer.valueOf(3);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> similarTriple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final Triple<String, Float, Integer> differentTriple = new Triple<>(firstEntry, secondEntry, differentThirdEntry);
 
 		Assert.assertEquals(triple.hashCode(), similarTriple.hashCode());
 		Assert.assertNotEquals(triple.hashCode(), differentTriple.hashCode());
@@ -106,10 +106,10 @@ public final class TripleTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testTriple() {
-		String firstEntry = "a";
-		Float secondEntry = Float.valueOf(2.3f);
-		Integer thirdEntry = Integer.valueOf(2);
-		Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
+		final String firstEntry = "a";
+		final Float secondEntry = Float.valueOf(2.3f);
+		final Integer thirdEntry = Integer.valueOf(2);
+		final Triple<String, Float, Integer> triple = new Triple<>(firstEntry, secondEntry, thirdEntry);
 
 		Assert.assertEquals(firstEntry, triple.getFirst());
 		Assert.assertEquals(secondEntry, triple.getSecond());

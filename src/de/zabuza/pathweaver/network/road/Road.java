@@ -61,7 +61,7 @@ public final class Road {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -71,7 +71,7 @@ public final class Road {
 		if (!(obj instanceof Road)) {
 			return false;
 		}
-		Road other = (Road) obj;
+		final Road other = (Road) obj;
 		if (this.mId != other.mId) {
 			return false;
 		}

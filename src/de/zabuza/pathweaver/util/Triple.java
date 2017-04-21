@@ -37,7 +37,7 @@ public class Triple<E1, E2, E3> {
 	 * @param third
 	 *            Third object of the triple
 	 */
-	public Triple(E1 first, E2 second, E3 third) {
+	public Triple(final E1 first, final E2 second, final E3 third) {
 		this.mFirstElement = first;
 		this.mSecondElement = second;
 		this.mThirdElement = third;
@@ -49,7 +49,7 @@ public class Triple<E1, E2, E3> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}

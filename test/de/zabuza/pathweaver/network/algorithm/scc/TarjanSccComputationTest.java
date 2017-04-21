@@ -24,14 +24,14 @@ public final class TarjanSccComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetLargestScc() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -60,10 +60,10 @@ public final class TarjanSccComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Node seventhNode = new Node(6);
-		Node eighthNode = new Node(7);
-		Node ninthNode = new Node(8);
-		Node tenthNode = new Node(9);
+		final Node seventhNode = new Node(6);
+		final Node eighthNode = new Node(7);
+		final Node ninthNode = new Node(8);
+		final Node tenthNode = new Node(9);
 
 		network.addNode(seventhNode);
 		network.addNode(eighthNode);
@@ -76,9 +76,9 @@ public final class TarjanSccComputationTest {
 		network.addEdge(ninthNode, seventhNode, 1);
 		network.addEdge(tenthNode, eighthNode, 1);
 
-		TarjanSccComputation computation = new TarjanSccComputation(network);
-		StronglyConnectedComponent scc = computation.getLargestScc();
-		Set<Node> nodes = scc.getNodes();
+		final TarjanSccComputation computation = new TarjanSccComputation(network);
+		final StronglyConnectedComponent scc = computation.getLargestScc();
+		final Set<Node> nodes = scc.getNodes();
 		Assert.assertEquals(6, scc.getSize());
 		Assert.assertTrue(nodes.contains(firstNode));
 		Assert.assertTrue(nodes.contains(secondNode));
@@ -99,10 +99,10 @@ public final class TarjanSccComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPathNetwork() {
-		PathNetwork network = new PathNetwork();
-		TarjanSccComputation computation = new TarjanSccComputation(network);
-		PathNetwork anotherNetwork = new PathNetwork();
-		TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
+		final PathNetwork network = new PathNetwork();
+		final TarjanSccComputation computation = new TarjanSccComputation(network);
+		final PathNetwork anotherNetwork = new PathNetwork();
+		final TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());
@@ -114,14 +114,14 @@ public final class TarjanSccComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSccs() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -150,10 +150,10 @@ public final class TarjanSccComputationTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Node seventhNode = new Node(6);
-		Node eighthNode = new Node(7);
-		Node ninthNode = new Node(8);
-		Node tenthNode = new Node(9);
+		final Node seventhNode = new Node(6);
+		final Node eighthNode = new Node(7);
+		final Node ninthNode = new Node(8);
+		final Node tenthNode = new Node(9);
 
 		network.addNode(seventhNode);
 		network.addNode(eighthNode);
@@ -166,12 +166,12 @@ public final class TarjanSccComputationTest {
 		network.addEdge(ninthNode, seventhNode, 1);
 		network.addEdge(tenthNode, eighthNode, 1);
 
-		TarjanSccComputation computation = new TarjanSccComputation(network);
-		List<StronglyConnectedComponent> sccs = computation.getSccs();
+		final TarjanSccComputation computation = new TarjanSccComputation(network);
+		final List<StronglyConnectedComponent> sccs = computation.getSccs();
 		Assert.assertEquals(3, sccs.size());
 
 		boolean foundLargeScc = false;
-		for (StronglyConnectedComponent scc : sccs) {
+		for (final StronglyConnectedComponent scc : sccs) {
 			if (scc.getSize() == 6) {
 				foundLargeScc = true;
 				break;
@@ -180,10 +180,10 @@ public final class TarjanSccComputationTest {
 		Assert.assertTrue(foundLargeScc);
 
 		boolean foundMiddleScc = false;
-		for (StronglyConnectedComponent scc : sccs) {
+		for (final StronglyConnectedComponent scc : sccs) {
 			if (scc.getSize() == 3) {
 				foundMiddleScc = true;
-				Set<Node> nodes = scc.getNodes();
+				final Set<Node> nodes = scc.getNodes();
 				Assert.assertTrue(nodes.contains(seventhNode));
 				Assert.assertTrue(nodes.contains(eighthNode));
 				Assert.assertTrue(nodes.contains(ninthNode));
@@ -193,10 +193,10 @@ public final class TarjanSccComputationTest {
 		Assert.assertTrue(foundMiddleScc);
 
 		boolean foundSmallScc = false;
-		for (StronglyConnectedComponent scc : sccs) {
+		for (final StronglyConnectedComponent scc : sccs) {
 			if (scc.getSize() == 1) {
 				foundSmallScc = true;
-				Set<Node> nodes = scc.getNodes();
+				final Set<Node> nodes = scc.getNodes();
 				Assert.assertTrue(nodes.contains(tenthNode));
 				break;
 			}
@@ -211,10 +211,10 @@ public final class TarjanSccComputationTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanSccComputation() {
-		PathNetwork network = new PathNetwork();
-		TarjanSccComputation computation = new TarjanSccComputation(network);
-		PathNetwork anotherNetwork = new PathNetwork();
-		TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
+		final PathNetwork network = new PathNetwork();
+		final TarjanSccComputation computation = new TarjanSccComputation(network);
+		final PathNetwork anotherNetwork = new PathNetwork();
+		final TarjanSccComputation anotherComputation = new TarjanSccComputation(anotherNetwork);
 
 		Assert.assertEquals(network, computation.getPathNetwork());
 		Assert.assertEquals(anotherNetwork, anotherComputation.getPathNetwork());

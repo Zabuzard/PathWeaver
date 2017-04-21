@@ -22,11 +22,11 @@ public final class LandmarkMetricTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testDistance() {
-		IPathNetwork network = new PathNetwork();
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final IPathNetwork network = new PathNetwork();
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 		network.addNode(firstNode);
 		network.addNode(secondNode);
 		network.addNode(thirdNode);
@@ -36,12 +36,12 @@ public final class LandmarkMetricTest {
 		network.addEdge(thirdNode, fourthNode, 1);
 		network.addEdge(fourthNode, firstNode, 1);
 
-		LandmarkMetric metric = new LandmarkMetric(2, network);
+		final LandmarkMetric metric = new LandmarkMetric(2, network);
 
-		float firstDistance = metric.distance(firstNode, firstNode);
+		final float firstDistance = metric.distance(firstNode, firstNode);
 		Assert.assertEquals(0, firstDistance, 0);
 
-		float secondDistance = metric.distance(firstNode, fourthNode);
+		final float secondDistance = metric.distance(firstNode, fourthNode);
 		Assert.assertTrue(secondDistance == 0 || secondDistance == 1 || secondDistance == 3);
 	}
 
@@ -53,11 +53,11 @@ public final class LandmarkMetricTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testLandmarkMetricIntIPathNetworkILandmarkProviderOfNode() {
-		IPathNetwork network = new PathNetwork();
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
+		final IPathNetwork network = new PathNetwork();
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
 		network.addNode(firstNode);
 		network.addNode(secondNode);
 		network.addNode(thirdNode);
@@ -67,12 +67,12 @@ public final class LandmarkMetricTest {
 		network.addEdge(thirdNode, fourthNode, 1);
 		network.addEdge(fourthNode, firstNode, 1);
 
-		LandmarkMetric metric = new LandmarkMetric(2, network);
+		final LandmarkMetric metric = new LandmarkMetric(2, network);
 
-		float firstDistance = metric.distance(firstNode, firstNode);
+		final float firstDistance = metric.distance(firstNode, firstNode);
 		Assert.assertEquals(0, firstDistance, 0);
 
-		float secondDistance = metric.distance(firstNode, fourthNode);
+		final float secondDistance = metric.distance(firstNode, fourthNode);
 		Assert.assertTrue(secondDistance == 0 || secondDistance == 1 || secondDistance == 3);
 	}
 

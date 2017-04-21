@@ -43,9 +43,9 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 	 *            The node to process its successors
 	 */
 	private void doGetSuccessorsTask(final Node node) {
-		Set<DirectedWeightedEdge> outgoingEdges = this.mNetwork.getOutgoingEdges(node);
-		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
-			Node successor = outgoingEdge.getDestination();
+		final Set<DirectedWeightedEdge> outgoingEdges = this.mNetwork.getOutgoingEdges(node);
+		for (final DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+			final Node successor = outgoingEdge.getDestination();
 			if (this.mNodeToIndex.containsKey(successor)) {
 				// Update the low link value if not visited the first time
 				if (this.mInDeque.contains(successor)) {
@@ -120,9 +120,9 @@ public class TarjanNonRecursiveSccComputation extends TarjanSccComputation {
 
 		// Process all task elements
 		while (!this.mTaskDeque.isEmpty()) {
-			TarjanTaskElement taskElement = this.mTaskDeque.pop();
-			Node elementNode = taskElement.getNode();
-			ETarjanTask currentTask = taskElement.getCurrentTask().get();
+			final TarjanTaskElement taskElement = this.mTaskDeque.pop();
+			final Node elementNode = taskElement.getNode();
+			final ETarjanTask currentTask = taskElement.getCurrentTask().get();
 
 			if (currentTask == ETarjanTask.INDEX) {
 				// Only register node if it is visited the first time

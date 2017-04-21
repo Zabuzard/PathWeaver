@@ -44,11 +44,11 @@ public final class SearchSpaceComparisonExample {
 	public static void main(final String[] args) throws FileNotFoundException, IOException {
 		// Loading file
 		System.out.println("Loading file...");
-		File osmFile = new File("res/examples/saarland.osm");
+		final File osmFile = new File("res/examples/saarland.osm");
 
 		// Creating road network
 		System.out.println("Creating road network...");
-		RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
+		final RoadNetwork network = RoadNetwork.createFromOsmFile(osmFile);
 
 		// Reducing to largest SCC
 		System.out.println("Reducing to largest SCC...");
@@ -56,30 +56,30 @@ public final class SearchSpaceComparisonExample {
 
 		// Preparing algorithms
 		System.out.println("Preparing ordinary Dijkstra...");
-		DijkstraShortestPathComputation dijkstra = new DijkstraShortestPathComputation(network);
+		final DijkstraShortestPathComputation dijkstra = new DijkstraShortestPathComputation(network);
 		System.out.println("Preparing A-Star (Straight-Line)...");
-		AStarShortestPathComputation aStarStraight = new AStarShortestPathComputation(network,
+		final AStarShortestPathComputation aStarStraight = new AStarShortestPathComputation(network,
 				new StraightLineRoadTimeMetric());
 		System.out.println("Preparing A-Star (Landmark, random)...");
-		AStarShortestPathComputation aStarLandmarkRandom = new AStarShortestPathComputation(network,
+		final AStarShortestPathComputation aStarLandmarkRandom = new AStarShortestPathComputation(network,
 				new LandmarkMetric(42, network, new RandomLandmarkProvider(network)));
 		System.out.println("Preparing A-Star (Landmark, greedy-farthest)...");
-		AStarShortestPathComputation aStarLandmarkGreedy = new AStarShortestPathComputation(network,
+		final AStarShortestPathComputation aStarLandmarkGreedy = new AStarShortestPathComputation(network,
 				new LandmarkMetric(42, network, new GreedyFarthestLandmarkProvider(network)));
 		System.out.println("Preparing ArcFlag...");
 		// Saarbruecken city
-		float latitudeMin = 49.20f;
-		float latitudeMax = 49.25f;
-		float longitudeMin = 6.95f;
-		float longitudeMax = 7.05f;
-		ArcFlagShortestPathComputation arcFlag = new ArcFlagShortestPathComputation(network,
+		final float latitudeMin = 49.20f;
+		final float latitudeMax = 49.25f;
+		final float longitudeMin = 6.95f;
+		final float longitudeMax = 7.05f;
+		final ArcFlagShortestPathComputation arcFlag = new ArcFlagShortestPathComputation(network,
 				new OneAxisRectanglePartitioningProvider(network, latitudeMin, latitudeMax, longitudeMin,
 						longitudeMax));
 
 		// Starting search space queries
 		System.out.println("Starting search space queries...");
-		RoadNode sourceLortzingStreet = network.getNearestRoadNode(49.402016f, 6.901051f);
-		RoadNode destinationFeldmannStreet = network.getNearestRoadNode(49.22364f, 6.9926014f);
+		final RoadNode sourceLortzingStreet = network.getNearestRoadNode(49.402016f, 6.901051f);
+		final RoadNode destinationFeldmannStreet = network.getNearestRoadNode(49.22364f, 6.9926014f);
 
 		System.out.println("Starting ordinary Dijkstra...");
 		computeSearchSpaceAndSaveToFile(dijkstra, sourceLortzingStreet, destinationFeldmannStreet, "dijkstra.tsv");
@@ -114,15 +114,16 @@ public final class SearchSpaceComparisonExample {
 	private final static void computeSearchSpaceAndSaveToFile(final IShortestPathComputation computation,
 			final RoadNode source, final RoadNode destination, final String fileName) throws IOException {
 		@SuppressWarnings("unchecked")
+		final
 		Set<RoadNode> searchSpace = (Set<RoadNode>) (Set<?>) computation.computeShortestPathSearchSpace(source,
 				destination);
 		// Save the search space to a file on the desktop
-		String tsvData = RoadUtil.getPositionsTsv(searchSpace);
-		File desktop = new File(System.getProperty("user.home"), "Desktop");
-		File searchSpaceFile = new File(desktop, fileName);
+		final String tsvData = RoadUtil.getPositionsTsv(searchSpace);
+		final File desktop = new File(System.getProperty("user.home"), "Desktop");
+		final File searchSpaceFile = new File(desktop, fileName);
 		System.out.println("\tSaving to: " + searchSpaceFile);
 		try (final BufferedWriter bw = new BufferedWriter(new FileWriter(searchSpaceFile))) {
-			String header = "Lat\tLng" + System.lineSeparator();
+			final String header = "Lat\tLng" + System.lineSeparator();
 			bw.write(header + tsvData);
 		}
 	}

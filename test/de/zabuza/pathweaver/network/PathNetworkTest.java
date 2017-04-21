@@ -29,9 +29,9 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testAddEdge() {
-		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final PathNetwork network = new PathNetwork();
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 		network.addNode(node);
 		network.addNode(anotherNode);
 
@@ -52,9 +52,9 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testAddNode() {
-		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final PathNetwork network = new PathNetwork();
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 
 		Assert.assertFalse(network.containsNodeId(0));
 		network.addNode(node);
@@ -72,9 +72,9 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testContainsNode() {
-		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final PathNetwork network = new PathNetwork();
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 
 		Assert.assertFalse(network.containsNodeId(0));
 		network.addNode(node);
@@ -89,9 +89,9 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testContainsNodeId() {
-		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final PathNetwork network = new PathNetwork();
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 
 		Assert.assertFalse(network.containsNodeId(0));
 		network.addNode(node);
@@ -110,10 +110,10 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetAmountOfEdges() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 		Assert.assertEquals(0, network.getAmountOfEdges());
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 		network.addNode(node);
 		network.addNode(anotherNode);
 
@@ -134,12 +134,12 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetIncomingEdges() {
-		PathNetwork network = new PathNetwork();
-		Node source = new Node(0);
-		Node destination = new Node(1);
-		int cost = 1;
-		int anotherCost = 2;
-		Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
+		final PathNetwork network = new PathNetwork();
+		final Node source = new Node(0);
+		final Node destination = new Node(1);
+		final int cost = 1;
+		final int anotherCost = 2;
+		final Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
 
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(destination));
 		network.addNode(source);
@@ -147,27 +147,27 @@ public final class PathNetworkTest {
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(destination));
 
 		network.addEdge(source, destination, cost);
-		Set<DirectedWeightedEdge> firstEdgeSet = network.getIncomingEdges(destination);
+		final Set<DirectedWeightedEdge> firstEdgeSet = network.getIncomingEdges(destination);
 		Assert.assertEquals(1, firstEdgeSet.size());
-		DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
+		final DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(source, edge.getSource());
 		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
-		Set<DirectedWeightedEdge> secondEdgeSet = network.getIncomingEdges(source);
+		final Set<DirectedWeightedEdge> secondEdgeSet = network.getIncomingEdges(source);
 		Assert.assertEquals(1, secondEdgeSet.size());
-		DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
+		final DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(destination, secondEdge.getSource());
 		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
-		Set<DirectedWeightedEdge> thirdEdgeSet = network.getIncomingEdges(destination);
+		final Set<DirectedWeightedEdge> thirdEdgeSet = network.getIncomingEdges(destination);
 		Assert.assertEquals(2, thirdEdgeSet.size());
-		Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
-		DirectedWeightedEdge thirdEdge = iter.next();
+		final Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
+		final DirectedWeightedEdge thirdEdge = iter.next();
 		Assert.assertEquals(source, thirdEdge.getSource());
 		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
-		DirectedWeightedEdge fourthEdge = iter.next();
+		final DirectedWeightedEdge fourthEdge = iter.next();
 		Assert.assertEquals(source, fourthEdge.getSource());
 		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
@@ -178,9 +178,9 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNodeById() {
-		PathNetwork network = new PathNetwork();
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final PathNetwork network = new PathNetwork();
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 
 		Assert.assertNull(network.getNodeById(0));
 		network.addNode(node);
@@ -199,12 +199,12 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetOutgoingEdges() {
-		PathNetwork network = new PathNetwork();
-		Node source = new Node(0);
-		Node destination = new Node(1);
-		int cost = 1;
-		int anotherCost = 2;
-		Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
+		final PathNetwork network = new PathNetwork();
+		final Node source = new Node(0);
+		final Node destination = new Node(1);
+		final int cost = 1;
+		final int anotherCost = 2;
+		final Set<DirectedWeightedEdge> emptySet = Collections.emptySet();
 
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(source));
 		network.addNode(source);
@@ -212,27 +212,27 @@ public final class PathNetworkTest {
 		Assert.assertEquals(emptySet, network.getOutgoingEdges(source));
 
 		network.addEdge(source, destination, cost);
-		Set<DirectedWeightedEdge> firstEdgeSet = network.getOutgoingEdges(source);
+		final Set<DirectedWeightedEdge> firstEdgeSet = network.getOutgoingEdges(source);
 		Assert.assertEquals(1, firstEdgeSet.size());
-		DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
+		final DirectedWeightedEdge edge = firstEdgeSet.iterator().next();
 		Assert.assertEquals(destination, edge.getDestination());
 		Assert.assertEquals(cost, edge.getCost(), 0);
 
 		network.addEdge(destination, source, anotherCost);
-		Set<DirectedWeightedEdge> secondEdgeSet = network.getOutgoingEdges(destination);
+		final Set<DirectedWeightedEdge> secondEdgeSet = network.getOutgoingEdges(destination);
 		Assert.assertEquals(1, secondEdgeSet.size());
-		DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
+		final DirectedWeightedEdge secondEdge = secondEdgeSet.iterator().next();
 		Assert.assertEquals(source, secondEdge.getDestination());
 		Assert.assertEquals(anotherCost, secondEdge.getCost(), 0);
 
 		network.addEdge(source, destination, anotherCost);
-		Set<DirectedWeightedEdge> thirdEdgeSet = network.getOutgoingEdges(source);
+		final Set<DirectedWeightedEdge> thirdEdgeSet = network.getOutgoingEdges(source);
 		Assert.assertEquals(2, thirdEdgeSet.size());
-		Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
-		DirectedWeightedEdge thirdEdge = iter.next();
+		final Iterator<DirectedWeightedEdge> iter = thirdEdgeSet.iterator();
+		final DirectedWeightedEdge thirdEdge = iter.next();
 		Assert.assertEquals(destination, thirdEdge.getDestination());
 		Assert.assertEquals(cost, thirdEdge.getCost(), 0);
-		DirectedWeightedEdge fourthEdge = iter.next();
+		final DirectedWeightedEdge fourthEdge = iter.next();
 		Assert.assertEquals(destination, fourthEdge.getDestination());
 		Assert.assertEquals(anotherCost, fourthEdge.getCost(), 0);
 	}
@@ -243,10 +243,10 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetSize() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 		Assert.assertEquals(0, network.getSize());
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
 		network.addNode(node);
 		Assert.assertEquals(1, network.getSize());
 		network.addNode(anotherNode);
@@ -263,12 +263,12 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHasIncomingEdge() {
-		PathNetwork network = new PathNetwork();
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		Node anotherSrc = new Node(2);
-		int cost = 1;
-		int anotherCost = 2;
+		final PathNetwork network = new PathNetwork();
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final Node anotherSrc = new Node(2);
+		final int cost = 1;
+		final int anotherCost = 2;
 
 		Assert.assertFalse(network.hasIncomingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
 		network.addNode(src);
@@ -277,8 +277,8 @@ public final class PathNetworkTest {
 		network.addEdge(src, anotherSrc, cost);
 		network.addEdge(anotherSrc, src, anotherCost);
 
-		DirectedWeightedEdge firstEdge = network.getIncomingEdges(anotherSrc).iterator().next();
-		DirectedWeightedEdge secondEdge = network.getIncomingEdges(src).iterator().next();
+		final DirectedWeightedEdge firstEdge = network.getIncomingEdges(anotherSrc).iterator().next();
+		final DirectedWeightedEdge secondEdge = network.getIncomingEdges(src).iterator().next();
 		Assert.assertTrue(network.hasIncomingEdge(anotherSrc, firstEdge));
 		Assert.assertTrue(network.hasIncomingEdge(src, secondEdge));
 		Assert.assertFalse(network.hasIncomingEdge(anotherSrc, secondEdge));
@@ -292,12 +292,12 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testHasOutgoingEdge() {
-		PathNetwork network = new PathNetwork();
-		Node src = new Node(0);
-		Node dest = new Node(1);
-		Node anotherSrc = new Node(2);
-		int cost = 1;
-		int anotherCost = 2;
+		final PathNetwork network = new PathNetwork();
+		final Node src = new Node(0);
+		final Node dest = new Node(1);
+		final Node anotherSrc = new Node(2);
+		final int cost = 1;
+		final int anotherCost = 2;
 
 		Assert.assertFalse(network.hasOutgoingEdge(src, new DirectedWeightedEdge(anotherSrc, dest, cost)));
 		network.addNode(src);
@@ -306,8 +306,8 @@ public final class PathNetworkTest {
 		network.addEdge(src, anotherSrc, cost);
 		network.addEdge(anotherSrc, src, anotherCost);
 
-		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(src).iterator().next();
-		DirectedWeightedEdge secondEdge = network.getOutgoingEdges(anotherSrc).iterator().next();
+		final DirectedWeightedEdge firstEdge = network.getOutgoingEdges(src).iterator().next();
+		final DirectedWeightedEdge secondEdge = network.getOutgoingEdges(anotherSrc).iterator().next();
 		Assert.assertTrue(network.hasOutgoingEdge(src, firstEdge));
 		Assert.assertTrue(network.hasOutgoingEdge(anotherSrc, secondEdge));
 		Assert.assertFalse(network.hasOutgoingEdge(src, secondEdge));
@@ -320,7 +320,7 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testPathNetwork() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 		Assert.assertEquals(0, network.getSize());
 		Assert.assertEquals(0, network.getAmountOfEdges());
 	}
@@ -331,14 +331,14 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testReduceToLargestScc() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -367,10 +367,10 @@ public final class PathNetworkTest {
 		network.addEdge(sixthNode, fifthNode, 3);
 		network.addEdge(fourthNode, sixthNode, 1);
 
-		Node seventhNode = new Node(6);
-		Node eighthNode = new Node(7);
-		Node ninthNode = new Node(8);
-		Node tenthNode = new Node(9);
+		final Node seventhNode = new Node(6);
+		final Node eighthNode = new Node(7);
+		final Node ninthNode = new Node(8);
+		final Node tenthNode = new Node(9);
 
 		network.addNode(seventhNode);
 		network.addNode(eighthNode);
@@ -404,14 +404,14 @@ public final class PathNetworkTest {
 	 */
 	@Test
 	public void testRemoveNode() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		Node thirdNode = new Node(2);
-		Node fourthNode = new Node(3);
-		Node fifthNode = new Node(4);
-		Node sixthNode = new Node(5);
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final Node thirdNode = new Node(2);
+		final Node fourthNode = new Node(3);
+		final Node fifthNode = new Node(4);
+		final Node sixthNode = new Node(5);
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -477,10 +477,10 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testReverse() {
-		PathNetwork network = new PathNetwork();
-		Node firstNode = new Node(0);
-		Node secondNode = new Node(1);
-		int cost = 1;
+		final PathNetwork network = new PathNetwork();
+		final Node firstNode = new Node(0);
+		final Node secondNode = new Node(1);
+		final int cost = 1;
 
 		network.addNode(firstNode);
 		network.addNode(secondNode);
@@ -489,8 +489,8 @@ public final class PathNetworkTest {
 
 		network.reverse();
 
-		DirectedWeightedEdge firstEdge = network.getOutgoingEdges(firstNode).iterator().next();
-		DirectedWeightedEdge secondEdge = network.getOutgoingEdges(secondNode).iterator().next();
+		final DirectedWeightedEdge firstEdge = network.getOutgoingEdges(firstNode).iterator().next();
+		final DirectedWeightedEdge secondEdge = network.getOutgoingEdges(secondNode).iterator().next();
 
 		Assert.assertEquals(firstNode, firstEdge.getSource());
 		Assert.assertEquals(firstNode, firstEdge.getDestination());
@@ -504,12 +504,12 @@ public final class PathNetworkTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testToString() {
-		PathNetwork network = new PathNetwork();
+		final PathNetwork network = new PathNetwork();
 		Assert.assertEquals("Network[#nodes=0,#edges=0,edges={}]", network.toString());
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
-		int cost = 1;
-		int anotherCost = 2;
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
+		final int cost = 1;
+		final int anotherCost = 2;
 
 		network.addNode(node);
 		network.addNode(anotherNode);
@@ -518,7 +518,7 @@ public final class PathNetworkTest {
 		network.addEdge(node, anotherNode, cost);
 		network.addEdge(node, anotherNode, anotherCost);
 		network.addEdge(anotherNode, node, cost);
-		String networkAsText = network.toString();
+		final String networkAsText = network.toString();
 		Assert.assertTrue(networkAsText.startsWith("Network[#nodes=2,#edges=3,edges={"));
 		Assert.assertTrue(networkAsText.endsWith("}]"));
 	}

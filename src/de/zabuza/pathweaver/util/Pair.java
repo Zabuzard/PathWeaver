@@ -15,11 +15,11 @@ public class Pair<E1, E2> {
 	/**
 	 * First element of the pair.
 	 */
-	private E1 mFirstElement;
+	private final E1 mFirstElement;
 	/**
 	 * Second element of the pair.
 	 */
-	private E2 mSecondElement;
+	private final E2 mSecondElement;
 
 	/**
 	 * Creates a new pair holding the two given objects.
@@ -40,7 +40,7 @@ public class Pair<E1, E2> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}

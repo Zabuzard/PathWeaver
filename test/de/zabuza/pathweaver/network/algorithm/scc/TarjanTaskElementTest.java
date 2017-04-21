@@ -25,8 +25,8 @@ public final class TarjanTaskElementTest {
 	 */
 	@Test
 	public void testGetCurrentTask() {
-		Node node = new Node(0);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node);
+		final Node node = new Node(0);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node);
 
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.INDEX, taskElement.getCurrentTask().get());
@@ -53,10 +53,10 @@ public final class TarjanTaskElementTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetNode() {
-		Node node = new Node(0);
-		Node anotherNode = new Node(1);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node);
-		TarjanTaskElement anotherTaskElement = new TarjanTaskElement(anotherNode);
+		final Node node = new Node(0);
+		final Node anotherNode = new Node(1);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node);
+		final TarjanTaskElement anotherTaskElement = new TarjanTaskElement(anotherNode);
 
 		Assert.assertEquals(node, taskElement.getNode());
 		Assert.assertEquals(anotherNode, anotherTaskElement.getNode());
@@ -68,18 +68,18 @@ public final class TarjanTaskElementTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testGetPredecessor() {
-		Node node = new Node(0);
-		Node predecessor = new Node(1);
-		Node anotherPredecessor = new Node(2);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node, predecessor);
-		TarjanTaskElement anotherTaskElement = new TarjanTaskElement(node, anotherPredecessor);
+		final Node node = new Node(0);
+		final Node predecessor = new Node(1);
+		final Node anotherPredecessor = new Node(2);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node, predecessor);
+		final TarjanTaskElement anotherTaskElement = new TarjanTaskElement(node, anotherPredecessor);
 
 		Assert.assertTrue(taskElement.getPredecessor().isPresent());
 		Assert.assertEquals(predecessor, taskElement.getPredecessor().get());
 		Assert.assertTrue(anotherTaskElement.getPredecessor().isPresent());
 		Assert.assertEquals(anotherPredecessor, anotherTaskElement.getPredecessor().get());
 
-		TarjanTaskElement yetAnothertaskElement = new TarjanTaskElement(node);
+		final TarjanTaskElement yetAnothertaskElement = new TarjanTaskElement(node);
 		Assert.assertFalse(yetAnothertaskElement.getPredecessor().isPresent());
 	}
 
@@ -88,8 +88,8 @@ public final class TarjanTaskElementTest {
 	 */
 	@Test
 	public void testReportTaskAccomplished() {
-		Node node = new Node(0);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node);
+		final Node node = new Node(0);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node);
 
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
 		Assert.assertEquals(ETarjanTask.INDEX, taskElement.getCurrentTask().get());
@@ -116,8 +116,8 @@ public final class TarjanTaskElementTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanTaskElementNode() {
-		Node node = new Node(0);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node);
+		final Node node = new Node(0);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node);
 
 		Assert.assertEquals(node, taskElement.getNode());
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());
@@ -131,9 +131,9 @@ public final class TarjanTaskElementTest {
 	@SuppressWarnings("static-method")
 	@Test
 	public void testTarjanTaskElementNodeNode() {
-		Node node = new Node(0);
-		Node predecessor = new Node(1);
-		TarjanTaskElement taskElement = new TarjanTaskElement(node, predecessor);
+		final Node node = new Node(0);
+		final Node predecessor = new Node(1);
+		final TarjanTaskElement taskElement = new TarjanTaskElement(node, predecessor);
 
 		Assert.assertEquals(node, taskElement.getNode());
 		Assert.assertTrue(taskElement.getCurrentTask().isPresent());

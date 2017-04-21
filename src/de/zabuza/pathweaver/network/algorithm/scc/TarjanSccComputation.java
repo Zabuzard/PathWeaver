@@ -72,7 +72,7 @@ public class TarjanSccComputation implements ISccComputation {
 		this.mNetwork = network;
 
 		clear();
-		for (Node node : getPathNetwork().getNodes()) {
+		for (final Node node : getPathNetwork().getNodes()) {
 			if (!this.mNodeToIndex.containsKey(node)) {
 				strongConnect(node);
 			}
@@ -135,7 +135,7 @@ public class TarjanSccComputation implements ISccComputation {
 	 * computation.
 	 */
 	protected void clear() {
-		IPathNetwork network = getPathNetwork();
+		final IPathNetwork network = getPathNetwork();
 		this.mNodeToIndex = new HashMap<>(network.getSize());
 		this.mNodeToLowLink = new HashMap<>(network.getSize());
 		this.mDeque = new LinkedList<>();
@@ -152,7 +152,7 @@ public class TarjanSccComputation implements ISccComputation {
 	 *            The root node of this SCC
 	 */
 	protected void establishScc(final Node rootNode) {
-		StronglyConnectedComponent scc = new StronglyConnectedComponent();
+		final StronglyConnectedComponent scc = new StronglyConnectedComponent();
 		Node dequeElement;
 		do {
 			dequeElement = this.mDeque.pop();
@@ -164,7 +164,7 @@ public class TarjanSccComputation implements ISccComputation {
 		this.mSccs.add(scc);
 
 		// Update largest known values
-		int sccSize = scc.getSize();
+		final int sccSize = scc.getSize();
 		if (sccSize > this.mLargestKnownSccSize) {
 			this.mLargestKnownSccSize = sccSize;
 			this.mLargestKnownScc = scc;
@@ -180,7 +180,7 @@ public class TarjanSccComputation implements ISccComputation {
 	 */
 	protected void strongConnect(final Node node) {
 		assert (!this.mNodeToIndex.containsKey(node) && !this.mNodeToLowLink.containsKey(node));
-		IPathNetwork network = getPathNetwork();
+		final IPathNetwork network = getPathNetwork();
 		this.mNodeToIndex.put(node, Integer.valueOf(this.mCurrentIndex));
 		this.mNodeToLowLink.put(node, Integer.valueOf(this.mCurrentIndex));
 		this.mCurrentIndex++;
@@ -188,11 +188,11 @@ public class TarjanSccComputation implements ISccComputation {
 		this.mDeque.push(node);
 		this.mInDeque.add(node);
 
-		Set<DirectedWeightedEdge> outgoingEdges = network.getOutgoingEdges(node);
+		final Set<DirectedWeightedEdge> outgoingEdges = network.getOutgoingEdges(node);
 
 		// Start a depth-first-search over all successors
-		for (DirectedWeightedEdge outgoingEdge : outgoingEdges) {
-			Node successor = outgoingEdge.getDestination();
+		for (final DirectedWeightedEdge outgoingEdge : outgoingEdges) {
+			final Node successor = outgoingEdge.getDestination();
 			processSuccessor(node, successor);
 		}
 
@@ -214,7 +214,7 @@ public class TarjanSccComputation implements ISccComputation {
 	 *            The candidate for the new value
 	 */
 	protected void updateLowLink(final Node node, final int valueCandidate) {
-		int minValue = Math.min(this.mNodeToLowLink.get(node).intValue(), valueCandidate);
+		final int minValue = Math.min(this.mNodeToLowLink.get(node).intValue(), valueCandidate);
 		this.mNodeToLowLink.put(node, Integer.valueOf(minValue));
 	}
 }
